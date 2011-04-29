@@ -17,13 +17,14 @@
 package zbeans.cowgraph.model;
 
 import java.awt.Color;
+import zbeans.simple.beans.PropertyChangeObservable;
 
 /**
  * Base interface for all graph elements.
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public interface GraphElement {
+public interface GraphElement extends PropertyChangeObservable {
     
     public long getX();
     public long getY();
