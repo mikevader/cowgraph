@@ -40,5 +40,5 @@
   <bounds x="450" y="174" width="573" height="320" />
     </editor-area>
     <screen width="1366" height="768"/>
-    <toolbar configuration="Standard" preferred-icon-size="24"/>
+    <toolbar configuration="Standard" preferred-icon-size="16"/>
 </windowmanager>

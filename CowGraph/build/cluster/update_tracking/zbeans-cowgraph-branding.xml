@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module codename="zbeans.cowgraph.branding">
-    <module_version install_time="1304070152820" last="true" origin="installer" specification_version="1.0">
+    <module_version install_time="1304076489079" last="true" origin="installer" specification_version="1.0">
         <file crc="3963010600" name="config/Modules/zbeans-cowgraph-branding.xml"/>
-        <file crc="3031682522" name="modules/zbeans-cowgraph-branding.jar"/>
+        <file crc="3840256966" name="modules/zbeans-cowgraph-branding.jar"/>
     </module_version>
 </module>

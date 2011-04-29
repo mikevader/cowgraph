@@ -1,5 +1,5 @@
 C:\Program Files\NetBeans 7.0\platform=1303978561031
-C:\Projects\NetBeansCodingDay\workspace\cowgraph\CowGraph\build\cluster=1304070153199
+C:\Projects\NetBeansCodingDay\workspace\cowgraph\CowGraph\build\cluster=1304076489426
 C:\Program Files\NetBeans 7.0\platform=1303978561031
-C:\Projects\NetBeansCodingDay\workspace\cowgraph\CowGraph\build\testuserdir=1304070153199
+C:\Projects\NetBeansCodingDay\workspace\cowgraph\CowGraph\build\testuserdir=1304076489426
 crc=7

@@ -1,5 +1,5 @@
 -------------------------------------------------------------------------------
->Log Session: Friday, April 29, 2011 11:42:33 AM CEST
+>Log Session: Friday, April 29, 2011 1:28:09 PM CEST
 >System Info: 
   Product Version         = CowGraph 201104080000
   Operating System        = Windows 7 version 6.1 running on amd64
@@ -85,7 +85,8 @@ Heap memory usage: initial 124,8MB maximum 1776,0MB
 Non heap memory usage: initial 23,2MB maximum 130,0MB
 Garbage collector: PS Scavenge (Collections=1 Total time spent=0s)
 Garbage collector: PS MarkSweep (Collections=0 Total time spent=0s)
-Classes: loaded=3457 total loaded=3457 unloaded 0
+Classes: loaded=3271 total loaded=3271 unloaded 0
 INFO [org.netbeans.core.ui.warmup.DiagnosticTask]: Total memory 8.377.946.112
 INFO [null]: Total physical memory 8.377.946.112
 WARNING [org.openide.filesystems.Ordering]: Not all children in Menu/Window/ marked with the position attribute: [zbeans-cowgraph-MyWindowTopComponent.shadow], but some are: [org-netbeans-core-windows-actions-GlobalPropertiesAction.shadow, Output, SwitchToRecentDocumentAction.shadow, ProgressListAction.shadow, Separator3.instance, CloseWindowAction.shadow, MaximizeWindowAction.shadow, org-netbeans-core-windows-actions-UndockAction.shadow, Separator4.instance, CloneDocumentAction.shadow, CloseAllDocumentsAction.shadow, CloseAllButThisAction.shadow, DocumentsAction.shadow, Separator5.instance, org-netbeans-core-windows-actions-ResetWindowsAction.shadow]
+WARNING [org.openide.util.actions.SystemAction]: No such icon from org.netbeans.modules.quicksearch.QuickSearchAction: org/netbeans/modules/jumpto/resources/edit_parameters.png
