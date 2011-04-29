@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: zbeans.cowgraph.model
+OpenIDE-Module-Localizing-Bundle: zbeans/cowgraph/model/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+
