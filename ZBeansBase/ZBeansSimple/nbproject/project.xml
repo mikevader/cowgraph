@@ -64,7 +64,13 @@
                     </run-dependency>
                 </dependency>
             </module-dependencies>
-            <public-packages/>
+            <public-packages>
+                <package>zbeans.simple.beans</package>
+                <package>zbeans.simple.layouts</package>
+                <package>zbeans.simple.nodes</package>
+                <package>zbeans.simple.tasks</package>
+                <package>zbeans.simple.views</package>
+            </public-packages>
         </data>
     </configuration>
 </project>
