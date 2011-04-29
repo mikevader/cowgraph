@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN"
+                            "http://www.netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="xml">
+        <folder name="entities">
+            <folder name="zbeans_cowgraph">
+                <file name="MyWindow" url="nbres:/org/netbeans/modules/settings/resources/properties-1_0.dtd">
+                    <!--zbeans.cowgraph.MyWindowTopComponent-->
+                    <attr name="hint.originalPublicID" stringvalue="-//zbeans.cowgraph//MyWindow//EN"/>
+                </file>
+            </folder>
+        </folder>
+        <folder name="memory">
+            <folder name="zbeans">
+                <folder name="cowgraph">
+                    <file name="MyWindowTopComponent">
+                        <!--zbeans.cowgraph.MyWindowTopComponent-->
+                        <attr name="settings.providerPath" stringvalue="xml/lookups//zbeans_cowgraph/MyWindow.instance"/>
+                    </file>
+                </folder>
+            </folder>
+        </folder>
+        <folder name="lookups">
+            <folder name="zbeans_cowgraph">
+                <file name="MyWindow.instance">
+                    <!--zbeans.cowgraph.MyWindowTopComponent-->
+                    <attr
+                        methodvalue="org.netbeans.api.settings.Factory.create" name="instanceCreate"/>
+                    <attr
+                        methodvalue="org.netbeans.api.settings.Factory.properties" name="settings.convertor"/>
+                    <attr name="settings.instanceClass" stringvalue="zbeans.cowgraph.MyWindowTopComponent"/>
+                    <attr name="settings.instanceOf" stringvalue="zbeans.cowgraph.MyWindowTopComponent"/>
+                    <attr boolvalue="true" name="xmlproperties.preventStoring"/>
+                </file>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Menu">
+        <folder name="Window">
+            <file name="zbeans-cowgraph-MyWindowTopComponent.shadow">
+                <!--zbeans.cowgraph.MyWindowTopComponent-->
+                <attr name="originalFile" stringvalue="Actions/Window/zbeans-cowgraph-MyWindowTopComponent.instance"/>
+            </file>
+        </folder>
+    </folder>
+    <folder name="Windows2">
+        <folder name="Components">
+            <file name="MyWindowTopComponent.settings">
+                <!--zbeans.cowgraph.MyWindowTopComponent--><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE settings PUBLIC "-//NetBeans//DTD Session settings 1.0//EN" "http://www.netbeans.org/dtds/sessionsettings-1_0.dtd">
+<settings version="1.0">
+  <instance class="zbeans.cowgraph.MyWindowTopComponent"/>
+</settings>
+]]></file>
+        </folder>
+        <folder name="Modes">
+            <folder name="editor">
+                <file name="MyWindowTopComponent.wstcref">
+                    <!--zbeans.cowgraph.MyWindowTopComponent--><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tc-ref PUBLIC "-//NetBeans//DTD Top Component in Mode Properties 2.0//EN" "http://www.netbeans.org/dtds/tc-ref2_0.dtd">
+<tc-ref version="2.0">
+  <tc-id id="MyWindowTopComponent"/>
+  <state opened="true"/>
+</tc-ref>
+]]></file>
+            </folder>
+        </folder>
+    </folder>
+    <folder name="Actions">
+        <folder name="Window">
+            <file name="zbeans-cowgraph-MyWindowTopComponent.instance">
+                <!--zbeans.cowgraph.MyWindowTopComponent-->
+                <attr
+                    methodvalue="org.openide.windows.TopComponent.openAction" name="instanceCreate"/>
+                <attr name="component" newvalue="zbeans.cowgraph.MyWindowTopComponent"/>
+                <attr name="preferredID" stringvalue="MyWindowTopComponent"/>
+                <attr
+                    bundlevalue="zbeans.cowgraph.Bundle#CTL_MyWindowAction" name="displayName"/>
+            </file>
+        </folder>
+    </folder>
+</filesystem>

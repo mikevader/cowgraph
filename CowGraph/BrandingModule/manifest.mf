@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: zbeans.cowgraph.branding
+OpenIDE-Module-Layer: zbeans/cowgraph/branding/layer.xml
+OpenIDE-Module-Localizing-Bundle: zbeans/cowgraph/branding/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+
