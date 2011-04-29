@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<module codename="zbeans.cowgraph">
-    <module_version install_time="1304068608963" last="true" origin="installer" specification_version="1.0">
-        <file crc="596282176" name="config/Modules/zbeans-cowgraph.xml"/>
-        <file crc="2141360317" name="modules/zbeans-cowgraph.jar"/>
-    </module_version>
-</module>
