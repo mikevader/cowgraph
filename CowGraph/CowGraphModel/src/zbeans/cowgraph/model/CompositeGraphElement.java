@@ -16,28 +16,14 @@
  */
 package zbeans.cowgraph.model;
 
-import java.awt.Color;
-import zbeans.simple.beans.ObservableBean;
+import java.util.List;
 
 /**
- * A circle.
+ * Base interface for all composite graph elements.
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Circle extends ObservableBean implements GraphElement {
-
-    @Override
-    public long getX() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public long getY() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Color getColor() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+public interface CompositeGraphElement extends GraphElement {
+    
+    public List<GraphElement> getElements();
 }
