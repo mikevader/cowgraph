@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Rolf Bruderer
+ * Copyright (C) 2011 Michael M&uuml;hlebach <michael at anduin.ch>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,17 +14,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.visual.editor;
+package zbeans.cowgraph.model;
 
-import org.netbeans.api.visual.graph.GraphScene;
+import java.util.List;
 
 /**
+ * Base interface for all composite graph elements.
  *
- * @author Rolf Bruderer
+ * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class CowGraphVisualEditorScene extends GraphScene<, Object> {
+public interface CompositeGraphElement extends GraphElement {
     
-    
-    
-    
+    public List<GraphElement> getElements();
 }

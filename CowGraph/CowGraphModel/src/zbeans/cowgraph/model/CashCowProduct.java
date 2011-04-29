@@ -16,54 +16,44 @@
  */
 package zbeans.cowgraph.model;
 
+import java.awt.Color;
 import java.util.Collections;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import zbeans.simple.beans.ObservableBean;
 
 /**
- * A version of a cow graphic.
+ * Cash cow buble: a circle with a specified color, size, position, text and
+ * arrow.
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class CowGraphVersion extends ObservableBean {
-    private String name;
-    private Date date;
+public class CashCowProduct extends ObservableBean implements CompositeGraphElement {
     private List<GraphElement> elements;
 
-    public CowGraphVersion() {
-        name = "";
-        date = new Date();
-        
+    public CashCowProduct() {
         elements = new LinkedList<GraphElement>();
+
+        // TODO: Create here a complete CashCow buble with circles arrows and text graph elements.
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
+    @Override
     public List<GraphElement> getElements() {
         return Collections.unmodifiableList(elements);
     }
 
-    public GraphElement remove(int index) {
-        return elements.remove(index);
+    @Override
+    public long getX() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public boolean add(GraphElement e) {
-        return elements.add(e);
+    @Override
+    public long getY() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Color getColor() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

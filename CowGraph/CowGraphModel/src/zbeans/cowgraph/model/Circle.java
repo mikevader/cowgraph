@@ -17,13 +17,14 @@
 package zbeans.cowgraph.model;
 
 import java.awt.Color;
+import zbeans.simple.beans.ObservableBean;
 
 /**
  * A circle.
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Circle implements GraphElement {
+public class Circle extends ObservableBean implements GraphElement {
 
     @Override
     public long getX() {
@@ -39,5 +40,4 @@ public class Circle implements GraphElement {
     public Color getColor() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

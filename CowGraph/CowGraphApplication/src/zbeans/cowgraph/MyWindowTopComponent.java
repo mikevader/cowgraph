@@ -10,6 +10,8 @@ import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Top component which displays something.
@@ -26,7 +28,10 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 preferredID = "MyWindowTopComponent")
 public final class MyWindowTopComponent extends TopComponent {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyWindowTopComponent.class);
+    
     public MyWindowTopComponent() {
+        LOGGER.info("CowGraph Application started...");
         initComponents();
         setName(NbBundle.getMessage(MyWindowTopComponent.class, "CTL_MyWindowTopComponent"));
         setToolTipText(NbBundle.getMessage(MyWindowTopComponent.class, "HINT_MyWindowTopComponent"));
