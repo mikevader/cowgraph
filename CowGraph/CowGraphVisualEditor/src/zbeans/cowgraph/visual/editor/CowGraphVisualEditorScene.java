@@ -17,12 +17,33 @@
 package zbeans.cowgraph.visual.editor;
 
 import org.netbeans.api.visual.graph.GraphScene;
+import org.netbeans.api.visual.widget.Widget;
 
 /**
  *
  * @author Rolf Bruderer
  */
-public class CowGraphVisualEditorScene extends GraphScene<, Object> {
+public class CowGraphVisualEditorScene extends GraphScene<Object, Object> {
+
+    @Override
+    protected Widget attachNodeWidget(Object n) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected Widget attachEdgeWidget(Object e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected void attachEdgeSourceAnchor(Object e, Object n, Object n1) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    protected void attachEdgeTargetAnchor(Object e, Object n, Object n1) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
     
     
