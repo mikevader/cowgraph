@@ -83,8 +83,7 @@ Alle folgenden Befehle sind im gewünschten Verzeichnis (allenfalls mit cd wechse
 	git pull upstream master
 
 2. Committing (nur in mein Repository):
-	git add .	
-	git commit -m "Dein Commmit Text*  // nur lokal
+	git commit -a -m "Dein Commmit Text*  // alle Änderungen, auch neue Files, nur lokal
 	git push  // in mein repository
 
 3. Commiting (von eigenem Repository in gemeinsames Repository):
@@ -96,8 +95,7 @@ Alle folgenden Befehle sind im gewünschten Verzeichnis (allenfalls mit cd wechse
 		(ganz nach unten scrollen)
 
 4. Mergen (lokal):
-	git add .
-	git commit -m "blabla*  // nur lokal
+	git commit -a -m "blabla*  // alle Änderungen, auch neue Files, nur lokal
 	git push // in mein remote repository (optional, sicher ist sicher)
 	git pull upstream master
 
