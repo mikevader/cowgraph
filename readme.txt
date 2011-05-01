@@ -95,11 +95,15 @@ Alle folgenden Befehle sind im gewünschten Verzeichnis (allenfalls mit cd wechse
 		(ganz nach unten scrollen)
 
 4. Mergen (lokal):
+
+	Eigene Änderungen zuerst in eigenem Repo einchecken/sichern (sicher ist sicher): 
 	git commit -a -m "blabla*  // alle Änderungen, auch neue Files, nur lokal
-	git push // in mein remote repository (optional, sicher ist sicher)
+	git push // in mein remote repository 
+
+	Dann erst alle Änderungen auschecken:
 	git pull upstream master
 
-	Dann in netbeans alle aufgeführten conflicted files von Hand korrigieren
+	Dann in Netbeans alle aufgeführten conflicted files von Hand korrigieren
 	und alle gemergten Änderungen einchecken:
 	git commit -a -m "merged blabla"
 
