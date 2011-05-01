@@ -106,6 +106,7 @@ Alle folgenden Befehle sind im gewünschten Verzeichnis (allenfalls mit cd wechse
 	Dann in Netbeans alle aufgeführten conflicted files von Hand korrigieren
 	und alle gemergten Änderungen einchecken:
 	git commit -a -m "merged blabla"
+	git push
 
 	Schliesslich gemäss Punkt 3 in gemeinsames Repository pullen.
 
