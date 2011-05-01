@@ -4,11 +4,13 @@
  */
 package zbeans.cowgraph;
 
+import org.slf4j.Logger;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.slf4j.LoggerFactory;
 
 /**
  * Top component which displays something.
@@ -25,7 +27,7 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 preferredID = "MyWindowTopComponent")
 public final class MyWindowTopComponent extends TopComponent {
 
-    // private static final Logger LOGGER = LoggerFactory.getLogger(MyWindowTopComponent.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyWindowTopComponent.class);
     
     public MyWindowTopComponent() {
         // LOGGER.info("CowGraph Application started...");
