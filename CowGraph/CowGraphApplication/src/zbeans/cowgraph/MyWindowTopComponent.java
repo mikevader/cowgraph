@@ -30,7 +30,7 @@ public final class MyWindowTopComponent extends TopComponent {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyWindowTopComponent.class);
     
     public MyWindowTopComponent() {
-        // LOGGER.info("CowGraph Application started...");
+        LOGGER.info("CowGraph Application started...");
         initComponents();
         setName(NbBundle.getMessage(MyWindowTopComponent.class, "CTL_MyWindowTopComponent"));
         setToolTipText(NbBundle.getMessage(MyWindowTopComponent.class, "HINT_MyWindowTopComponent"));
