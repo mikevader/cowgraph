@@ -100,8 +100,14 @@ Alle folgenden Befehle sind im gewünschten Verzeichnis (allenfalls mit cd wechse
 	git commit -m "blabla*  // nur lokal
 	git push // in mein remote repository (optional, sicher ist sicher)
 	git pull upstream master
+
 	Dann in netbeans alle aufgeführten conflicted files von Hand korrigieren
+	und alle gemergten Änderungen einchecken:
 	git commit -a -m "merged blabla"
+
+	Schliesslich gemäss Punkt 3 in gemeinsames Repository pullen.
+
+Siehe auch weitere GIT cheat sheets unter http://help.github.com/git-cheat-sheets/
 
 
 Kontakte / Lead-Entwickler
@@ -109,4 +115,3 @@ Kontakte / Lead-Entwickler
 
 Michael Mühlebach
 Rolf Bruderer
-
