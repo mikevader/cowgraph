@@ -33,7 +33,7 @@ Wir verwenden folgende Entwicklungs-Umgebung:
 - Netbeans 7.0 (aktuell RC1)
 - Versionskontrolle mit GIT (vorwiegend über GIT-Bash-Konsole)
 
-Die Entwicklungs-Umgebung ist wie folt zu installieren und einzurichten:
+Die Entwicklungs-Umgebung ist wie folgt zu installieren und einzurichten:
 
 1. NetBeans installieren: 
 	http://netbeans.org/downloads/index.html
@@ -51,9 +51,9 @@ Die Entwicklungs-Umgebung ist wie folt zu installieren und einzurichten:
 	die Git-Bash-Konsole auf das gewünschte Working-Directory für ZBeans-Projekte zu konfigurieren 
 	(einfach in der Windows-Verknüpgung->Properties->Start In)
 
-4. Dann auf github.com nach unserem Projekt "zbeans/cashcow" suchen und dieses "forken" und auschecken:
+4. Dann auf github.com nach unserem Projekt "zbeans/cowgraph" suchen und dieses "forken" und auschecken:
 	- Gemäss Anleitung unter http://help.github.com/fork-a-repo/
-	- $ git clone git@github.com:<youusername>/cashcow.git
+	- $ git clone git@github.com:<youusername>/cowgraph.git
 
 5. (Optional) Git Plugin für Netbeans installieren
 	[Optional, weil es nicht wahnsinnig hilfreich zu sein scheint.]
@@ -63,7 +63,7 @@ Die Entwicklungs-Umgebung ist wie folt zu installieren und einzurichten:
 
 6. In Netbeans eine ProjetcGroup einrichten:
 	- Unter File/Project Group/New
-	- Folder Of Projects: Das cashcow-Verzeichnis in welches Du die zbeans Projekte ausgecheckt hast
+	- Folder Of Projects: Das cowgraph-Verzeichnis in welches Du die zbeans Projekte ausgecheckt hast
 	- Es werden jeweils automatisch alle Projekte geöffnet, die dort ausgecheckt sind (kein Import/Refresh wie in Eclipse nötig)
 
 Hier noch ein paar Links zu git Infoquellen:
@@ -118,3 +118,4 @@ Kontakte / Lead-Entwickler
 
 Michael Mühlebach
 Rolf Bruderer
+Philip Graf
