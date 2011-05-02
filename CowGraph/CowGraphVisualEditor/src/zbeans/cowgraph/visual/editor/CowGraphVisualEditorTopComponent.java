@@ -1,39 +1,47 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2011 rbr
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph;
+package zbeans.cowgraph.visual.editor;
 
-import org.slf4j.Logger;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
+import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.slf4j.LoggerFactory;
 
 /**
  * Top component which displays something.
  */
-@ConvertAsProperties(dtd = "-//zbeans.cowgraph//MyWindow//EN",
+@ConvertAsProperties(dtd = "-//zbeans.cowgraph.visual.editor//CowGraphVisualEditor//EN",
 autostore = false)
-@TopComponent.Description(preferredID = "MyWindowTopComponent",
+@TopComponent.Description(preferredID = "CowGraphVisualEditorTopComponent",
 //iconBase="SET/PATH/TO/ICON/HERE", 
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "editor", openAtStartup = true)
-@ActionID(category = "Window", id = "zbeans.cowgraph.MyWindowTopComponent")
+@TopComponent.Registration(mode = "editor", openAtStartup = false)
+@ActionID(category = "Window", id = "zbeans.cowgraph.visual.editor.CowGraphVisualEditorTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
-@TopComponent.OpenActionRegistration(displayName = "#CTL_MyWindowAction",
-preferredID = "MyWindowTopComponent")
-public final class MyWindowTopComponent extends TopComponent {
+@TopComponent.OpenActionRegistration(displayName = "#CTL_CowGraphVisualEditorAction",
+preferredID = "CowGraphVisualEditorTopComponent")
+public final class CowGraphVisualEditorTopComponent extends TopComponent {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyWindowTopComponent.class);
-    
-    public MyWindowTopComponent() {
-        LOGGER.info("CowGraph Application started...");
+    public CowGraphVisualEditorTopComponent() {
         initComponents();
-        setName(NbBundle.getMessage(MyWindowTopComponent.class, "CTL_MyWindowTopComponent"));
-        setToolTipText(NbBundle.getMessage(MyWindowTopComponent.class, "HINT_MyWindowTopComponent"));
+        setName(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "CTL_CowGraphVisualEditorTopComponent"));
+        setToolTipText(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "HINT_CowGraphVisualEditorTopComponent"));
 
     }
 
@@ -45,30 +53,22 @@ public final class MyWindowTopComponent extends TopComponent {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(MyWindowTopComponent.class, "MyWindowTopComponent.jLabel1.text")); // NOI18N
+        canvasScrollPane = new javax.swing.JScrollPane();
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jLabel1)
-                .addContainerGap(239, Short.MAX_VALUE))
+            .addComponent(canvasScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(jLabel1)
-                .addContainerGap(189, Short.MAX_VALUE))
+            .addComponent(canvasScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane canvasScrollPane;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
