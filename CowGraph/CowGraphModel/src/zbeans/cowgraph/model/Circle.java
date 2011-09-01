@@ -24,7 +24,7 @@ package zbeans.cowgraph.model;
 public class Circle extends GraphElementImpl {
 
     public static final String PROP_RADIUS = "radius";
-    private long radius;
+    private long radius = 20;
 
     /**
      * Get the value of radius

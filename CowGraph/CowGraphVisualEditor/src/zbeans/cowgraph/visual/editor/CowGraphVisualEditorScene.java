@@ -42,6 +42,7 @@ import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.model.GraphElement;
 import zbeans.cowgraph.model.GraphElementFactory;
 import zbeans.cowgraph.model.GraphElementType;
+import zbeans.cowgraph.visual.editor.widget.GraphElementWidgetFactory;
 
 /**
  *
@@ -102,13 +103,8 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected Widget attachNodeWidget(GraphElement node) {
-        
-        IconNodeWidget widget = new IconNodeWidget(this);
-        //widget.setImage(node.getImage());
-        widget.setLabel(Long.toString(node.hashCode()));
-        // TODO: Reflect changes in model (GraphElement)
+        Widget widget = GraphElementWidgetFactory.createWidget(this, node);        
         widget.getActions().addAction(ActionFactory.createMoveAction());
-
         widget.addDependency(new GraphElementWidgetDependency(widget, node));
         widget.setPreferredLocation(new Point((int)node.getX(), (int)node.getY()));
         mainLayer.addChild(widget);
