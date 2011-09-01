@@ -26,6 +26,7 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.util.Lookup;
 import org.openide.util.lookup.Lookups;
+import zbeans.cowgraph.visual.editor.palette.PaletteSupport;
 
 /**
  * Top component which displays something.
@@ -55,7 +56,7 @@ public final class CowGraphVisualEditorTopComponent extends TopComponent {
         canvasScrollPane.setViewportView(view);
         add(scene.createSatelliteView(), BorderLayout.WEST);
         
-        // associateLookup(Lookups.fixed(PaletteSu));
+        associateLookup(Lookups.fixed(PaletteSupport.createPalette()));
     }
 
     /** This method is called from within the constructor to
