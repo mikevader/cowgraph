@@ -34,18 +34,24 @@ import org.netbeans.api.visual.widget.LayerWidget;
 import org.netbeans.api.visual.widget.Widget;
 import org.netbeans.api.visual.widget.general.IconNodeWidget;
 import org.openide.util.ImageUtilities;
+import zbeans.cowgraph.model.CowGraphVersion;
+import zbeans.cowgraph.model.GraphElement;
 
 /**
  *
  * @author Rolf Bruderer
  */
-public class CowGraphVisualEditorScene extends GraphScene<MyNode, String> {
+public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> {
 
+    private CowGraphVersion version;
     private LayerWidget mainLayer;
 
-    public CowGraphVisualEditorScene() {
+    CowGraphVisualEditorScene(CowGraphVersion version) {
+        this.version = version;
+
         mainLayer = new LayerWidget(this);
         addChild(mainLayer);
+
 
 
         getActions().addAction(ActionFactory.createAcceptAction(new AcceptProvider() {
@@ -64,9 +70,10 @@ public class CowGraphVisualEditorScene extends GraphScene<MyNode, String> {
 
             @Override
             public void accept(Widget widget, Point point, Transferable transferable) {
-                Image image = getImageFromTransferable(transferable);
-                Widget w = CowGraphVisualEditorScene.this.addNode(new MyNode(image));
-                w.setPreferredLocation(widget.convertLocalToScene(point));
+                // TODO Add correct GraphElement to version.
+//                Image image = getImageFromTransferable(transferable);
+//                Widget w = CowGraphVisualEditorScene.this.addNode(new GraphElement(image));
+//                w.setPreferredLocation(widget.convertLocalToScene(point));
             }
         }));
 
@@ -75,11 +82,15 @@ public class CowGraphVisualEditorScene extends GraphScene<MyNode, String> {
     }
 
     @Override
-    protected Widget attachNodeWidget(MyNode node) {
+    protected Widget attachNodeWidget(GraphElement node) {
         IconNodeWidget widget = new IconNodeWidget(this);
-        widget.setImage(node.getImage());
+        //widget.setImage(node.getImage());
         widget.setLabel(Long.toString(node.hashCode()));
+        // TODO: Reflect changes in model (GraphElement)
         widget.getActions().addAction(ActionFactory.createMoveAction());
+        
+        widget.addDependency(new GraphElementWidgetDependency(widget, node));
+        
         mainLayer.addChild(widget);
         return widget;
     }
@@ -90,11 +101,11 @@ public class CowGraphVisualEditorScene extends GraphScene<MyNode, String> {
     }
 
     @Override
-    protected void attachEdgeSourceAnchor(String edge, MyNode oldSourceNode, MyNode sourceNode) {
+    protected void attachEdgeSourceAnchor(String edge, GraphElement oldSourceNode, GraphElement sourceNode) {
     }
 
     @Override
-    protected void attachEdgeTargetAnchor(String edge, MyNode oldTargetNode, MyNode targetNode) {
+    protected void attachEdgeTargetAnchor(String edge, GraphElement oldTargetNode, GraphElement targetNode) {
     }
 
     private Image getImageFromTransferable(Transferable transferable) {
