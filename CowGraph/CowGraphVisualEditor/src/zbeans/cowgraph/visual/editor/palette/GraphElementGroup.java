@@ -20,19 +20,12 @@ package zbeans.cowgraph.visual.editor.palette;
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Category {
+public enum GraphElementGroup {
+    BASIC("basic");
+    
+    public final String title;
 
-    private String name;
-
-    /** Creates a new instance of Category */
-    public Category() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    private GraphElementGroup(String title) {
+        this.title = title;
     }
 }
