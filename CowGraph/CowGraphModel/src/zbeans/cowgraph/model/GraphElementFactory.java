@@ -14,32 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.visual.editor;
-
-import org.netbeans.api.visual.widget.Widget.Dependency;
-import org.netbeans.api.visual.widget.general.IconNodeWidget;
-import zbeans.cowgraph.model.GraphElement;
+package zbeans.cowgraph.model;
 
 /**
- * Verantwortlich für updates im GraphElement bei Änderungen im Widget.
- * 
- * 
+ *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class GraphElementWidgetDependency implements Dependency {
+public interface GraphElementFactory {
 
-    IconNodeWidget widget;
-    GraphElement node;
-
-    public GraphElementWidgetDependency(IconNodeWidget widget, GraphElement node) {
-        this.widget = widget;
-        this.node = node;
-    }
-
-    @Override
-    public void revalidateDependency() {
-        this.node.setX(widget.getLocation().x);
-        this.node.setY(widget.getLocation().y);
-    }
-    
+    public GraphElement createGraphElement(GraphElementType type);
 }

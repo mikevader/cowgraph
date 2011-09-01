@@ -16,6 +16,7 @@
  */
 package zbeans.cowgraph.visual.editor.palette;
 
+import zbeans.cowgraph.model.GraphElementType;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.util.lookup.Lookups;
@@ -26,12 +27,9 @@ import org.openide.util.lookup.Lookups;
  */
 public class ShapeNode extends AbstractNode {
 
-    private Shape shape;
-
     /** Creates a new instance of InstrumentNode */
-    public ShapeNode(Shape key) {
-        super(Children.LEAF, Lookups.fixed(new Object[]{key}));
-        this.shape = key;
-        setIconBaseWithExtension(key.getImage());
+    public ShapeNode(GraphElementType key) {
+        super(Children.LEAF, Lookups.singleton(key));
+        setIconBaseWithExtension(key.image);
     }
 }

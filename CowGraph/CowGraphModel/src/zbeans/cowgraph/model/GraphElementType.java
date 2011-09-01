@@ -14,44 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.visual.editor.palette;
+package zbeans.cowgraph.model;
 
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Shape {
+public enum GraphElementType {
 
-    private Integer number;
-    private String category;
-    private String title;
-    private String image;
+    CIRCLE("Circle", Circle.class, GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/image1.png");
+    
+    public final String name;
+    public final GraphElementGroup group;
+    public final Class<? extends GraphElement> elementClass;
+    public final String image;
 
-    /** Creates a new instance of Instrument */
-    public Shape() {
+    private GraphElementType(String name, Class<? extends GraphElement> elementClass, GraphElementGroup group, String image) {
+        this.name = name;
+        this.group = group;
+        this.image = image;  
+        this.elementClass = elementClass;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Class<? extends GraphElement> getElementClass() {
+        return elementClass;
     }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
+    
+    
 }

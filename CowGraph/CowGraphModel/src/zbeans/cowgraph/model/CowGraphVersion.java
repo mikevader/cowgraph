@@ -28,24 +28,21 @@ import zbeans.simple.beans.ObservableBean;
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
 public class CowGraphVersion extends ObservableBean {
-    
+
     public static final String PROP_NAME = "name";
     public static final String PROP_DATE = "date";
-    
+
     public static enum Property {
-        
+
         /**
          * We send a property change event to this property when an element is added, passing the added element as new value.
          */
         ELEMENTS_ADDED,
-
         /**
          * We send a property change event to this property when an element is removed, passing the removed element as old value.
          */
         ELEMENTS_REMOVED;
     }
-    
-    
     private String name;
     private Date date;
     private List<GraphElement> elements;
@@ -53,7 +50,7 @@ public class CowGraphVersion extends ObservableBean {
     public CowGraphVersion() {
         name = "";
         date = new Date();
-        
+
         elements = new LinkedList<GraphElement>();
     }
 
@@ -84,14 +81,30 @@ public class CowGraphVersion extends ObservableBean {
     public GraphElement remove(int index) {
         GraphElement elem = elements.remove(index);
         firePropertyElementAdded(Property.ELEMENTS_REMOVED.name(), elem);
-        return elem;        
+        return elem;
     }
 
     public boolean add(GraphElement elem) {
         boolean added = elements.add(elem);
         if (added) {
-            firePropertyElementAdded(Property.ELEMENTS_ADDED.name(), elem);    
-        }       
+            firePropertyElementAdded(Property.ELEMENTS_ADDED.name(), elem);
+        }
         return added;
+    }
+
+    /**
+     * FIXME: move to ObservableBean
+     * Fire change event for element added.
+     */
+    protected final void firePropertyElementAdded(String propertyName, final Object elementAdded) {
+        firePropertyChange(propertyName, null, elementAdded);
+    }
+
+    /**
+     * FIXME: move to ObservableBean
+     * Fire change event for element removed.
+     */
+    protected final void firePropertyElementRemoved(String propertyName, final Object elementRemoved) {
+        firePropertyChange(propertyName, elementRemoved, null);
     }
 }

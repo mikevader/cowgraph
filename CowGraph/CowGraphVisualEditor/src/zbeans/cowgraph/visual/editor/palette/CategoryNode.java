@@ -16,6 +16,7 @@
  */
 package zbeans.cowgraph.visual.editor.palette;
 
+import zbeans.cowgraph.model.GraphElementGroup;
 import org.openide.nodes.AbstractNode;
 import org.openide.util.lookup.Lookups;
 
@@ -26,8 +27,8 @@ import org.openide.util.lookup.Lookups;
 public class CategoryNode extends AbstractNode {
 
     /** Creates a new instance of CategoryNode */
-    public CategoryNode(Category category) {
+    public CategoryNode(GraphElementGroup category) {
         super(new ShapeChildren(category), Lookups.singleton(category));
-        setDisplayName(category.getName());
+        setDisplayName(category.title);
     }
 }

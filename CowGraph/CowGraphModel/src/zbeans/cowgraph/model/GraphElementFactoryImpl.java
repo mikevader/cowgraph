@@ -14,32 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.visual.editor;
+package zbeans.cowgraph.model;
 
-import org.netbeans.api.visual.widget.Widget.Dependency;
-import org.netbeans.api.visual.widget.general.IconNodeWidget;
-import zbeans.cowgraph.model.GraphElement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Verantwortlich für updates im GraphElement bei Änderungen im Widget.
- * 
- * 
+ *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class GraphElementWidgetDependency implements Dependency {
-
-    IconNodeWidget widget;
-    GraphElement node;
-
-    public GraphElementWidgetDependency(IconNodeWidget widget, GraphElement node) {
-        this.widget = widget;
-        this.node = node;
-    }
+@ServiceProvider(service=GraphElementFactory.class)
+public class GraphElementFactoryImpl implements GraphElementFactory {
 
     @Override
-    public void revalidateDependency() {
-        this.node.setX(widget.getLocation().x);
-        this.node.setY(widget.getLocation().y);
+    public GraphElement createGraphElement(GraphElementType type) {        
+        try {
+            return type.getElementClass().newInstance();
+        } catch (Exception ex) {
+            Logger.getLogger(GraphElementFactoryImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IllegalStateException("Could not create GraphElement for type " + type);
+        }
     }
     
 }

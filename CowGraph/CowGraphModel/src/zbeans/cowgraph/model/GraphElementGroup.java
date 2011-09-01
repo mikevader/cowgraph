@@ -14,25 +14,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.visual.editor.palette;
+package zbeans.cowgraph.model;
 
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Category {
+public enum GraphElementGroup {
+    BASIC("basic");
+    
+    public final String title;
 
-    private String name;
-
-    /** Creates a new instance of Category */
-    public Category() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    private GraphElementGroup(String title) {
+        this.title = title;
     }
 }
