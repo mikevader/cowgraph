@@ -25,25 +25,23 @@ import org.openide.nodes.Index;
  */
 public class ShapeChildren extends Index.ArrayChildren {
 
-    private Category category;
+    private GraphElementGroup category;
     private String[][] items = new String[][]{
         {"0", "Shapes", "zbeans/cowgraph/visual/editor/palette/image1.png"},
         {"1", "Shapes", "zbeans/cowgraph/visual/editor/palette/image2.png"},
         {"2", "Shapes", "zbeans/cowgraph/visual/editor/palette/image3.png"},};
 
-    public ShapeChildren(Category Category) {
-        this.category = Category;
+    public ShapeChildren(GraphElementGroup category) {
+        this.category = category;
     }
 
     protected java.util.List initCollection() {
         ArrayList childrenNodes = new ArrayList(items.length);
-        for (int i = 0; i < items.length; i++) {
-            if (category.getName().equals(items[i][1])) {
-                Shape item = new Shape();
-                item.setNumber(new Integer(items[i][0]));
-                item.setCategory(items[i][1]);
-                item.setImage(items[i][2]);
-                childrenNodes.add(new ShapeNode(item));
+
+        for (GraphElementType graphElementType : GraphElementType.values()) {
+
+            if (graphElementType.group == category) {
+                childrenNodes.add(new ShapeNode(graphElementType));
             }
         }
         return childrenNodes;

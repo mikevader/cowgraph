@@ -16,42 +16,24 @@
  */
 package zbeans.cowgraph.visual.editor.palette;
 
+import java.awt.Image;
+
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Shape {
+public enum GraphElementType {
+    CIRCLE("Circle", GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/image1.png");
+    
+    
+    
+    public final String name;
+    public final GraphElementGroup group;
+    public final String image;
 
-    private Integer number;
-    private String category;
-    private String title;
-    private String image;
-
-    /** Creates a new instance of Instrument */
-    public Shape() {
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
+    private GraphElementType(String name, GraphElementGroup group, String image) {
+        this.name = name;
+        this.group = group;
         this.image = image;
     }
 }
