@@ -16,6 +16,7 @@
  */
 package zbeans.cowgraph.visual.editor;
 
+import org.netbeans.api.visual.widget.Widget;
 import org.netbeans.api.visual.widget.Widget.Dependency;
 import org.netbeans.api.visual.widget.general.IconNodeWidget;
 import zbeans.cowgraph.model.GraphElement;
@@ -28,10 +29,10 @@ import zbeans.cowgraph.model.GraphElement;
  */
 public class GraphElementWidgetDependency implements Dependency {
 
-    IconNodeWidget widget;
+    Widget widget;
     GraphElement node;
 
-    public GraphElementWidgetDependency(IconNodeWidget widget, GraphElement node) {
+    public GraphElementWidgetDependency(Widget widget, GraphElement node) {
         this.widget = widget;
         this.node = node;
     }
