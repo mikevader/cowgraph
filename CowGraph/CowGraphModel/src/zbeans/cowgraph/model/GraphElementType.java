@@ -14,18 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.visual.editor.palette;
+package zbeans.cowgraph.model;
 
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public enum GraphElementGroup {
-    BASIC("basic");
-    
-    public final String title;
+public enum GraphElementType {
 
-    private GraphElementGroup(String title) {
-        this.title = title;
+    CIRCLE("Circle", GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/image1.png");
+    public final String name;
+    public final GraphElementGroup group;
+    public final String image;
+
+    private GraphElementType(String name, GraphElementGroup group, String image) {
+        this.name = name;
+        this.group = group;
+        this.image = image;
     }
 }

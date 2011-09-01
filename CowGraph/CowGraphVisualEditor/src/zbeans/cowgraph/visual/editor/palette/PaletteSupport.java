@@ -69,14 +69,14 @@ public class PaletteSupport {
     private static class MyDnDHandler extends DragAndDropHandler {
 
         public void customize(ExTransferable exTransferable, Lookup lookup) {
-            Node node = lookup.lookup(Node.class);
-            final Image image = (Image) node.getIcon(BeanInfo.ICON_COLOR_16x16);
-            exTransferable.put(new ExTransferable.Single(DataFlavor.imageFlavor) {
-
-                protected Object getData() throws IOException, UnsupportedFlavorException {
-                    return image;
-                }
-            });
+//            Node node = lookup.lookup(Node.class);
+//            final Image image = (Image) node.getIcon(BeanInfo.ICON_COLOR_16x16);
+//            exTransferable.put(new ExTransferable.Single(DataFlavor.imageFlavor) {
+//
+//                protected Object getData() throws IOException, UnsupportedFlavorException {
+//                    return image;
+//                }
+//            });
         }
     }
 }

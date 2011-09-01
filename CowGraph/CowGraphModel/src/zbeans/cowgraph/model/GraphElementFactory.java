@@ -14,22 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.visual.editor.palette;
-
-import zbeans.cowgraph.model.GraphElementType;
-import org.openide.nodes.AbstractNode;
-import org.openide.nodes.Children;
-import org.openide.util.lookup.Lookups;
+package zbeans.cowgraph.model;
 
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class ShapeNode extends AbstractNode {
+public interface GraphElementFactory {
 
-    /** Creates a new instance of InstrumentNode */
-    public ShapeNode(GraphElementType key) {
-        super(Children.LEAF, Lookups.fixed(new Object[]{key}));
-        setIconBaseWithExtension(key.image);
-    }
+    public GraphElement createGraphElement(GraphElementType type);
 }

@@ -16,6 +16,8 @@
  */
 package zbeans.cowgraph.visual.editor.palette;
 
+import zbeans.cowgraph.model.GraphElementType;
+import zbeans.cowgraph.model.GraphElementGroup;
 import java.util.ArrayList;
 import org.openide.nodes.Index;
 
