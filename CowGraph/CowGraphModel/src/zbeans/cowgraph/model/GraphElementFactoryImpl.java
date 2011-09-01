@@ -14,26 +14,26 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.visual.editor.palette;
+package zbeans.cowgraph.model;
 
-import java.awt.Image;
+import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public enum GraphElementType {
-    CIRCLE("Circle", GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/image1.png");
-    
-    
-    
-    public final String name;
-    public final GraphElementGroup group;
-    public final String image;
+@ServiceProvider(service=GraphElementFactory.class)
+public class GraphElementFactoryImpl implements GraphElementFactory {
 
-    private GraphElementType(String name, GraphElementGroup group, String image) {
-        this.name = name;
-        this.group = group;
-        this.image = image;
+    @Override
+    public GraphElement createGraphElement(GraphElementType type) {
+        switch (type) {
+            case CIRCLE:
+                return new Circle();
+        }
+        
+        
+        return null;
     }
+    
 }

@@ -16,6 +16,7 @@
  */
 package zbeans.cowgraph.visual.editor.palette;
 
+import zbeans.cowgraph.model.GraphElementGroup;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
 
