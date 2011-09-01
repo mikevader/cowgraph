@@ -14,35 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.model;
+package zbeans.cowgraph.datasource.impl;
+
+import java.util.List;
+import org.openide.util.lookup.ServiceProvider;
+import zbeans.cowgraph.datasource.Document;
 
 /**
- * A circle.
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Circle extends GraphElementImpl {
+@ServiceProvider(service=Document.class)
+public class FileDocument implements Document {
 
-    public static final String PROP_RADIUS = "radius";
-    private long radius;
-
-    /**
-     * Get the value of radius
-     *
-     * @return the value of radius
-     */
-    public long getRadius() {
-        return radius;
+    @Override
+    public List<String> getDocuments() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    /**
-     * Set the value of radius
-     *
-     * @param radius new value of radius
-     */
-    public void setRadius(long radius) {
-        long oldRadius = this.radius;
-        this.radius = radius;
-        this.firePropertyChange(PROP_RADIUS, oldRadius, radius);
+    @Override
+    public zbeans.cowgraph.model.CowGraphDocument getDocument(String documentName) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+    
 }

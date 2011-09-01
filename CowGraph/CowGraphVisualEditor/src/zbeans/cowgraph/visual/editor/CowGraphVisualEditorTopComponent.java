@@ -16,12 +16,16 @@
  */
 package zbeans.cowgraph.visual.editor;
 
+import java.awt.BorderLayout;
+import javax.swing.JComponent;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.util.Lookup;
+import org.openide.util.lookup.Lookups;
 
 /**
  * Top component which displays something.
@@ -38,11 +42,20 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 preferredID = "CowGraphVisualEditorTopComponent")
 public final class CowGraphVisualEditorTopComponent extends TopComponent {
 
+    private final JComponent view;
+
     public CowGraphVisualEditorTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "CTL_CowGraphVisualEditorTopComponent"));
         setToolTipText(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "HINT_CowGraphVisualEditorTopComponent"));
 
+        CowGraphVisualEditorScene scene = new CowGraphVisualEditorScene();
+        view = scene.createView();
+
+        canvasScrollPane.setViewportView(view);
+        add(scene.createSatelliteView(), BorderLayout.WEST);
+        
+        // associateLookup(Lookups.fixed(PaletteSu));
     }
 
     /** This method is called from within the constructor to
@@ -55,21 +68,13 @@ public final class CowGraphVisualEditorTopComponent extends TopComponent {
 
         canvasScrollPane = new javax.swing.JScrollPane();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(canvasScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(canvasScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
-        );
+        setLayout(new java.awt.BorderLayout());
+        add(canvasScrollPane, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane canvasScrollPane;
     // End of variables declaration//GEN-END:variables
+
     @Override
     public void componentOpened() {
         // TODO add custom code on component opening

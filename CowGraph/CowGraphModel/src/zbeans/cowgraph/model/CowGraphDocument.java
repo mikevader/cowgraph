@@ -37,7 +37,7 @@ public class CowGraphDocument {
         return Collections.unmodifiableList(versions);
     }
 
-    public boolean remove(Object o) {
+    public boolean remove(CowGraphVersion o) {
         return versions.remove(o);
     }
 

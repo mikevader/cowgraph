@@ -14,35 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.model;
+package zbeans.cowgraph.visual.editor;
+
+import java.awt.Image;
 
 /**
- * A circle.
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Circle extends GraphElementImpl {
+public class MyNode {
+    private Image image;
 
-    public static final String PROP_RADIUS = "radius";
-    private long radius;
-
-    /**
-     * Get the value of radius
-     *
-     * @return the value of radius
-     */
-    public long getRadius() {
-        return radius;
+    public MyNode(Image image) {
+        this.image = image;
     }
 
-    /**
-     * Set the value of radius
-     *
-     * @param radius new value of radius
-     */
-    public void setRadius(long radius) {
-        long oldRadius = this.radius;
-        this.radius = radius;
-        this.firePropertyChange(PROP_RADIUS, oldRadius, radius);
+    public Image getImage() {
+        return image;
     }
 }
