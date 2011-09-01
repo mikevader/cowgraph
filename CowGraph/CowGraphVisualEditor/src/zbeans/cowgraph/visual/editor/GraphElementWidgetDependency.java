@@ -14,23 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.model;
+package zbeans.cowgraph.visual.editor;
 
-import java.awt.Color;
-import zbeans.simple.beans.PropertyChangeObservable;
+import org.netbeans.api.visual.widget.Widget.Dependency;
+import org.netbeans.api.visual.widget.general.IconNodeWidget;
+import zbeans.cowgraph.model.GraphElement;
 
 /**
- * Base interface for all graph elements.
- *
+ * Verantwortlich für updates im GraphElement bei Änderungen im Widget.
+ * 
+ * 
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public interface GraphElement extends PropertyChangeObservable {
-    
-    public long getX();
-    public long getY();
-    public Color getColor();
-    
-    public void setX(long x);
-    public void setY(long y);
-    
+public class GraphElementWidgetDependency implements Dependency {
+
+    IconNodeWidget widget;
+    GraphElement node;
+
+    public GraphElementWidgetDependency(IconNodeWidget widget, GraphElement node) {
+        this.widget = widget;
+        this.node = node;
+    }
+
+    @Override
+    public void revalidateDependency() {
+        this.node.setX(this.widget.getLocation().x);
+        this.node.setY(this.widget.getLocation().y);
+    }
 }

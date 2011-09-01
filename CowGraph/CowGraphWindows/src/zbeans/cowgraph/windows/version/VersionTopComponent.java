@@ -22,6 +22,8 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.explorer.view.ListView;
+import org.openide.util.Lookup;
+import zbeans.cowgraph.datasource.Document;
 
 /**
  * Top component which displays something.

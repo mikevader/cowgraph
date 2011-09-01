@@ -20,12 +20,11 @@ import java.awt.BorderLayout;
 import javax.swing.JComponent;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
-import org.openide.util.Lookup;
 import org.openide.util.lookup.Lookups;
+import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.visual.editor.palette.PaletteSupport;
 
 /**
@@ -36,7 +35,7 @@ autostore = false)
 @TopComponent.Description(preferredID = "CowGraphVisualEditorTopComponent",
 //iconBase="SET/PATH/TO/ICON/HERE", 
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
-@TopComponent.Registration(mode = "editor", openAtStartup = false)
+@TopComponent.Registration(mode = "editor", openAtStartup = true)
 @ActionID(category = "Window", id = "zbeans.cowgraph.visual.editor.CowGraphVisualEditorTopComponent")
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
 @TopComponent.OpenActionRegistration(displayName = "#CTL_CowGraphVisualEditorAction",
@@ -44,18 +43,22 @@ preferredID = "CowGraphVisualEditorTopComponent")
 public final class CowGraphVisualEditorTopComponent extends TopComponent {
 
     private final JComponent view;
+    private CowGraphVersion version;
 
     public CowGraphVisualEditorTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "CTL_CowGraphVisualEditorTopComponent"));
         setToolTipText(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "HINT_CowGraphVisualEditorTopComponent"));
 
-        CowGraphVisualEditorScene scene = new CowGraphVisualEditorScene();
+        //TODO: Should be passed into Editor
+        version = new CowGraphVersion();
+
+        CowGraphVisualEditorScene scene = new CowGraphVisualEditorScene(version);
         view = scene.createView();
 
         canvasScrollPane.setViewportView(view);
         add(scene.createSatelliteView(), BorderLayout.WEST);
-        
+
         associateLookup(Lookups.fixed(PaletteSupport.createPalette()));
     }
 
