@@ -28,8 +28,22 @@ import zbeans.simple.beans.ObservableBean;
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
 public class CowGraphVersion extends ObservableBean {
+    
     public static final String PROP_NAME = "name";
     public static final String PROP_DATE = "date";
+    
+    public static enum Property {
+        
+        /**
+         * We send a property change event to this property when an element is added, passing the added element as new value.
+         */
+        ELEMENTS_ADDED,
+
+        /**
+         * We send a property change event to this property when an element is removed, passing the removed element as old value.
+         */
+        ELEMENTS_REMOVED;
+    }
     
     
     private String name;
@@ -68,10 +82,16 @@ public class CowGraphVersion extends ObservableBean {
     }
 
     public GraphElement remove(int index) {
-        return elements.remove(index);
+        GraphElement elem = elements.remove(index);
+        firePropertyElementAdded(Property.ELEMENTS_REMOVED.name(), elem);
+        return elem;        
     }
 
-    public boolean add(GraphElement e) {
-        return elements.add(e);
+    public boolean add(GraphElement elem) {
+        boolean added = elements.add(elem);
+        if (added) {
+            firePropertyElementAdded(Property.ELEMENTS_ADDED.name(), elem);    
+        }       
+        return added;
     }
 }

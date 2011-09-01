@@ -38,7 +38,7 @@ public class GraphElementWidgetDependency implements Dependency {
 
     @Override
     public void revalidateDependency() {
-        this.node.setX(this.widget.getLocation().x);
+        this.node.setX(0.0);
         this.node.setY(this.widget.getLocation().y);
     }
 }

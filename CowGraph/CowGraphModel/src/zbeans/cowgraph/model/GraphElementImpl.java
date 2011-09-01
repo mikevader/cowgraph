@@ -28,8 +28,8 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
     public static final String PROP_X = "x";
     public static final String PROP_Y = "y";
     public static final String PROP_COLOR = "color";
-    private long x;
-    private long y;
+    private double x;
+    private double y;
     private Color color;
 
     /**
@@ -59,7 +59,7 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      * @return the value of y
      */
     @Override
-    public long getY() {
+    public double getY() {
         return y;
     }
 
@@ -68,8 +68,8 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      *
      * @param y new value of y
      */
-    public void setY(long y) {
-        long oldY = this.y;
+    public void setY(double y) {
+        double oldY = this.y;
         this.y = y;
         this.firePropertyChange(PROP_Y, oldY, y);
     }
@@ -80,17 +80,17 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      * @return the value of x
      */
     @Override
-    public long getX() {
+    public double getX() {
         return x;
     }
 
     /**
      * Set the value of x
      *
-     * @param x new value of x
+     * 
      */
-    public void setX(long x) {
-        long oldX = this.x;
+    public void setX(double x) {
+        double oldX = this.x;
         this.x = x;
         this.firePropertyChange(PROP_X, oldX, x);
     }
