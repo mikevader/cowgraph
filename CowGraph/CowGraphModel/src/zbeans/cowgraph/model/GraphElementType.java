@@ -22,14 +22,23 @@ package zbeans.cowgraph.model;
  */
 public enum GraphElementType {
 
-    CIRCLE("Circle", GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/image1.png");
+    CIRCLE("Circle", Circle.class, GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/image1.png");
+    
     public final String name;
     public final GraphElementGroup group;
+    public final Class<? extends GraphElement> elementClass;
     public final String image;
 
-    private GraphElementType(String name, GraphElementGroup group, String image) {
+    private GraphElementType(String name, Class<? extends GraphElement> elementClass, GraphElementGroup group, String image) {
         this.name = name;
         this.group = group;
-        this.image = image;
+        this.image = image;  
+        this.elementClass = elementClass;
     }
+
+    public Class<? extends GraphElement> getElementClass() {
+        return elementClass;
+    }
+    
+    
 }

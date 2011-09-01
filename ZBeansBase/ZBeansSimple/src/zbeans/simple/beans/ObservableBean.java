@@ -138,5 +138,7 @@ public class ObservableBean implements PropertyChangeObservable {
         final Object newValue) {
         propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }
+    
+
 
 }

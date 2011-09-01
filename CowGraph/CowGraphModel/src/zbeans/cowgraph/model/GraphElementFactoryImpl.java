@@ -16,6 +16,8 @@
  */
 package zbeans.cowgraph.model;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
@@ -26,14 +28,13 @@ import org.openide.util.lookup.ServiceProvider;
 public class GraphElementFactoryImpl implements GraphElementFactory {
 
     @Override
-    public GraphElement createGraphElement(GraphElementType type) {
-        switch (type) {
-            case CIRCLE:
-                return new Circle();
+    public GraphElement createGraphElement(GraphElementType type) {        
+        try {
+            return type.getElementClass().newInstance();
+        } catch (Exception ex) {
+            Logger.getLogger(GraphElementFactoryImpl.class.getName()).log(Level.SEVERE, null, ex);
+            throw new IllegalStateException("Could not create GraphElement for type " + type);
         }
-        
-        
-        return null;
     }
     
 }

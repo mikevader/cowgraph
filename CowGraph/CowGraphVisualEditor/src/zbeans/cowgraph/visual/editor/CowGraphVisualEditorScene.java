@@ -16,13 +16,16 @@
  */
 package zbeans.cowgraph.visual.editor;
 
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
+import java.awt.datatransfer.Transferable;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import java.awt.Rectangle;
 import java.awt.datatransfer.Transferable;
 import java.awt.geom.AffineTransform;
 import javax.swing.JComponent;
+
 import org.netbeans.api.visual.action.AcceptProvider;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.action.ConnectorState;
@@ -32,6 +35,7 @@ import org.netbeans.api.visual.widget.Widget;
 import org.netbeans.api.visual.widget.general.IconNodeWidget;
 import org.openide.nodes.Node;
 import org.openide.nodes.NodeTransfer;
+
 import org.openide.util.ImageUtilities;
 import org.openide.util.Lookup;
 import zbeans.cowgraph.model.CowGraphVersion;
@@ -43,13 +47,14 @@ import zbeans.cowgraph.model.GraphElementType;
  *
  * @author Rolf Bruderer
  */
-public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> {
+public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> implements PropertyChangeListener {
 
-    private CowGraphVersion version;
+    final private CowGraphVersion version;
     private LayerWidget mainLayer;
 
     CowGraphVisualEditorScene(CowGraphVersion version) {
         this.version = version;
+        version.addPropertyChangeListener(this);
 
         mainLayer = new LayerWidget(this);
         addChild(mainLayer);
@@ -62,27 +67,17 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
             public ConnectorState isAcceptable(Widget widget, Point point, Transferable transferable) {
                 Node node = NodeTransfer.node(transferable, NodeTransfer.DND_COPY_OR_MOVE);
                 GraphElementType type = node.getLookup().lookup(GraphElementType.class);
-
-                Image dragImage = getImageFromTransferable(type);
-                JComponent view = getView();
-                Graphics2D g2 = (Graphics2D) view.getGraphics();
-                Rectangle visRect = view.getVisibleRect();
-                view.paintImmediately(visRect);
-                g2.drawImage(dragImage, AffineTransform.getTranslateInstance(point.getX(), point.getY()), null);
-
+                if (type!=null) {
                 return ConnectorState.ACCEPT;
+                }
+                else {
+                    return ConnectorState.REJECT;
+                }
             }
 
             @Override
             public void accept(Widget widget, Point point, Transferable transferable) {
-                Node node = NodeTransfer.node(transferable, NodeTransfer.DND_COPY_OR_MOVE);
-                GraphElementType type = node.getLookup().lookup(GraphElementType.class);
-
-
-                // TODO Add correct GraphElement to version.
-                GraphElementFactory factory = Lookup.getDefault().lookup(GraphElementFactory.class);
-                Widget w = CowGraphVisualEditorScene.this.addNode(factory.createGraphElement(type));
-                w.setPreferredLocation(widget.convertLocalToScene(point));
+                addGraphElementsFromTransferable(transferable, point);
             }
         }));
 
@@ -90,8 +85,24 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         getActions().addAction(ActionFactory.createPanAction());
     }
 
+    private void addGraphElementsFromTransferable(Transferable transferable, Point point) {
+        Node[] nodes = NodeTransfer.nodes(transferable, NodeTransfer.DND_COPY_OR_MOVE);
+        for (Node node : nodes) {
+            GraphElementType type = node.getLookup().lookup(GraphElementType.class);
+            GraphElementFactory factory = Lookup.getDefault().lookup(GraphElementFactory.class);
+            GraphElement elem = factory.createGraphElement(type);
+
+            Point pointInScene = convertLocalToScene(point);
+            elem.setX(pointInScene.getX());
+            elem.setY(pointInScene.getY());
+
+            version.add(elem);
+        }
+    }
+
     @Override
     protected Widget attachNodeWidget(GraphElement node) {
+        
         IconNodeWidget widget = new IconNodeWidget(this);
         //widget.setImage(node.getImage());
         widget.setLabel(Long.toString(node.hashCode()));
@@ -99,7 +110,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         widget.getActions().addAction(ActionFactory.createMoveAction());
 
         widget.addDependency(new GraphElementWidgetDependency(widget, node));
-
+        widget.setPreferredLocation(new Point((int)node.getX(), (int)node.getY()));
         mainLayer.addChild(widget);
         return widget;
     }
@@ -117,7 +128,13 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
     protected void attachEdgeTargetAnchor(String edge, GraphElement oldTargetNode, GraphElement targetNode) {
     }
 
-    private Image getImageFromTransferable(GraphElementType type) {
-        return ImageUtilities.loadImage(type.image);
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_ADDED.name())) {
+            addNode((GraphElement) evt.getNewValue());            
+        }
+        if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_ADDED.name())) {
+        }
     }
 }

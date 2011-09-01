@@ -26,11 +26,26 @@ import zbeans.simple.beans.PropertyChangeObservable;
  */
 public interface GraphElement extends PropertyChangeObservable {
     
-    public long getX();
-    public long getY();
+    
+    public static enum ChildChangeEvent {
+
+        /**
+         * On change events to this property we only pass the new element as the new value (old value is null)
+         */
+        ADD_ELEMENT,
+        
+        /**
+         * On change events to this 
+         */
+        REMOVE_ELEMENT;
+        
+   }
+        
+    public double getX();
+    public double getY();
     public Color getColor();
     
-    public void setX(long x);
-    public void setY(long y);
-    
+    public void setX(double x);
+    public void setY(double y);
+        
 }

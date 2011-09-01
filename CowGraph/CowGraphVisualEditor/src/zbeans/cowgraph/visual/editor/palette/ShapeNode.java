@@ -29,7 +29,7 @@ public class ShapeNode extends AbstractNode {
 
     /** Creates a new instance of InstrumentNode */
     public ShapeNode(GraphElementType key) {
-        super(Children.LEAF, Lookups.fixed(new Object[]{key}));
+        super(Children.LEAF, Lookups.singleton(key));
         setIconBaseWithExtension(key.image);
     }
 }
