@@ -18,7 +18,6 @@ package zbeans.cowgraph.windows.version;
 
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -46,6 +45,12 @@ public final class VersionTopComponent extends TopComponent {
         putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.TRUE);
 
+
+        /* Example of datasource service usage:
+        
+        Document doc = Lookup.getDefault().lookup(Document.class);
+        doc.getDocuments();
+         */
     }
 
     /** This method is called from within the constructor to
@@ -61,10 +66,10 @@ public final class VersionTopComponent extends TopComponent {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
         add(jScrollPane1);
     }// </editor-fold>//GEN-END:initComponents
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
     @Override
     public void componentOpened() {
         // TODO add custom code on component opening

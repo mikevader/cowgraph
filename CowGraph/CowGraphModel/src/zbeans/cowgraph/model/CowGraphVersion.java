@@ -28,6 +28,10 @@ import zbeans.simple.beans.ObservableBean;
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
 public class CowGraphVersion extends ObservableBean {
+    public static final String PROP_NAME = "name";
+    public static final String PROP_DATE = "date";
+    
+    
     private String name;
     private Date date;
     private List<GraphElement> elements;
@@ -44,7 +48,9 @@ public class CowGraphVersion extends ObservableBean {
     }
 
     public void setDate(Date date) {
+        Date oldDate = this.date;
         this.date = date;
+        this.firePropertyChange(PROP_DATE, oldDate, this.date);
     }
 
     public String getName() {
@@ -52,7 +58,9 @@ public class CowGraphVersion extends ObservableBean {
     }
 
     public void setName(String name) {
+        String oldName = this.name;
         this.name = name;
+        this.firePropertyChange(PROP_NAME, oldName, this.name);
     }
 
     public List<GraphElement> getElements() {

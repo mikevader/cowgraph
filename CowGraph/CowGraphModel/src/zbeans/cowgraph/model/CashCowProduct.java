@@ -28,7 +28,7 @@ import zbeans.simple.beans.ObservableBean;
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class CashCowProduct extends ObservableBean implements CompositeGraphElement {
+public class CashCowProduct extends GraphElementImpl implements CompositeGraphElement {
     private List<GraphElement> elements;
 
     public CashCowProduct() {
@@ -40,20 +40,5 @@ public class CashCowProduct extends ObservableBean implements CompositeGraphElem
     @Override
     public List<GraphElement> getElements() {
         return Collections.unmodifiableList(elements);
-    }
-
-    @Override
-    public long getX() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public long getY() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Color getColor() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
