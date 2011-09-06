@@ -80,7 +80,7 @@ public class CowGraphVersion extends ObservableBean {
 
     public GraphElement remove(int index) {
         GraphElement elem = elements.remove(index);
-        firePropertyElementAdded(Property.ELEMENTS_REMOVED.name(), elem);
+        firePropertyElementRemoved(Property.ELEMENTS_REMOVED.name(), elem);
         return elem;
     }
 
