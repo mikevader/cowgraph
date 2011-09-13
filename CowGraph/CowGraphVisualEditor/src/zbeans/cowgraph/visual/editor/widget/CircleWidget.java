@@ -21,37 +21,33 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
-import org.netbeans.api.visual.widget.general.IconNodeWidget;
 import zbeans.cowgraph.model.Circle;
-import zbeans.cowgraph.model.GraphElement;
 
 /**
  *
  * @author rbr
  */
 public class CircleWidget extends Widget {
-    
+
     private Circle element;
-    
+
     public CircleWidget(Scene scene, Circle element) {
         super(scene);
-        this.element = element;        
+        this.element = element;
     }
-    
+
     @Override
     protected Rectangle calculateClientArea() {
-        int radius = (int)element.getRadius();        
-        Rectangle rect = new Rectangle ((int)element.getX(), (int)element.getY(), 2*radius, 2*radius);
-        rect.grow (1, 1); // counting with line-width
-        return convertSceneToLocal(rect);
+        int radius = (int) element.getRadius();
+        Rectangle rect = new Rectangle(0, 0, 2 * radius, 2 * radius);
+        return rect;
     }
- 
-   @Override
-   protected void paintWidget() {
-       super.paintWidget();
-       Graphics2D gr = getGraphics();
-       gr.setColor (Color.BLACK);       
-       gr.drawOval((int)element.getX(), (int)element.getY(), 2*(int)element.getRadius(), 2*(int)element.getRadius());       
-   }
-    
+
+    @Override
+    protected void paintWidget() {
+        super.paintWidget();
+        Graphics2D gr = getGraphics();
+        gr.setColor(Color.BLACK);
+        gr.drawOval(0, 0, 2 * (int) element.getRadius(), 2 * (int) element.getRadius());
+    }
 }

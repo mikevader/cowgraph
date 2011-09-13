@@ -16,9 +16,9 @@
  */
 package zbeans.cowgraph.visual.editor;
 
+import java.util.logging.Logger;
 import org.netbeans.api.visual.widget.Widget;
 import org.netbeans.api.visual.widget.Widget.Dependency;
-import org.netbeans.api.visual.widget.general.IconNodeWidget;
 import zbeans.cowgraph.model.GraphElement;
 
 /**
@@ -41,6 +41,6 @@ public class GraphElementWidgetDependency implements Dependency {
     public void revalidateDependency() {
         this.node.setX(widget.getLocation().x);
         this.node.setY(widget.getLocation().y);
+        System.out.println("Dependeny: revalidate");
     }
-    
 }

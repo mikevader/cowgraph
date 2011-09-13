@@ -28,17 +28,14 @@ import org.openide.nodes.Index;
 public class ShapeChildren extends Index.ArrayChildren {
 
     private GraphElementGroup category;
-    private String[][] items = new String[][]{
-        {"0", "Shapes", "zbeans/cowgraph/visual/editor/palette/image1.png"},
-        {"1", "Shapes", "zbeans/cowgraph/visual/editor/palette/image2.png"},
-        {"2", "Shapes", "zbeans/cowgraph/visual/editor/palette/image3.png"},};
 
     public ShapeChildren(GraphElementGroup category) {
         this.category = category;
     }
 
+    @Override
     protected java.util.List initCollection() {
-        ArrayList childrenNodes = new ArrayList(items.length);
+        ArrayList childrenNodes = new ArrayList(GraphElementType.values().length);
 
         for (GraphElementType graphElementType : GraphElementType.values()) {
 

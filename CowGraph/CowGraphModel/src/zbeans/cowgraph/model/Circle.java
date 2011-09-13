@@ -26,6 +26,10 @@ public class Circle extends GraphElementImpl {
     public static final String PROP_RADIUS = "radius";
     private long radius = 20;
 
+    public Circle() {
+        super(GraphElementType.CIRCLE);
+    }
+    
     /**
      * Get the value of radius
      *
