@@ -17,15 +17,21 @@
 package zbeans.cowgraph.visual.editor;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JComponent;
-import org.openide.util.NbBundle;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import org.openide.windows.TopComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.awt.ActionReferences;
+import org.openide.util.NbBundle.Messages;
 import org.openide.util.lookup.Lookups;
 import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.visual.editor.palette.PaletteSupport;
+import static zbeans.cowgraph.visual.editor.Bundle.*;
 
 /**
  * Top component which displays something.
@@ -33,25 +39,27 @@ import zbeans.cowgraph.visual.editor.palette.PaletteSupport;
 @ConvertAsProperties(dtd = "-//zbeans.cowgraph.visual.editor//CowGraphVisualEditor//EN",
 autostore = false)
 @TopComponent.Description(preferredID = "CowGraphVisualEditorTopComponent",
-//iconBase="SET/PATH/TO/ICON/HERE", 
+iconBase = "/zbeans/cowgraph/visual/editor/new_icon.png",
 persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @TopComponent.Registration(mode = "editor", openAtStartup = true)
 @ActionID(category = "Window", id = "zbeans.cowgraph.visual.editor.CowGraphVisualEditorTopComponent")
-@ActionReference(path = "Menu/Window" /*, position = 333 */)
-@TopComponent.OpenActionRegistration(displayName = "#CTL_CowGraphVisualEditorAction",
-preferredID = "CowGraphVisualEditorTopComponent")
-public final class CowGraphVisualEditorTopComponent extends TopComponent {
+@ActionReferences({
+    @ActionReference(path = "Menu/Window", position = 0)})
+@TopComponent.OpenActionRegistration(displayName = "#CTL_CowGraphVisualEditorAction")
+public final class CowGraphVisualEditorTopComponent extends TopComponent implements ActionListener, ChangeListener {
 
     private final JComponent view;
-    private CowGraphVersion version;
+    private static CowGraphVersion version = new CowGraphVersion();
+    private static int i = 1;
 
+    @Messages({"UnsavedImageNameFormat=Image {0}"})
     public CowGraphVisualEditorTopComponent() {
         initComponents();
-        setName(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "CTL_CowGraphVisualEditorTopComponent"));
-        setToolTipText(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "HINT_CowGraphVisualEditorTopComponent"));
+        setDisplayName(UnsavedImageNameFormat(i++));
+        //setToolTipText(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "HINT_CowGraphVisualEditorTopComponent"));
 
         //TODO: Should be passed into Editor
-        version = new CowGraphVersion();
+//        version = new CowGraphVersion();
 
         CowGraphVisualEditorScene scene = new CowGraphVisualEditorScene(version);
         view = scene.createView();
@@ -99,5 +107,15 @@ public final class CowGraphVisualEditorTopComponent extends TopComponent {
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

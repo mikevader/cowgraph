@@ -25,9 +25,6 @@ import zbeans.simple.beans.ObservableBean;
  */
 public class GraphElementImpl extends ObservableBean implements GraphElement {
 
-    public static final String PROP_X = "x";
-    public static final String PROP_Y = "y";
-    public static final String PROP_COLOR = "color";
     private final GraphElementType type;
     private double x;
     private double y;

@@ -26,6 +26,10 @@ import zbeans.simple.beans.PropertyChangeObservable;
  */
 public interface GraphElement extends PropertyChangeObservable {
 
+    public static final String PROP_X = "x";
+    public static final String PROP_Y = "y";
+    public static final String PROP_COLOR = "color";
+
     public static enum ChildChangeEvent {
 
         /**
@@ -37,7 +41,7 @@ public interface GraphElement extends PropertyChangeObservable {
          */
         REMOVE_ELEMENT;
     }
-    
+
     public GraphElementType getType();
 
     public double getX();

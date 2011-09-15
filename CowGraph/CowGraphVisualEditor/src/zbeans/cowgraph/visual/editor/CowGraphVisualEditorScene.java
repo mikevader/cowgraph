@@ -16,7 +16,6 @@
  */
 package zbeans.cowgraph.visual.editor;
 
-import java.awt.Image;
 import java.awt.Point;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -33,7 +32,6 @@ import org.netbeans.api.visual.widget.Widget;
 import org.openide.nodes.Node;
 import org.openide.nodes.NodeTransfer;
 
-import org.openide.util.ImageUtilities;
 import org.openide.util.Lookup;
 import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.model.GraphElement;
@@ -57,7 +55,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         mainLayer = new LayerWidget(this);
         addChild(mainLayer);
 
-
+        //TODO: Scene should initialize itself according to the given version. Now it starts with an empty scene and reacts to add/remove event since its creation which omits all object create before.
 
         getActions().addAction(ActionFactory.createAcceptAction(new AcceptProvider() {
 
@@ -98,22 +96,11 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected Widget attachNodeWidget(GraphElement node) {
-//        IconNodeWidget widget = new IconNodeWidget(this);
-//        widget.setImage(getImageFromTransferable(node.getType()));
-//        widget.setLabel(Long.toString(node.hashCode()));
-//        // TODO: Reflect changes in model (GraphElement)
-//        widget.getActions().addAction(ActionFactory.createMoveAction());
-//
-//        widget.addDependency(new GraphElementWidgetDependency(widget, node));
-//
-//        mainLayer.addChild(widget);
-//        return widget;
-
         Widget widget = GraphElementWidgetFactory.createWidget(this, node);
         //widget.setLabel(Long.toString(node.hashCode()));
         widget.getActions().addAction(ActionFactory.createMoveAction());
-        //widget.addDependency(new GraphElementWidgetDependency(widget, node));
         widget.setPreferredLocation(new Point((int) node.getX(), (int) node.getY()));
+        widget.addDependency(new GraphElementWidgetDependency(widget, node));
         mainLayer.addChild(widget);
         return widget;
     }
@@ -135,27 +122,24 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_ADDED.name())) {
             this.addNode((GraphElement) evt.getNewValue());
-            
-//            if (SwingUtilities.isEventDispatchThread()) {
+
+            if (SwingUtilities.isEventDispatchThread()) {
                 repaint();
                 getScene().validate();
-//            } else {
-//                SwingUtilities.invokeLater(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        repaint();
-//                        getScene().validate();
-//                    }
-//                });
-//            }
-            
-        }
-        if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_REMOVED.name())) {
-        }
-    }
+            } else {
+                SwingUtilities.invokeLater(new Runnable() {
 
-    private Image getImageFromTransferable(GraphElementType type) {
-        return ImageUtilities.loadImage(type.image);
+                    @Override
+                    public void run() {
+                        repaint();
+                        getScene().validate();
+                    }
+                });
+            }
+
+        } else if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_REMOVED.name())) {
+            GraphElement element = (GraphElement) evt.getOldValue();
+            //TODO: Search in the graph for the node (aka GraphElement) and remove it. Maybe it would be an good idea to keep pointers to the nodes in a hashtable for better performance.
+        }
     }
 }
