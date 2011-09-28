@@ -25,12 +25,14 @@ import zbeans.simple.beans.ObservableBean;
  */
 public class GraphElementImpl extends ObservableBean implements GraphElement {
 
-    public static final String PROP_X = "x";
-    public static final String PROP_Y = "y";
-    public static final String PROP_COLOR = "color";
+    private final GraphElementType type;
     private double x;
     private double y;
     private Color color;
+
+    public GraphElementImpl(final GraphElementType type) {
+        this.type = type;
+    }
 
     /**
      * Get the value of color
@@ -68,6 +70,7 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      *
      * @param y new value of y
      */
+    @Override
     public void setY(double y) {
         double oldY = this.y;
         this.y = y;
@@ -89,9 +92,15 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      *
      * 
      */
+    @Override
     public void setX(double x) {
         double oldX = this.x;
         this.x = x;
         this.firePropertyChange(PROP_X, oldX, x);
+    }
+
+    @Override
+    public GraphElementType getType() {
+        return type;
     }
 }

@@ -16,9 +16,14 @@
  */
 package zbeans.cowgraph.visual.editor;
 
+import java.awt.Point;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.SwingUtilities;
 import org.netbeans.api.visual.widget.Widget;
 import org.netbeans.api.visual.widget.Widget.Dependency;
-import org.netbeans.api.visual.widget.general.IconNodeWidget;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import zbeans.cowgraph.model.GraphElement;
 
 /**
@@ -27,20 +32,58 @@ import zbeans.cowgraph.model.GraphElement;
  * 
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class GraphElementWidgetDependency implements Dependency {
+public class GraphElementWidgetDependency implements Dependency, PropertyChangeListener {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(GraphElementWidgetDependency.class);
     Widget widget;
     GraphElement node;
+    boolean suspend;
+    private boolean inRevalidation;
 
     public GraphElementWidgetDependency(Widget widget, GraphElement node) {
         this.widget = widget;
         this.node = node;
+
+        this.node.addPropertyChangeListener(this);
+        this.suspend = false;
+        this.inRevalidation = false;
     }
 
     @Override
     public void revalidateDependency() {
-        this.node.setX(widget.getLocation().x);
-        this.node.setY(widget.getLocation().y);
+        if (inRevalidation) {
+            return;
+        }
+
+        this.suspend = true;
+        this.node.setX(widget.getPreferredLocation().x);
+        this.node.setY(widget.getPreferredLocation().y);
+        this.suspend = false;
     }
-    
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (suspend) {
+            return;
+        }
+
+        if (GraphElement.PROP_X.equals(evt.getPropertyName()) || GraphElement.PROP_Y.equals(evt.getPropertyName())) {
+            inRevalidation = true;
+            this.widget.setPreferredLocation(new Point((int) this.node.getX(), (int) this.node.getY()));
+            if (SwingUtilities.isEventDispatchThread()) {
+                this.widget.getScene().repaint();
+                this.widget.getScene().validate();
+            } else {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        widget.getScene().repaint();
+                        widget.getScene().validate();
+                    }
+                });
+            }
+            inRevalidation = false;
+        }
+    }
 }

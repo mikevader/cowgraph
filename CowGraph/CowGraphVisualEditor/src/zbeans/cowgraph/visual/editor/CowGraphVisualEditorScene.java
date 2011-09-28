@@ -17,26 +17,21 @@
 package zbeans.cowgraph.visual.editor;
 
 import java.awt.Point;
-import java.awt.datatransfer.Transferable;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.awt.Rectangle;
 import java.awt.datatransfer.Transferable;
-import java.awt.geom.AffineTransform;
-import javax.swing.JComponent;
 
+import javax.swing.SwingUtilities;
 import org.netbeans.api.visual.action.AcceptProvider;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.action.ConnectorState;
 import org.netbeans.api.visual.graph.GraphScene;
 import org.netbeans.api.visual.widget.LayerWidget;
 import org.netbeans.api.visual.widget.Widget;
-import org.netbeans.api.visual.widget.general.IconNodeWidget;
 import org.openide.nodes.Node;
 import org.openide.nodes.NodeTransfer;
 
-import org.openide.util.ImageUtilities;
 import org.openide.util.Lookup;
 import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.model.GraphElement;
@@ -60,7 +55,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         mainLayer = new LayerWidget(this);
         addChild(mainLayer);
 
-
+        //TODO: Scene should initialize itself according to the given version. Now it starts with an empty scene and reacts to add/remove event since its creation which omits all object create before.
 
         getActions().addAction(ActionFactory.createAcceptAction(new AcceptProvider() {
 
@@ -68,17 +63,16 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
             public ConnectorState isAcceptable(Widget widget, Point point, Transferable transferable) {
                 Node node = NodeTransfer.node(transferable, NodeTransfer.DND_COPY_OR_MOVE);
                 GraphElementType type = node.getLookup().lookup(GraphElementType.class);
-                if (type!=null) {
-                return ConnectorState.ACCEPT;
-                }
-                else {
+                if (type != null) {
+                    return ConnectorState.ACCEPT;
+                } else {
                     return ConnectorState.REJECT;
                 }
             }
 
             @Override
             public void accept(Widget widget, Point point, Transferable transferable) {
-                addGraphElementsFromTransferable(transferable, point);
+                addGraphElementsFromTransferable(transferable, widget.convertLocalToScene(point));
             }
         }));
 
@@ -93,9 +87,8 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
             GraphElementFactory factory = Lookup.getDefault().lookup(GraphElementFactory.class);
             GraphElement elem = factory.createGraphElement(type);
 
-            Point pointInScene = convertLocalToScene(point);
-            elem.setX(pointInScene.getX());
-            elem.setY(pointInScene.getY());
+            elem.setX(point.getX());
+            elem.setY(point.getY());
 
             version.add(elem);
         }
@@ -103,10 +96,11 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected Widget attachNodeWidget(GraphElement node) {
-        Widget widget = GraphElementWidgetFactory.createWidget(this, node);        
+        Widget widget = GraphElementWidgetFactory.createWidget(this, node);
+        //widget.setLabel(Long.toString(node.hashCode()));
         widget.getActions().addAction(ActionFactory.createMoveAction());
+        widget.setPreferredLocation(new Point((int) node.getX(), (int) node.getY()));
         widget.addDependency(new GraphElementWidgetDependency(widget, node));
-        widget.setPreferredLocation(new Point((int)node.getX(), (int)node.getY()));
         mainLayer.addChild(widget);
         return widget;
     }
@@ -124,13 +118,28 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
     protected void attachEdgeTargetAnchor(String edge, GraphElement oldTargetNode, GraphElement targetNode) {
     }
 
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_ADDED.name())) {
-            addNode((GraphElement) evt.getNewValue());            
-        }
-        if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_ADDED.name())) {
+            this.addNode((GraphElement) evt.getNewValue());
+
+            if (SwingUtilities.isEventDispatchThread()) {
+                repaint();
+                getScene().validate();
+            } else {
+                SwingUtilities.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        repaint();
+                        getScene().validate();
+                    }
+                });
+            }
+
+        } else if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_REMOVED.name())) {
+            GraphElement element = (GraphElement) evt.getOldValue();
+            //TODO: Search in the graph for the node (aka GraphElement) and remove it. Maybe it would be an good idea to keep pointers to the nodes in a hashtable for better performance.
         }
     }
 }

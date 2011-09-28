@@ -25,27 +25,32 @@ import zbeans.simple.beans.PropertyChangeObservable;
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
 public interface GraphElement extends PropertyChangeObservable {
-    
-    
+
+    public static final String PROP_X = "x";
+    public static final String PROP_Y = "y";
+    public static final String PROP_COLOR = "color";
+
     public static enum ChildChangeEvent {
 
         /**
          * On change events to this property we only pass the new element as the new value (old value is null)
          */
         ADD_ELEMENT,
-        
         /**
          * On change events to this 
          */
         REMOVE_ELEMENT;
-        
-   }
-        
+    }
+
+    public GraphElementType getType();
+
     public double getX();
+
     public double getY();
+
     public Color getColor();
-    
+
     public void setX(double x);
+
     public void setY(double y);
-        
 }

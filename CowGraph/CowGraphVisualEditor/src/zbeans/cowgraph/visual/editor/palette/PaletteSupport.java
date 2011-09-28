@@ -16,18 +16,12 @@
  */
 package zbeans.cowgraph.visual.editor.palette;
 
-import java.awt.Image;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.beans.BeanInfo;
-import java.io.IOException;
 import javax.swing.Action;
 import org.netbeans.spi.palette.DragAndDropHandler;
 import org.netbeans.spi.palette.PaletteActions;
 import org.netbeans.spi.palette.PaletteController;
 import org.netbeans.spi.palette.PaletteFactory;
 import org.openide.nodes.AbstractNode;
-import org.openide.nodes.Node;
 import org.openide.util.Lookup;
 import org.openide.util.datatransfer.ExTransferable;
 
