@@ -27,8 +27,12 @@ import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
+import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
+import org.openide.util.Utilities;
 import org.openide.util.lookup.Lookups;
+import org.openide.windows.WindowManager;
+import zbeans.cowgraph.model.CowGraphDocument;
 import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.visual.editor.palette.PaletteSupport;
 import static zbeans.cowgraph.visual.editor.Bundle.*;
@@ -49,7 +53,8 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 public final class CowGraphVisualEditorTopComponent extends TopComponent implements ActionListener, ChangeListener {
 
     private final JComponent view;
-    private static CowGraphVersion version = new CowGraphVersion();
+    private CowGraphVisualEditorScene scene;
+//    private static CowGraphVersion version = new CowGraphVersion();
     private static int i = 1;
 
     @Messages({"UnsavedImageNameFormat=Image {0}"})
@@ -61,7 +66,7 @@ public final class CowGraphVisualEditorTopComponent extends TopComponent impleme
         //TODO: Should be passed into Editor
 //        version = new CowGraphVersion();
 
-        CowGraphVisualEditorScene scene = new CowGraphVisualEditorScene(version);
+        scene = new CowGraphVisualEditorScene();
         view = scene.createView();
 
         canvasScrollPane.setViewportView(view);
@@ -89,7 +94,14 @@ public final class CowGraphVisualEditorTopComponent extends TopComponent impleme
 
     @Override
     public void componentOpened() {
-        // TODO add custom code on component opening
+        Lookup.Result<CowGraphVersion> result;
+//        result = Utilities.actionsGlobalContext().lookupResult(CowGraphVersion.class);
+        
+        
+        result = WindowManager.getDefault().findTopComponent("VersionTopComponent").getLookup().lookupResult(CowGraphVersion.class);
+        for (CowGraphVersion version : result.allInstances()) {
+           scene.setVersion(version);
+        }
     }
 
     @Override

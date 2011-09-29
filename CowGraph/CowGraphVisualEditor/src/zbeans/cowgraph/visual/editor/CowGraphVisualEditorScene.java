@@ -45,17 +45,12 @@ import zbeans.cowgraph.visual.editor.widget.GraphElementWidgetFactory;
  */
 public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> implements PropertyChangeListener {
 
-    final private CowGraphVersion version;
+    private CowGraphVersion version;
     private LayerWidget mainLayer;
 
-    CowGraphVisualEditorScene(CowGraphVersion version) {
-        this.version = version;
-        version.addPropertyChangeListener(this);
-
+    CowGraphVisualEditorScene() {
         mainLayer = new LayerWidget(this);
         addChild(mainLayer);
-
-        //TODO: Scene should initialize itself according to the given version. Now it starts with an empty scene and reacts to add/remove event since its creation which omits all object create before.
 
         getActions().addAction(ActionFactory.createAcceptAction(new AcceptProvider() {
 
@@ -80,6 +75,16 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         getActions().addAction(ActionFactory.createPanAction());
     }
 
+    public CowGraphVersion getVersion() {
+        return version;
+    }
+
+    public void setVersion(CowGraphVersion version) {
+        //TODO: Scene should initialize itself according to the given version. Now it starts with an empty scene and reacts to add/remove event since its creation which omits all object create before.
+        this.version = version;
+        this.version.addPropertyChangeListener(this);
+    }
+    
     private void addGraphElementsFromTransferable(Transferable transferable, Point point) {
         Node[] nodes = NodeTransfer.nodes(transferable, NodeTransfer.DND_COPY_OR_MOVE);
         for (Node node : nodes) {

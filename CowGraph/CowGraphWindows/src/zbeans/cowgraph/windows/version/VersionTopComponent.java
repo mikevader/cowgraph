@@ -16,14 +16,23 @@
  */
 package zbeans.cowgraph.windows.version;
 
+import java.awt.BorderLayout;
+import javax.swing.ActionMap;
+import javax.swing.tree.TreeSelectionModel;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
+import org.openide.explorer.ExplorerManager;
+import org.openide.explorer.ExplorerUtils;
+import org.openide.explorer.view.BeanTreeView;
 import org.openide.explorer.view.ListView;
+import org.openide.explorer.view.OutlineView;
+import org.openide.nodes.AbstractNode;
+import org.openide.nodes.Children;
 import org.openide.util.Lookup;
-import zbeans.cowgraph.datasource.Document;
+import zbeans.cowgraph.datasource.DocumentDataSource;
 
 /**
  * Top component which displays something.
@@ -38,8 +47,14 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @ActionReference(path = "Menu/Window" /*, position = 333 */)
 @TopComponent.OpenActionRegistration(displayName = "#CTL_VersionAction",
 preferredID = "VersionTopComponent")
-public final class VersionTopComponent extends TopComponent {
+public final class VersionTopComponent extends TopComponent implements ExplorerManager.Provider {
 
+    private final ExplorerManager manager = new ExplorerManager();
+    
+    private final OutlineView view = new OutlineView();
+    
+    
+    
     public VersionTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(VersionTopComponent.class, "CTL_VersionTopComponent"));
@@ -47,13 +62,22 @@ public final class VersionTopComponent extends TopComponent {
         putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.TRUE);
 
+        setLayout(new BorderLayout());
+        add(view, BorderLayout.CENTER);
 
-        /* Example of datasource service usage:
-        
-        Document doc = Lookup.getDefault().lookup(Document.class);
-        doc.getDocuments();
-         */
+        DocumentDataSource dataSource = Lookup.getDefault().lookup(DocumentDataSource.class);
+        manager.setRootContext(new AbstractNode(Children.create(new FolderChildren(dataSource), true)));
+
+        ActionMap map = getActionMap();
+        associateLookup(ExplorerUtils.createLookup(manager, map));
     }
+
+    @Override
+    public ExplorerManager getExplorerManager() {
+        return manager;
+    }
+    
+    
 
     /** This method is called from within the constructor to
      * initialize the form.
