@@ -21,8 +21,9 @@
  */
 package zbeans.cowgraph.windows.version;
 
+import java.beans.IntrospectionException;
 import javax.swing.Action;
-import org.openide.nodes.AbstractNode;
+import org.openide.nodes.BeanNode;
 import org.openide.nodes.Children;
 import org.openide.util.lookup.Lookups;
 import zbeans.cowgraph.model.CowGraphDocument;
@@ -32,16 +33,20 @@ import zbeans.cowgraph.model.CowGraphDocument;
  * @author Michael Muehlebach <michael@anduin.ch>
  */
 /** Getting the feed node and wrapping it in a FilterNode */
-public class DocumentNode extends AbstractNode {
+public class DocumentNode extends BeanNode {
 
-    DocumentNode(CowGraphDocument document) {
-        super(Children.create(new DocumentChildren(document), true), Lookups.singleton(document));
+    DocumentNode(CowGraphDocument document) throws IntrospectionException {
+        super(document, Children.create(new DocumentChildren(document), true), Lookups.singleton(document));
     }
 
     @Override
     public String getDisplayName() {
-        CowGraphDocument document = getLookup().lookup(CowGraphDocument.class);
+        CowGraphDocument document = getDocument();
         return document.getName();
+    }
+
+    private CowGraphDocument getDocument() {
+        return getLookup().lookup(CowGraphDocument.class);
     }
 
 //    @Override

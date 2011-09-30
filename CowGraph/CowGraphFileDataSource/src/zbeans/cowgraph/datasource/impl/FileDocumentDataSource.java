@@ -35,17 +35,25 @@ public class FileDocumentDataSource implements DocumentDataSource {
     public List<CowGraphDocument> getDocuments() {
         List<CowGraphDocument> list = new LinkedList<CowGraphDocument>();
 
-        CowGraphVersion version = new CowGraphVersion();
-        version.setDate(new Date());
-        version.setName("v0.1");
-
         CowGraphDocument document = new CowGraphDocument();
+        addVersion("v1.1", document);
+        addVersion("v2.0", document);
+        addVersion("v3.0", document);
+
         document.setName("MyFirstDocument");
-        document.add(version);
 
         list.add(document);
 
         return list;
+    }
+
+    private CowGraphVersion addVersion(String name, CowGraphDocument document) {
+        CowGraphVersion version = new CowGraphVersion(document);
+        version.setDate(new Date());
+        version.setName(name);
+                document.add(version);
+
+        return version;
     }
 
     @Override

@@ -18,7 +18,6 @@ package zbeans.cowgraph.windows.version;
 
 import java.awt.BorderLayout;
 import javax.swing.ActionMap;
-import javax.swing.tree.TreeSelectionModel;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -26,13 +25,13 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerUtils;
-import org.openide.explorer.view.BeanTreeView;
 import org.openide.explorer.view.ListView;
 import org.openide.explorer.view.OutlineView;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
 import org.openide.util.Lookup;
 import zbeans.cowgraph.datasource.DocumentDataSource;
+import zbeans.cowgraph.model.CowGraphVersion;
 
 /**
  * Top component which displays something.
@@ -50,11 +49,8 @@ preferredID = "VersionTopComponent")
 public final class VersionTopComponent extends TopComponent implements ExplorerManager.Provider {
 
     private final ExplorerManager manager = new ExplorerManager();
-    
-    private final OutlineView view = new OutlineView();
-    
-    
-    
+    private final OutlineView view;
+
     public VersionTopComponent() {
         initComponents();
         setName(NbBundle.getMessage(VersionTopComponent.class, "CTL_VersionTopComponent"));
@@ -62,22 +58,20 @@ public final class VersionTopComponent extends TopComponent implements ExplorerM
         putClientProperty(TopComponent.PROP_CLOSING_DISABLED, Boolean.TRUE);
         putClientProperty(TopComponent.PROP_MAXIMIZATION_DISABLED, Boolean.TRUE);
 
-        setLayout(new BorderLayout());
+        view = new OutlineView();
+        view.addPropertyColumn(CowGraphVersion.PROP_DATE, "Date Modified");
         add(view, BorderLayout.CENTER);
 
         DocumentDataSource dataSource = Lookup.getDefault().lookup(DocumentDataSource.class);
         manager.setRootContext(new AbstractNode(Children.create(new FolderChildren(dataSource), true)));
 
-        ActionMap map = getActionMap();
-        associateLookup(ExplorerUtils.createLookup(manager, map));
+        associateLookup(ExplorerUtils.createLookup(manager, getActionMap()));
     }
 
     @Override
     public ExplorerManager getExplorerManager() {
         return manager;
     }
-    
-    
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -87,13 +81,9 @@ public final class VersionTopComponent extends TopComponent implements ExplorerM
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new ListView();
-
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
-        add(jScrollPane1);
+        setLayout(new java.awt.BorderLayout());
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
     @Override

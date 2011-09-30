@@ -21,9 +21,11 @@
  */
 package zbeans.cowgraph.windows.version;
 
+import java.beans.IntrospectionException;
 import java.util.List;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
+import org.openide.util.Exceptions;
 import zbeans.cowgraph.model.CowGraphDocument;
 import zbeans.cowgraph.model.CowGraphVersion;
 
@@ -36,8 +38,8 @@ public class DocumentChildren extends ChildFactory<CowGraphVersion> {
 
     private final CowGraphDocument document;
 
-    public DocumentChildren(CowGraphDocument feed) {
-        this.document = feed;
+    public DocumentChildren(CowGraphDocument document) {
+        this.document = document;
     }
 
     @Override
@@ -48,8 +50,12 @@ public class DocumentChildren extends ChildFactory<CowGraphVersion> {
 
     @Override
     protected Node createNodeForKey(CowGraphVersion key) {
-        Node node = new VersionNode(key);
-
+        Node node = null;
+        try {
+            node = new VersionNode(key);
+        } catch (IntrospectionException ex) {
+            Exceptions.printStackTrace(ex);
+        }
         return node;
     }
 }

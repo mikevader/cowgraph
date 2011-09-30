@@ -35,55 +35,51 @@ import zbeans.cowgraph.model.GraphElement;
 public class GraphElementWidgetDependency implements Dependency, PropertyChangeListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GraphElementWidgetDependency.class);
-    Widget widget;
-    GraphElement node;
-    boolean suspend;
-    private boolean inRevalidation;
+    private Widget widget;
+    private GraphElement node;
+    private boolean propagatingChangesToNode;
+    private boolean propagatingChangesToWidget;
 
     public GraphElementWidgetDependency(Widget widget, GraphElement node) {
         this.widget = widget;
         this.node = node;
-
-        this.node.addPropertyChangeListener(this);
-        this.suspend = false;
-        this.inRevalidation = false;
+        this.propagatingChangesToNode = false;
+        this.propagatingChangesToWidget = false;
+        subscribeForPropertyChanges();
     }
 
     @Override
     public void revalidateDependency() {
-        if (inRevalidation) {
+        if (propagatingChangesToWidget) {
             return;
         }
 
-        this.suspend = true;
+        this.propagatingChangesToNode = true;
         this.node.setX(widget.getPreferredLocation().x);
         this.node.setY(widget.getPreferredLocation().y);
-        this.suspend = false;
+        this.propagatingChangesToNode = false;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (suspend) {
+        if (propagatingChangesToNode) {
             return;
         }
 
         if (GraphElement.PROP_X.equals(evt.getPropertyName()) || GraphElement.PROP_Y.equals(evt.getPropertyName())) {
-            inRevalidation = true;
+            propagatingChangesToWidget = true;
             this.widget.setPreferredLocation(new Point((int) this.node.getX(), (int) this.node.getY()));
-            if (SwingUtilities.isEventDispatchThread()) {
-                this.widget.getScene().repaint();
-                this.widget.getScene().validate();
-            } else {
-                SwingUtilities.invokeLater(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        widget.getScene().repaint();
-                        widget.getScene().validate();
-                    }
-                });
-            }
-            inRevalidation = false;
+            propagatingChangesToWidget = false;
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    widget.getScene().validate();
+                }
+            });
         }
+    }
+
+    private void subscribeForPropertyChanges() {
+        this.node.addPropertyChangeListener(this);
     }
 }

@@ -21,9 +21,11 @@
  */
 package zbeans.cowgraph.windows.version;
 
+import java.beans.IntrospectionException;
 import java.util.List;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
+import org.openide.util.Exceptions;
 import zbeans.cowgraph.datasource.DocumentDataSource;
 import zbeans.cowgraph.model.CowGraphDocument;
 
@@ -49,7 +51,12 @@ public class FolderChildren extends ChildFactory<CowGraphDocument> {
 
     @Override
     protected Node createNodeForKey(CowGraphDocument key) {
-        Node node = new DocumentNode(key);
+        Node node = null;
+        try {
+            node = new DocumentNode(key);
+        } catch (IntrospectionException ex) {
+            Exceptions.printStackTrace(ex);
+        }
         
         return node;
     }

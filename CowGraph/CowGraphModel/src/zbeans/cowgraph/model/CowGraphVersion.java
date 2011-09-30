@@ -43,15 +43,25 @@ public class CowGraphVersion extends ObservableBean {
          */
         ELEMENTS_REMOVED;
     }
+    private CowGraphDocument document;
     private String name;
     private Date date;
     private List<GraphElement> elements;
 
     public CowGraphVersion() {
+        this(null);
+    }
+
+    public CowGraphVersion(CowGraphDocument document) {
+        this.document = document;
         name = "";
         date = new Date();
 
         elements = new LinkedList<GraphElement>();
+    }
+
+    public CowGraphDocument getDocument() {
+        return this.document;
     }
 
     public Date getDate() {
@@ -90,6 +100,10 @@ public class CowGraphVersion extends ObservableBean {
             firePropertyElementAdded(Property.ELEMENTS_ADDED.name(), elem);
         }
         return added;
+    }
+    
+    public String getLongDisplayName() {
+        return getDocument().getName() + " - " + getName();
     }
 
     /**

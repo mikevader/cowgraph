@@ -21,33 +21,44 @@
  */
 package zbeans.cowgraph.windows.version;
 
+import java.beans.IntrospectionException;
 import javax.swing.Action;
-import org.openide.nodes.AbstractNode;
+import org.openide.actions.OpenAction;
+import org.openide.cookies.OpenCookie;
+import org.openide.nodes.BeanNode;
 import org.openide.nodes.Children;
+import org.openide.util.actions.SystemAction;
 import org.openide.util.lookup.Lookups;
+import org.openide.util.lookup.ProxyLookup;
+import org.openide.windows.TopComponent;
 import zbeans.cowgraph.model.CowGraphVersion;
+import zbeans.cowgraph.visual.editor.CowGraphVisualEditorTopComponent;
 
 /**
  *
  * @author Michael Muehlebach <michael@anduin.ch>
 /** Wrapping the children in a FilterNode */
-public class VersionNode extends AbstractNode {
+public class VersionNode extends BeanNode {
 
-    public VersionNode(CowGraphVersion version) {
-        super(Children.LEAF, /*new ProxyLookup(*/Lookups.singleton(version)/*, Lookups.fixed(new EntryOpenCookie(version)))*/);
+    public VersionNode(CowGraphVersion version) throws IntrospectionException {
+        super(version, Children.LEAF, new ProxyLookup(Lookups.singleton(version), Lookups.fixed(new EntryOpenCookie(version))));
     }
 
     /** Using HtmlDisplayName ensures any HTML in RSS entry titles are properly handled, escaped, entities resolved, etc. */
     @Override
     public String getDisplayName() {
-        CowGraphVersion version = getLookup().lookup(CowGraphVersion.class);
+        CowGraphVersion version = getVersion();
         return version.getName();
+    }
+
+    private CowGraphVersion getVersion() {
+        return getLookup().lookup(CowGraphVersion.class);
     }
 
     /** Making a tooltip out of the entry's description */
     @Override
     public String getShortDescription() {
-        CowGraphVersion version = getLookup().lookup(CowGraphVersion.class);
+        CowGraphVersion version = getVersion();
         StringBuilder sb = new StringBuilder();
         sb.append("Name: ").append(version.getName()).append("; ");
         if (version.getDate() != null) {
@@ -59,31 +70,26 @@ public class VersionNode extends AbstractNode {
     /** Providing the Open action on a feed entry */
     @Override
     public Action[] getActions(boolean popup) {
-        return new Action[]{/*SystemAction.get(OpenAction.class)*/};
+        return new Action[]{SystemAction.get(OpenAction.class)};
     }
 
-//    @Override
-//    public Action getPreferredAction() {
-//        return getActions(false)[0];
-//    }
+    @Override
+    public Action getPreferredAction() {
+        return getActions(false)[0];
+    }
 
     /** Specifying what should happen when the user invokes the Open action */
-//    private static class EntryOpenCookie implements OpenCookie {
-//
-//        private final CowGraphVersion entry;
-//
-//        EntryOpenCookie(CowGraphVersion entry) {
-//            this.entry = entry;
-//        }
-//
-//        @Override
-//        public void open() {
-//            TopComponent tc = WindowManager.getDefault().findTopComponent("CowGraphVisualEditorTopComponent");
-//
-//            if (tc != null) {
-//                tc.open();
-//                tc.requestActive();
-//            }
-//        }
-//    }
+    private static class EntryOpenCookie implements OpenCookie {
+
+        private final CowGraphVersion version;
+
+        EntryOpenCookie(CowGraphVersion version) {
+            this.version = version;
+        }
+
+        @Override
+        public void open() {
+            CowGraphVisualEditorTopComponent.openOrActivateForSelectedVersion();
+        }
+    }
 }

@@ -16,9 +16,12 @@
  */
 package zbeans.cowgraph.visual.editor;
 
+import java.util.Map;
+import org.openide.util.Utilities;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import javax.swing.JComponent;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -29,10 +32,7 @@ import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
-import org.openide.util.Utilities;
 import org.openide.util.lookup.Lookups;
-import org.openide.windows.WindowManager;
-import zbeans.cowgraph.model.CowGraphDocument;
 import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.visual.editor.palette.PaletteSupport;
 import static zbeans.cowgraph.visual.editor.Bundle.*;
@@ -50,21 +50,40 @@ persistenceType = TopComponent.PERSISTENCE_ALWAYS)
 @ActionReferences({
     @ActionReference(path = "Menu/Window", position = 0)})
 @TopComponent.OpenActionRegistration(displayName = "#CTL_CowGraphVisualEditorAction")
+@Messages({"AnExampleMessageKey=Hello Message: {0}"})
 public final class CowGraphVisualEditorTopComponent extends TopComponent implements ActionListener, ChangeListener {
+    
+    private static Map<CowGraphVersion, CowGraphVisualEditorTopComponent> existingVersionEditors = new HashMap<CowGraphVersion, CowGraphVisualEditorTopComponent>();
+    
+    /**
+     * Opens the editor for currents selected version or activates it if already open.
+     */
+    public static void openOrActivateForSelectedVersion() {
+        Lookup.Result<CowGraphVersion> result;
+        result = Utilities.actionsGlobalContext().lookupResult(CowGraphVersion.class);
+        CowGraphVersion version = result.allInstances().iterator().next();
+        
+        CowGraphVisualEditorTopComponent editor = existingVersionEditors.get(version);
+        if (editor == null) {
+            editor = new CowGraphVisualEditorTopComponent();
+            existingVersionEditors.put(version, editor);           
+        }
+        editor.open();
+        editor.requestActive();
+            
+            
+    }
 
     private final JComponent view;
     private CowGraphVisualEditorScene scene;
-//    private static CowGraphVersion version = new CowGraphVersion();
-    private static int i = 1;
+    private CowGraphVersion version;
 
-    @Messages({"UnsavedImageNameFormat=Image {0}"})
     public CowGraphVisualEditorTopComponent() {
         initComponents();
-        setDisplayName(UnsavedImageNameFormat(i++));
         //setToolTipText(NbBundle.getMessage(CowGraphVisualEditorTopComponent.class, "HINT_CowGraphVisualEditorTopComponent"));
-
-        //TODO: Should be passed into Editor
-//        version = new CowGraphVersion();
+        
+        //Initial Display name
+        setDisplayName(AnExampleMessageKey("Cow"));
 
         scene = new CowGraphVisualEditorScene();
         view = scene.createView();
@@ -95,13 +114,11 @@ public final class CowGraphVisualEditorTopComponent extends TopComponent impleme
     @Override
     public void componentOpened() {
         Lookup.Result<CowGraphVersion> result;
-//        result = Utilities.actionsGlobalContext().lookupResult(CowGraphVersion.class);
-        
-        
-        result = WindowManager.getDefault().findTopComponent("VersionTopComponent").getLookup().lookupResult(CowGraphVersion.class);
-        for (CowGraphVersion version : result.allInstances()) {
-           scene.setVersion(version);
-        }
+        result = Utilities.actionsGlobalContext().lookupResult(CowGraphVersion.class);
+        version = result.allInstances().iterator().next();
+        scene.setVersion(version);
+
+        setDisplayName(version.getLongDisplayName());
     }
 
     @Override
