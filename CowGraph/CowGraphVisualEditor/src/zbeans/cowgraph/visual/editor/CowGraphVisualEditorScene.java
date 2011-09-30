@@ -104,11 +104,56 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         Widget widget = GraphElementWidgetFactory.createWidget(this, node);
         //widget.setLabel(Long.toString(node.hashCode()));
         widget.getActions().addAction(ActionFactory.createMoveAction());
+        widget.getActions().addAction(ActionFactory.createResizeAction());
+        widget.getActions().addAction(this.createSelectAction());
+        widget.getActions().addAction(this.createObjectHoverAction());
+        
+        
+        
         widget.setPreferredLocation(new Point((int) node.getX(), (int) node.getY()));
         widget.addDependency(new GraphElementWidgetDependency(widget, node));
         mainLayer.addChild(widget);
         return widget;
     }
+    
+// See for resize: http://netbeans.org/community/magazine/html/04/visuallibrary.html
+// and :    http://java.dzone.com/news/how-add-resize-functionality-v
+//    private final static ResizeStrategy resizeStrategy = new ResizeStrategy() {
+//public Rectangle boundsSuggested (final Widget widget,
+//final Rectangle originalBounds,
+//final Rectangle suggestedBounds,
+//final ResizeProvider.ControlPoint controlPoint)
+//{
+//final Rectangle result = new Rectangle(suggestedBounds);
+//final Thumbnail thumbnail = widget.getLookup().lookup(Thumbnail.class);
+//
+//// We could compute aspectRatio from originalBounds,
+//// but rounding errors would accumulate.
+//if (thumbnail != null) {
+//// isImageAvailable() doesn’t guarantee the image is online
+//final BufferedImage image = thumbnail.getImage();
+//
+//if (image != null) {
+//final Insets insets = widget.getBorder().getInsets();
+//final int mw = insets.left + insets.right;
+//final int mh = insets.bottom + insets.top;
+//final int contentWidth = result.width - mw;
+//final int contentHeight = result.height - mh;
+//final float aspectRatio = (float) image.getHeight()/image.getWidth();
+//final double deltaW = Math.abs(suggestedBounds.getWidth() - originalBounds.getWidth());
+//final double deltaH = Math.abs(suggestedBounds.getHeight() - originalBounds.getHeight());
+//
+//if (deltaW >= deltaH) { // moving mostly horizontally
+//result.height = mh + Math.round(contentWidth * aspectRatio);
+//}
+//else { // moving mostly vertically
+//result.width = mw + Math.round(contentHeight / aspectRatio);
+//}
+//}
+//}
+//return result;
+//}
+//};
 
     @Override
     protected Widget attachEdgeWidget(String egde) {

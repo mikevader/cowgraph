@@ -36,7 +36,7 @@ import zbeans.cowgraph.model.CowGraphDocument;
 public class DocumentNode extends BeanNode {
 
     DocumentNode(CowGraphDocument document) throws IntrospectionException {
-        super(document, Children.create(new DocumentChildren(document), true), Lookups.singleton(document));
+        super(document, Children.create(new VersionNodeFactory(document), true), Lookups.singleton(document));
     }
 
     @Override

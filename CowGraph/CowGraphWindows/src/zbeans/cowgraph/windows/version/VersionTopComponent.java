@@ -17,7 +17,6 @@
 package zbeans.cowgraph.windows.version;
 
 import java.awt.BorderLayout;
-import javax.swing.ActionMap;
 import org.openide.util.NbBundle;
 import org.openide.windows.TopComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -25,7 +24,6 @@ import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.explorer.ExplorerManager;
 import org.openide.explorer.ExplorerUtils;
-import org.openide.explorer.view.ListView;
 import org.openide.explorer.view.OutlineView;
 import org.openide.nodes.AbstractNode;
 import org.openide.nodes.Children;
@@ -63,7 +61,7 @@ public final class VersionTopComponent extends TopComponent implements ExplorerM
         add(view, BorderLayout.CENTER);
 
         DocumentDataSource dataSource = Lookup.getDefault().lookup(DocumentDataSource.class);
-        manager.setRootContext(new AbstractNode(Children.create(new FolderChildren(dataSource), true)));
+        manager.setRootContext(new AbstractNode(Children.create(new DocumentNodeFactory(dataSource), true)));
 
         associateLookup(ExplorerUtils.createLookup(manager, getActionMap()));
     }

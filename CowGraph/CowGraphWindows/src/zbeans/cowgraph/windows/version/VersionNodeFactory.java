@@ -26,38 +26,36 @@ import java.util.List;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
-import zbeans.cowgraph.datasource.DocumentDataSource;
 import zbeans.cowgraph.model.CowGraphDocument;
+import zbeans.cowgraph.model.CowGraphVersion;
 
 /**
  *
  * @author Michael Muehlebach <michael@anduin.ch>
  */
-/** Getting the children of the root node */
-public class FolderChildren extends ChildFactory<CowGraphDocument> {
+/** Defining the children of a feed node */
+public class VersionNodeFactory extends ChildFactory<CowGraphVersion> {
 
-    private DocumentDataSource dataSource;
+    private final CowGraphDocument document;
 
-    public FolderChildren(DocumentDataSource dataSource) {
-        this.dataSource = dataSource;
+    public VersionNodeFactory(CowGraphDocument document) {
+        this.document = document;
     }
 
     @Override
-    protected boolean createKeys(List<CowGraphDocument> toPopulate) {
-        toPopulate.addAll(dataSource.getDocuments());
-
+    protected boolean createKeys(List<CowGraphVersion> toPopulate) {
+        toPopulate.addAll(document.getVersions());
         return true;
     }
 
     @Override
-    protected Node createNodeForKey(CowGraphDocument key) {
+    protected Node createNodeForKey(CowGraphVersion key) {
         Node node = null;
         try {
-            node = new DocumentNode(key);
+            node = new VersionNode(key);
         } catch (IntrospectionException ex) {
             Exceptions.printStackTrace(ex);
         }
-        
         return node;
     }
 }

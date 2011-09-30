@@ -30,7 +30,6 @@ import org.openide.nodes.Children;
 import org.openide.util.actions.SystemAction;
 import org.openide.util.lookup.Lookups;
 import org.openide.util.lookup.ProxyLookup;
-import org.openide.windows.TopComponent;
 import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.visual.editor.CowGraphVisualEditorTopComponent;
 

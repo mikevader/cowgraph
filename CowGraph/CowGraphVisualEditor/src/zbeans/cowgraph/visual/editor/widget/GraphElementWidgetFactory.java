@@ -16,22 +16,39 @@
  */
 package zbeans.cowgraph.visual.editor.widget;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
 import zbeans.cowgraph.model.Circle;
 import zbeans.cowgraph.model.GraphElement;
 
-/**
- *
- * @author rbr
- */
 public class GraphElementWidgetFactory {
-    
-    public static Widget createWidget(Scene scene, GraphElement element) {
-        if (Circle.class.isAssignableFrom(element.getClass())) {
-            return new CircleWidget(scene, (Circle)element);
-        }
-        throw new UnsupportedOperationException("Unsupported graph element type: " + element.getClass().getName());
+
+    private static Map<Class<? extends GraphElement>, Class<? extends Widget>> widgetClasses = new HashMap<Class<? extends GraphElement>, Class<? extends Widget>>();
+
+    /**
+     * Configure all supported GraphElement types with corresponding Widget classes here.
+     */
+    static {
+        registerGraphElementWidget(Circle.class, CircleWidget.class);
     }
-    
+
+    public static void registerGraphElementWidget(Class<? extends GraphElement> graphElementClass, Class<? extends Widget> widgetClass) {
+        widgetClasses.put(graphElementClass, widgetClass);
+    }
+
+    public static Widget createWidget(Scene scene, GraphElement element) {
+        Class<? extends Widget> widgetClass = widgetClasses.get(element.getClass());
+        if (widgetClass == null) {
+            throw new UnsupportedOperationException("Unsupported graph element type: " + element.getClass().getSimpleName());
+        }
+        try {
+            Widget widget = widgetClass.getConstructor(Scene.class, element.getClass()).newInstance(scene, element);
+            return widget;
+        } catch (Exception e) {
+            throw new UnsupportedOperationException("Could not create widet for element of type " + element.getClass().getSimpleName(), e);
+        }
+
+    }
 }

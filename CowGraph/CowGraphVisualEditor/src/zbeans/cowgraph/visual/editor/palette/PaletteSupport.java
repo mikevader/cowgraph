@@ -32,7 +32,7 @@ import org.openide.util.datatransfer.ExTransferable;
 public class PaletteSupport {
 
     public static PaletteController createPalette() {
-        AbstractNode paletteRoot = new AbstractNode(new CategoryChildren());
+        AbstractNode paletteRoot = new AbstractNode(new CategoryNodeFactory());
         paletteRoot.setName("Palette Root");
         return PaletteFactory.createPalette(paletteRoot, new MyActions(), null, new MyDnDHandler());
     }

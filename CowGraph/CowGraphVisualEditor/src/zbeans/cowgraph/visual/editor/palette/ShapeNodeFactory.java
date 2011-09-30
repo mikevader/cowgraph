@@ -16,28 +16,33 @@
  */
 package zbeans.cowgraph.visual.editor.palette;
 
+import zbeans.cowgraph.model.GraphElementType;
 import zbeans.cowgraph.model.GraphElementGroup;
-import org.openide.nodes.Children;
-import org.openide.nodes.Node;
+import java.util.ArrayList;
+import org.openide.nodes.Index;
 
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class CategoryChildren extends Children.Keys {
+public class ShapeNodeFactory extends Index.ArrayChildren {
 
-    public CategoryChildren() {
+    private GraphElementGroup category;
+
+    public ShapeNodeFactory(GraphElementGroup category) {
+        this.category = category;
     }
 
     @Override
-    protected Node[] createNodes(Object key) {
-        GraphElementGroup obj = (GraphElementGroup) key;
-        return new Node[]{new CategoryNode(obj)};
-    }
+    protected java.util.List initCollection() {
+        ArrayList childrenNodes = new ArrayList(GraphElementType.values().length);
 
-    @Override
-    protected void addNotify() {
-        super.addNotify();
-        setKeys(GraphElementGroup.values());
+        for (GraphElementType graphElementType : GraphElementType.values()) {
+
+            if (graphElementType.getGroup() == category) {
+                childrenNodes.add(new ShapeNode(graphElementType));
+            }
+        }
+        return childrenNodes;
     }
 }
