@@ -16,9 +16,12 @@
  */
 package zbeans.cowgraph.model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import zbeans.simple.beans.ObservableBean;
 
 /**
  * CowGraph document which acts as root element for all versions of a cow graphic.
@@ -26,8 +29,33 @@ import java.util.List;
  * 
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class CowGraphDocument {
+public class CowGraphDocument extends ObservableBean {
+
+    public static final String PROP_NAME = "name";
+    
+    private String name;
     private List<CowGraphVersion> versions;
+
+    /**
+     * Get the value of name
+     *
+     * @return the value of name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param name new value of name
+     */
+    public void setName(String name) {
+        String oldName = this.name;
+        this.name = name;
+        firePropertyChange(PROP_NAME, oldName, name);
+    }
+
 
     public CowGraphDocument() {
         versions = new LinkedList<CowGraphVersion>();

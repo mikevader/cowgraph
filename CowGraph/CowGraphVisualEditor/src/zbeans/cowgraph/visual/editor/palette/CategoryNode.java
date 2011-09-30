@@ -28,7 +28,7 @@ public class CategoryNode extends AbstractNode {
 
     /** Creates a new instance of CategoryNode */
     public CategoryNode(GraphElementGroup category) {
-        super(new ShapeChildren(category), Lookups.singleton(category));
+        super(new ShapeNodeFactory(category), Lookups.singleton(category));
         setDisplayName(category.title);
     }
 }

@@ -16,25 +16,48 @@
  */
 package zbeans.cowgraph.datasource.impl;
 
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import org.openide.util.lookup.ServiceProvider;
-import zbeans.cowgraph.datasource.Document;
+import zbeans.cowgraph.datasource.DocumentDataSource;
+import zbeans.cowgraph.model.CowGraphDocument;
+import zbeans.cowgraph.model.CowGraphVersion;
 
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-@ServiceProvider(service=Document.class)
-public class FileDocument implements Document {
+@ServiceProvider(service = DocumentDataSource.class)
+public class FileDocumentDataSource implements DocumentDataSource {
 
     @Override
-    public List<String> getDocuments() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public List<CowGraphDocument> getDocuments() {
+        List<CowGraphDocument> list = new LinkedList<CowGraphDocument>();
+
+        CowGraphDocument document = new CowGraphDocument();
+        addVersion("v1.1", document);
+        addVersion("v2.0", document);
+        addVersion("v3.0", document);
+
+        document.setName("MyFirstDocument");
+
+        list.add(document);
+
+        return list;
+    }
+
+    private CowGraphVersion addVersion(String name, CowGraphDocument document) {
+        CowGraphVersion version = new CowGraphVersion(document);
+        version.setDate(new Date());
+        version.setName(name);
+                document.add(version);
+
+        return version;
     }
 
     @Override
     public zbeans.cowgraph.model.CowGraphDocument getDocument(String documentName) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
 }

@@ -23,7 +23,7 @@ import zbeans.cowgraph.model.CowGraphDocument;
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public interface Document {
-    List<String> getDocuments();
+public interface DocumentDataSource {
+    List<CowGraphDocument> getDocuments();
     CowGraphDocument getDocument(String documentName);
 }

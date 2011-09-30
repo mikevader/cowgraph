@@ -24,7 +24,7 @@ import org.openide.explorer.view.Visualizer;
 import org.openide.nodes.Node;
 
 /**
- * The etools specific outline view providing some additional special functionality and
+ * A convenience outline view providing some additional special functionality and
  * tree behaviour and some convenience API.
  * 
  * Currently the following is different compared to a usual {@link OutlineView}:
@@ -80,11 +80,11 @@ public final class SimpleOutlineView extends OutlineView {
 
     /**
      * Initialize with some default customizations. See class comment for documentation of
-     * special customization settings/behaviour of {@link EToolsOutlineView}.
+     * special customization settings/behaviour of {@link SimpleOutlineView}.
      * 
-     * This constructor is private, since the {@link EToolsOutlineView} provides factory
+     * This constructor is private, since the {@link SimpleOutlineView} provides factory
      * methods for convenience to setup often used configurations of a
-     * {@link EToolsOutlineView}.
+     * {@link SimpleOutlineView}.
      */
     private SimpleOutlineView() {
         super();

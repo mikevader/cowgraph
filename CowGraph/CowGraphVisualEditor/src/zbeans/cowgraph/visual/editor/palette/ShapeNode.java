@@ -28,8 +28,9 @@ import org.openide.util.lookup.Lookups;
 public class ShapeNode extends AbstractNode {
 
     /** Creates a new instance of InstrumentNode */
-    public ShapeNode(GraphElementType key) {
-        super(Children.LEAF, Lookups.singleton(key));
-        setIconBaseWithExtension(key.image);
+    public ShapeNode(GraphElementType elementType) {
+        super(Children.LEAF, Lookups.singleton(elementType));
+        setDisplayName(elementType.getName());
+        setIconBaseWithExtension(elementType.getImageResourcePath());
     }
 }

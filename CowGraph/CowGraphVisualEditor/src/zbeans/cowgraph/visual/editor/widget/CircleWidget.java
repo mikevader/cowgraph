@@ -23,10 +23,6 @@ import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
 import zbeans.cowgraph.model.Circle;
 
-/**
- *
- * @author rbr
- */
 public class CircleWidget extends Widget {
 
     private Circle element;

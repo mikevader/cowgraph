@@ -14,7 +14,7 @@ public interface QuickBeanFilter<T> {
 
     /**
      * Decide if this bean (the lookup model object contained in a node of a
-     * {@link EToolsOutlineView}'s row) should be accepted and therefore the row should be
+     * {@link SimpleOutlineView}'s row) should be accepted and therefore the row should be
      * visible in the view?
      * 
      * @param bean

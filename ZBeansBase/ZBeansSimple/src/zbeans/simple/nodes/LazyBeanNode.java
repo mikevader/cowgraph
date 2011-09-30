@@ -13,7 +13,7 @@ import org.openide.util.Lookup;
  * Actually this is currently quite tricky with the Nodes API (in Netbeans 6.9, may be
  * getting better in future releases ...), as not foreseen so far in this API.
  * 
- * Should be used with {@link EToolsOutlineView} which provides some special view
+ * Should be used with {@link SimpleOutlineView} which provides some special view
  * functionality for this kind of nodes (e.g. automatically reloading children for
  * expanded nodes of this type etc.).
  * 
