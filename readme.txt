@@ -119,7 +119,7 @@ Alle folgenden Befehle sind im gewünschten Verzeichnis (allenfalls mit cd wechse
 	Auf github.com, auf das gewünschte Repository klicken (auf Deiner Übersichts-Seite)
 	und die entsprechenden HTTPs URLs kopieren:
 	git remote set-url origin https://<uswername>@github.com/<username>/cowgraph.git		
-	git remote set-url upstream https://bruderol@github.com/zbeans/cowgraph.git
+	git remote set-url upstream https://<username>@github.com/zbeans/cowgraph.git
 
 	Proxy konfigurieren:
 	git config http.proxy proxy.zuehlke.com:8080
