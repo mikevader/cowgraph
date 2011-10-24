@@ -30,10 +30,10 @@ import zbeans.cowgraph.datasource.DocumentDataSource;
 import zbeans.cowgraph.model.CowGraphDocument;
 
 /**
+ * Getting the children of the root node.
  *
  * @author Michael Muehlebach <michael@anduin.ch>
  */
-/** Getting the children of the root node */
 public class DocumentNodeFactory extends ChildFactory<CowGraphDocument> {
 
     private DocumentDataSource dataSource;

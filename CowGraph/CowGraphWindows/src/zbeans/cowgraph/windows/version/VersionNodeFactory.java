@@ -30,10 +30,10 @@ import zbeans.cowgraph.model.CowGraphDocument;
 import zbeans.cowgraph.model.CowGraphVersion;
 
 /**
- *
+ * Defining the children of a document node.
+ * 
  * @author Michael Muehlebach <michael@anduin.ch>
  */
-/** Defining the children of a feed node */
 public class VersionNodeFactory extends ChildFactory<CowGraphVersion> {
 
     private final CowGraphDocument document;

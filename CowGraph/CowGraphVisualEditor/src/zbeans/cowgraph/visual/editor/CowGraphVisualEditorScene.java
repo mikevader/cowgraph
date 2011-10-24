@@ -16,6 +16,7 @@
  */
 package zbeans.cowgraph.visual.editor;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -26,6 +27,10 @@ import javax.swing.SwingUtilities;
 import org.netbeans.api.visual.action.AcceptProvider;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.action.ConnectorState;
+import org.netbeans.api.visual.action.SelectProvider;
+import org.netbeans.api.visual.action.TwoStateHoverProvider;
+import org.netbeans.api.visual.action.WidgetAction;
+import org.netbeans.api.visual.border.BorderFactory;
 import org.netbeans.api.visual.graph.GraphScene;
 import org.netbeans.api.visual.widget.LayerWidget;
 import org.netbeans.api.visual.widget.Widget;
@@ -84,7 +89,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         this.version = version;
         this.version.addPropertyChangeListener(this);
     }
-    
+
     private void addGraphElementsFromTransferable(Transferable transferable, Point point) {
         Node[] nodes = NodeTransfer.nodes(transferable, NodeTransfer.DND_COPY_OR_MOVE);
         for (Node node : nodes) {
@@ -102,22 +107,59 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
     @Override
     protected Widget attachNodeWidget(GraphElement node) {
         Widget widget = GraphElementWidgetFactory.createWidget(this, node);
+        widget.setBorder(BorderFactory.createEmptyBorder());
         //widget.setLabel(Long.toString(node.hashCode()));
         widget.getActions().addAction(ActionFactory.createMoveAction());
         widget.getActions().addAction(ActionFactory.createResizeAction());
-        widget.getActions().addAction(this.createSelectAction());
-        widget.getActions().addAction(this.createObjectHoverAction());
-        
-        
-        
+        widget.getActions().addAction(ActionFactory.createSelectAction(new SelectProvider() {
+
+            @Override
+            public boolean isAimingAllowed(Widget widget, Point localLocation, boolean invertSelection) {
+                return true;
+            }
+
+            @Override
+            public boolean isSelectionAllowed(Widget widget, Point localLocation, boolean invertSelection) {
+                return true;
+            }
+
+            @Override
+            public void select(Widget widget, Point localLocation, boolean invertSelection) {
+                if (invertSelection) {
+                    widget.setBorder(BorderFactory.createEmptyBorder());
+                } else {
+                    widget.setBorder(BorderFactory.createLineBorder(2));
+                }
+            }
+        }));
+
+        WidgetAction hoverAction = ActionFactory.createHoverAction(new TwoStateHoverProvider() {
+
+            @Override
+            public void unsetHovering(Widget widget) {
+                widget.setBorder(BorderFactory.createEmptyBorder());
+            }
+
+            @Override
+            public void setHovering(Widget widget) {
+                widget.setBorder(BorderFactory.createResizeBorder(8, Color.BLACK, false));
+            }
+        });
+
+        widget.getActions().addAction(hoverAction);
+        widget.getScene().getActions().addAction(hoverAction);
+
+
+
         widget.setPreferredLocation(new Point((int) node.getX(), (int) node.getY()));
         widget.addDependency(new GraphElementWidgetDependency(widget, node));
         mainLayer.addChild(widget);
         return widget;
     }
-    
+
 // See for resize: http://netbeans.org/community/magazine/html/04/visuallibrary.html
 // and :    http://java.dzone.com/news/how-add-resize-functionality-v
+//    and : http://blogs.oracle.com/geertjan/entry/small_netbeans_visual_library_resize
 //    private final static ResizeStrategy resizeStrategy = new ResizeStrategy() {
 //public Rectangle boundsSuggested (final Widget widget,
 //final Rectangle originalBounds,
@@ -154,7 +196,6 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 //return result;
 //}
 //};
-
     @Override
     protected Widget attachEdgeWidget(String egde) {
         return null;
