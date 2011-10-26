@@ -16,7 +16,6 @@
  */
 package zbeans.cowgraph.visual.editor;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -27,10 +26,6 @@ import javax.swing.SwingUtilities;
 import org.netbeans.api.visual.action.AcceptProvider;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.action.ConnectorState;
-import org.netbeans.api.visual.action.SelectProvider;
-import org.netbeans.api.visual.action.TwoStateHoverProvider;
-import org.netbeans.api.visual.action.WidgetAction;
-import org.netbeans.api.visual.border.BorderFactory;
 import org.netbeans.api.visual.graph.GraphScene;
 import org.netbeans.api.visual.widget.LayerWidget;
 import org.netbeans.api.visual.widget.Widget;
@@ -73,6 +68,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
             @Override
             public void accept(Widget widget, Point point, Transferable transferable) {
                 addGraphElementsFromTransferable(transferable, widget.convertLocalToScene(point));
+                getView().requestFocusInWindow();
             }
         }));
 
@@ -106,7 +102,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected Widget attachNodeWidget(GraphElement node) {
-        Widget widget = GraphElementWidgetFactory.createWidget(this, node);       
+        Widget widget = GraphElementWidgetFactory.createWidget(this, node);
         mainLayer.addChild(widget);
         return widget;
     }

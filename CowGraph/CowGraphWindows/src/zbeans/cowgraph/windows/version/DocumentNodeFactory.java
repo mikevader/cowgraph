@@ -26,6 +26,7 @@ import java.util.List;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
 import org.openide.util.Exceptions;
+import zbeans.cowgraph.datasource.DataSourceListener;
 import zbeans.cowgraph.datasource.DocumentDataSource;
 import zbeans.cowgraph.model.CowGraphDocument;
 
@@ -34,12 +35,13 @@ import zbeans.cowgraph.model.CowGraphDocument;
  *
  * @author Michael Muehlebach <michael@anduin.ch>
  */
-public class DocumentNodeFactory extends ChildFactory<CowGraphDocument> {
+public class DocumentNodeFactory extends ChildFactory<CowGraphDocument> implements DataSourceListener {
 
     private DocumentDataSource dataSource;
 
     public DocumentNodeFactory(DocumentDataSource dataSource) {
         this.dataSource = dataSource;
+        this.dataSource.addDataSourceListener(this);
     }
 
     @Override
@@ -59,5 +61,10 @@ public class DocumentNodeFactory extends ChildFactory<CowGraphDocument> {
         }
         
         return node;
+    }
+
+    @Override
+    public void dataSourceChanged() {
+        this.refresh(true);
     }
 }

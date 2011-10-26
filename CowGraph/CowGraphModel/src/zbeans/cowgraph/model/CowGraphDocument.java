@@ -16,8 +16,6 @@
  */
 package zbeans.cowgraph.model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,6 +30,7 @@ import zbeans.simple.beans.ObservableBean;
 public class CowGraphDocument extends ObservableBean {
 
     public static final String PROP_NAME = "name";
+    public static final String PROP_VERSIONS = "versions";
     
     private String name;
     private List<CowGraphVersion> versions;
@@ -62,14 +61,16 @@ public class CowGraphDocument extends ObservableBean {
     }
 
     public List<CowGraphVersion> getVersions() {
-        return Collections.unmodifiableList(versions);
+        return versions;
     }
 
-    public boolean remove(CowGraphVersion o) {
-        return versions.remove(o);
+    public boolean remove(CowGraphVersion version) {
+        firePropertyChange(PROP_VERSIONS, version, null);
+        return versions.remove(version);
     }
 
-    public boolean add(CowGraphVersion e) {
-        return versions.add(e);
+    public boolean add(CowGraphVersion version) {
+        firePropertyChange(PROP_VERSIONS, null, version);
+        return versions.add(version);
     }
 }

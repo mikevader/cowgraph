@@ -16,10 +16,12 @@
  */
 package zbeans.cowgraph.datasource.impl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import org.openide.util.lookup.ServiceProvider;
+import zbeans.cowgraph.datasource.DataSourceListener;
 import zbeans.cowgraph.datasource.DocumentDataSource;
 import zbeans.cowgraph.model.CowGraphDocument;
 import zbeans.cowgraph.model.CowGraphVersion;
@@ -30,11 +32,9 @@ import zbeans.cowgraph.model.CowGraphVersion;
  */
 @ServiceProvider(service = DocumentDataSource.class)
 public class FileDocumentDataSource implements DocumentDataSource {
-
-    @Override
-    public List<CowGraphDocument> getDocuments() {
-        List<CowGraphDocument> list = new LinkedList<CowGraphDocument>();
-
+    List<DataSourceListener> listeners = new LinkedList<DataSourceListener>();
+    List<CowGraphDocument> list = new LinkedList<CowGraphDocument>();
+    {
         CowGraphDocument document = new CowGraphDocument();
         addVersion("v1.1", document);
         addVersion("v2.0", document);
@@ -43,8 +43,11 @@ public class FileDocumentDataSource implements DocumentDataSource {
         document.setName("MyFirstDocument");
 
         list.add(document);
-
-        return list;
+    }
+    
+    @Override
+    public List<CowGraphDocument> getDocuments() {
+        return Collections.unmodifiableList(list);
     }
 
     private CowGraphVersion addVersion(String name, CowGraphDocument document) {
@@ -59,5 +62,22 @@ public class FileDocumentDataSource implements DocumentDataSource {
     @Override
     public zbeans.cowgraph.model.CowGraphDocument getDocument(String documentName) {
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public CowGraphDocument createNewDocument() {
+        CowGraphDocument doc = new CowGraphDocument();
+        list.add(doc);
+        
+        for (DataSourceListener dataSourceListener : listeners) {
+            dataSourceListener.dataSourceChanged();
+        }
+        
+        return doc;
+    }
+
+    @Override
+    public void addDataSourceListener(DataSourceListener listener) {
+        listeners.add(listener);
     }
 }

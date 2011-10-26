@@ -24,6 +24,8 @@ import zbeans.cowgraph.model.CowGraphDocument;
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
 public interface DocumentDataSource {
-    List<CowGraphDocument> getDocuments();
-    CowGraphDocument getDocument(String documentName);
+    public void addDataSourceListener(DataSourceListener listener);
+    public List<CowGraphDocument> getDocuments();
+    public CowGraphDocument getDocument(String documentName);
+    public CowGraphDocument createNewDocument();
 }
