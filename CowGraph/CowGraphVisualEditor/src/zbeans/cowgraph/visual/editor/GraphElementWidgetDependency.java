@@ -17,6 +17,7 @@
 package zbeans.cowgraph.visual.editor;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import javax.swing.SwingUtilities;
@@ -24,13 +25,12 @@ import org.netbeans.api.visual.widget.Widget;
 import org.netbeans.api.visual.widget.Widget.Dependency;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import zbeans.cowgraph.model.Circle;
 import zbeans.cowgraph.model.GraphElement;
+import zbeans.cowgraph.visual.editor.widget.CircleWidget;
 
 /**
- * Verantwortlich für updates im GraphElement bei Änderungen im Widget.
- * 
- * 
- * @author Michael M&uuml;hlebach <michael at anduin.ch>
+ * Synchronisiert Änderungen zwischen Widget und GraphElement
  */
 public class GraphElementWidgetDependency implements Dependency, PropertyChangeListener {
 
@@ -45,19 +45,6 @@ public class GraphElementWidgetDependency implements Dependency, PropertyChangeL
         this.node = node;
         this.propagatingChangesToNode = false;
         this.propagatingChangesToWidget = false;
-        subscribeForPropertyChanges();
-    }
-
-    @Override
-    public void revalidateDependency() {
-        if (propagatingChangesToWidget) {
-            return;
-        }
-
-        this.propagatingChangesToNode = true;
-        this.node.setX(widget.getPreferredLocation().x);
-        this.node.setY(widget.getPreferredLocation().y);
-        this.propagatingChangesToNode = false;
     }
 
     @Override
@@ -65,21 +52,52 @@ public class GraphElementWidgetDependency implements Dependency, PropertyChangeL
         if (propagatingChangesToNode) {
             return;
         }
+        propagatingChangesToWidget = true;
 
-        if (GraphElement.PROP_X.equals(evt.getPropertyName()) || GraphElement.PROP_Y.equals(evt.getPropertyName())) {
-            propagatingChangesToWidget = true;
-            this.widget.setPreferredLocation(new Point((int) this.node.getX(), (int) this.node.getY()));
-            propagatingChangesToWidget = false;
+        if (GraphElement.PROP_X.equals(evt.getPropertyName()) || GraphElement.PROP_Y.equals(evt.getPropertyName()) || Circle.PROP_WIDTH.equals(evt.getPropertyName())) {
+            updateWidget();
+
             SwingUtilities.invokeLater(new Runnable() {
+
                 @Override
                 public void run() {
                     widget.getScene().validate();
                 }
             });
         }
+
+        propagatingChangesToWidget = false;
+
     }
 
-    private void subscribeForPropertyChanges() {
-        this.node.addPropertyChangeListener(this);
+    @Override
+    public void revalidateDependency() {
+        if (propagatingChangesToWidget) {
+            return;
+        }
+        this.propagatingChangesToNode = true;
+        updateGraphElement();
+        this.propagatingChangesToNode = false;
+    }
+
+    public void updateGraphElement() {
+        this.node.setX(widget.getPreferredLocation().x);
+        this.node.setY(widget.getPreferredLocation().y);
+        if (node instanceof Circle) {
+            Circle c = (Circle) node;
+            int width = widget.getPreferredBounds().width - 2 * CircleWidget.BOUNDS_INSET;
+            c.setWidth(width);
+            LOGGER.info("Circle width updated: " + width);
+        }
+    }
+
+    public void updateWidget() {
+        widget.setPreferredLocation(new Point((int) node.getX(), (int) node.getY()));
+        if (node instanceof Circle) {
+            Circle c = (Circle) node;
+            int width = (int) c.getWidth() + 2 * CircleWidget.BOUNDS_INSET;
+            widget.setPreferredBounds(new Rectangle(0, 0, width, width));
+            LOGGER.info("Widget width updated: " + widget.getPreferredBounds().width);
+        }
     }
 }

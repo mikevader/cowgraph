@@ -106,53 +106,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected Widget attachNodeWidget(GraphElement node) {
-        Widget widget = GraphElementWidgetFactory.createWidget(this, node);
-        widget.setBorder(BorderFactory.createEmptyBorder());
-        //widget.setLabel(Long.toString(node.hashCode()));
-        widget.getActions().addAction(ActionFactory.createMoveAction());
-        widget.getActions().addAction(ActionFactory.createResizeAction());
-        widget.getActions().addAction(ActionFactory.createSelectAction(new SelectProvider() {
-
-            @Override
-            public boolean isAimingAllowed(Widget widget, Point localLocation, boolean invertSelection) {
-                return true;
-            }
-
-            @Override
-            public boolean isSelectionAllowed(Widget widget, Point localLocation, boolean invertSelection) {
-                return true;
-            }
-
-            @Override
-            public void select(Widget widget, Point localLocation, boolean invertSelection) {
-                if (invertSelection) {
-                    widget.setBorder(BorderFactory.createEmptyBorder());
-                } else {
-                    widget.setBorder(BorderFactory.createLineBorder(2));
-                }
-            }
-        }));
-
-        WidgetAction hoverAction = ActionFactory.createHoverAction(new TwoStateHoverProvider() {
-
-            @Override
-            public void unsetHovering(Widget widget) {
-                widget.setBorder(BorderFactory.createEmptyBorder());
-            }
-
-            @Override
-            public void setHovering(Widget widget) {
-                widget.setBorder(BorderFactory.createResizeBorder(8, Color.BLACK, false));
-            }
-        });
-
-        widget.getActions().addAction(hoverAction);
-        widget.getScene().getActions().addAction(hoverAction);
-
-
-
-        widget.setPreferredLocation(new Point((int) node.getX(), (int) node.getY()));
-        widget.addDependency(new GraphElementWidgetDependency(widget, node));
+        Widget widget = GraphElementWidgetFactory.createWidget(this, node);       
         mainLayer.addChild(widget);
         return widget;
     }
