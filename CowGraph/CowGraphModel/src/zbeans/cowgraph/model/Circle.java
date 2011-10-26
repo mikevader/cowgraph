@@ -43,7 +43,7 @@ public class Circle extends GraphElementImpl {
     public Circle clone() {
         Circle clone = (Circle)super.clone();
         
-        clone.radius = radius;
+        clone.width = width;
         
         return clone;
     }

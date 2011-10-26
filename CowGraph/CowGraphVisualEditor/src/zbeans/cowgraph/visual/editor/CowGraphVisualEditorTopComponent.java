@@ -29,7 +29,6 @@ import javax.swing.event.ChangeListener;
 import org.openide.windows.TopComponent;
 import org.netbeans.api.settings.ConvertAsProperties;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.cookies.SaveCookie;
 import org.openide.util.Lookup;
