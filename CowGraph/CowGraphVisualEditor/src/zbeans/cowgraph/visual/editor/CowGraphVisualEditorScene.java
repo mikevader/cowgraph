@@ -37,7 +37,7 @@ import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.model.GraphElement;
 import zbeans.cowgraph.model.GraphElementFactory;
 import zbeans.cowgraph.model.GraphElementType;
-import zbeans.cowgraph.visual.editor.widget.GraphElementWidgetFactory;
+import zbeans.cowgraph.visual.editor.widget.WidgetFactory;
 
 /**
  *
@@ -80,10 +80,40 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         return version;
     }
 
-    public void setVersion(CowGraphVersion version) {
-        //TODO: Scene should initialize itself according to the given version. Now it starts with an empty scene and reacts to add/remove event since its creation which omits all object create before.
+    /**
+     * Has to be called before scene gets visible!!!
+     */
+    public void setVersion(CowGraphVersion version) {        
+        unsubscribeFromVersionChanges();
         this.version = version;
-        this.version.addPropertyChangeListener(this);
+        if (isVisible()) {
+            subscribeToVersionChanges();
+        }
+    }
+
+    private void subscribeToVersionChanges() {
+        if (this.version != null) {
+            this.version.addPropertyChangeListener(this);
+        }
+    }
+
+    private void unsubscribeFromVersionChanges() {
+        if (this.version != null) {
+            this.version.removePropertyChangeListener(this);
+        }
+    }
+
+    @Override
+    protected void notifyAdded() {
+        super.notifyAdded();
+        // TODO: ensure to create all widgets first, according to current set version.
+        subscribeToVersionChanges();        
+    }
+
+    @Override
+    protected void notifyRemoved() {
+        super.notifyRemoved();
+        unsubscribeFromVersionChanges();
     }
 
     private void addGraphElementsFromTransferable(Transferable transferable, Point point) {
@@ -93,8 +123,8 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
             GraphElementFactory factory = Lookup.getDefault().lookup(GraphElementFactory.class);
             GraphElement elem = factory.createGraphElement(type);
 
-            elem.setX(point.getX());
-            elem.setY(point.getY());
+            elem.setX(point.x);
+            elem.setY(point.y);
 
             version.add(elem);
         }
@@ -102,50 +132,11 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected Widget attachNodeWidget(GraphElement node) {
-        Widget widget = GraphElementWidgetFactory.createWidget(this, node);
+        Widget widget = WidgetFactory.createWidget(this, node);
         mainLayer.addChild(widget);
         return widget;
     }
 
-// See for resize: http://netbeans.org/community/magazine/html/04/visuallibrary.html
-// and :    http://java.dzone.com/news/how-add-resize-functionality-v
-//    and : http://blogs.oracle.com/geertjan/entry/small_netbeans_visual_library_resize
-//    private final static ResizeStrategy resizeStrategy = new ResizeStrategy() {
-//public Rectangle boundsSuggested (final Widget widget,
-//final Rectangle originalBounds,
-//final Rectangle suggestedBounds,
-//final ResizeProvider.ControlPoint controlPoint)
-//{
-//final Rectangle result = new Rectangle(suggestedBounds);
-//final Thumbnail thumbnail = widget.getLookup().lookup(Thumbnail.class);
-//
-//// We could compute aspectRatio from originalBounds,
-//// but rounding errors would accumulate.
-//if (thumbnail != null) {
-//// isImageAvailable() doesn’t guarantee the image is online
-//final BufferedImage image = thumbnail.getImage();
-//
-//if (image != null) {
-//final Insets insets = widget.getBorder().getInsets();
-//final int mw = insets.left + insets.right;
-//final int mh = insets.bottom + insets.top;
-//final int contentWidth = result.width - mw;
-//final int contentHeight = result.height - mh;
-//final float aspectRatio = (float) image.getHeight()/image.getWidth();
-//final double deltaW = Math.abs(suggestedBounds.getWidth() - originalBounds.getWidth());
-//final double deltaH = Math.abs(suggestedBounds.getHeight() - originalBounds.getHeight());
-//
-//if (deltaW >= deltaH) { // moving mostly horizontally
-//result.height = mh + Math.round(contentWidth * aspectRatio);
-//}
-//else { // moving mostly vertically
-//result.width = mw + Math.round(contentHeight / aspectRatio);
-//}
-//}
-//}
-//return result;
-//}
-//};
     @Override
     protected Widget attachEdgeWidget(String egde) {
         return null;

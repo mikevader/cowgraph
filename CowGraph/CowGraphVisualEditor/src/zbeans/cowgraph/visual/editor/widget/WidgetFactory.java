@@ -23,7 +23,7 @@ import org.netbeans.api.visual.widget.Widget;
 import zbeans.cowgraph.model.Circle;
 import zbeans.cowgraph.model.GraphElement;
 
-public class GraphElementWidgetFactory {
+public class WidgetFactory {
 
     private static Map<Class<? extends GraphElement>, Class<? extends Widget>> widgetClasses = new HashMap<Class<? extends GraphElement>, Class<? extends Widget>>();
 

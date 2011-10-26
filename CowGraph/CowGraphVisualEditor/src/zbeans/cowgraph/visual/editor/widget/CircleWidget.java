@@ -30,7 +30,6 @@ import org.netbeans.api.visual.border.BorderFactory;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
 import zbeans.cowgraph.model.Circle;
-import zbeans.cowgraph.visual.editor.GraphElementWidgetDependency;
 
 /**
  * Example widget to visualize a Circle, that can move and resize the circle and updates to changes in the Circle model element.
@@ -45,7 +44,7 @@ public class CircleWidget extends Widget {
     public static final int BOUNDS_INSET = 10;
 
     private Circle element;
-    private GraphElementWidgetDependency dependency;
+    private CircleDependency dependency;
 
     public CircleWidget(Scene scene, Circle element) {
         super(scene);
@@ -96,7 +95,7 @@ public class CircleWidget extends Widget {
         getActions().addAction(hoverAction);
         getScene().getActions().addAction(hoverAction);
 
-        dependency = new GraphElementWidgetDependency(this, element);
+        dependency = new CircleDependency(this, element);
         dependency.updateWidget();
         addDependency(dependency);
     }
@@ -131,6 +130,7 @@ public class CircleWidget extends Widget {
      */
     private static class CircleResizeStrategy implements ResizeStrategy {
 
+        @Override
         public Rectangle boundsSuggested(final Widget widget,
                 final Rectangle originalBounds,
                 final Rectangle suggestedBounds,

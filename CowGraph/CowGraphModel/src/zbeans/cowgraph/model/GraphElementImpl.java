@@ -28,8 +28,9 @@ import zbeans.simple.beans.ObservableBean;
 public class GraphElementImpl extends ObservableBean implements GraphElement {
 
     private GraphElementType type;
-    private double x;
-    private double y;
+    private int x;
+    private int y;
+
     private Color color;
 
     public GraphElementImpl(final GraphElementType type) {
@@ -63,7 +64,7 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      * @return the value of y
      */
     @Override
-    public double getY() {
+    public int getY() {
         return y;
     }
 
@@ -73,7 +74,7 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      * @param y new value of y
      */
     @Override
-    public void setY(double y) {
+    public void setY(int y) {
         double oldY = this.y;
         this.y = y;
         this.firePropertyChange(PROP_Y, oldY, y);
@@ -85,7 +86,7 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      * @return the value of x
      */
     @Override
-    public double getX() {
+    public int getX() {
         return x;
     }
 
@@ -95,7 +96,7 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
      * 
      */
     @Override
-    public void setX(double x) {
+    public void setX(int x) {
         double oldX = this.x;
         this.x = x;
         this.firePropertyChange(PROP_X, oldX, x);
@@ -111,7 +112,6 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
         GraphElementImpl clone = null;
         try {
             clone = (GraphElementImpl) super.clone();
-
             clone.type = type;
             clone.x = x;
             clone.y = y;
