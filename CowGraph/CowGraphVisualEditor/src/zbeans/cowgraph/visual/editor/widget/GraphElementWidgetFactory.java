@@ -39,7 +39,7 @@ public class GraphElementWidgetFactory {
     }
 
     public static Widget createWidget(Scene scene, GraphElement element) {
-        Class<? extends Widget> widgetClass = widgetClasses.get(element.getClass());
+        Class<? extends Widget> widgetClass = widgetClasses.get(element.getClass());        
         if (widgetClass == null) {
             throw new UnsupportedOperationException("Unsupported graph element type: " + element.getClass().getSimpleName());
         }

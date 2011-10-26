@@ -23,31 +23,21 @@ package zbeans.cowgraph.model;
  */
 public class Circle extends GraphElementImpl {
 
-    public static final String PROP_RADIUS = "radius";
-    private long radius = 20;
+    public static final String PROP_WIDTH = "width";
+    private int width = 40;
 
     public Circle() {
         super(GraphElementType.CIRCLE);
     }
     
-    /**
-     * Get the value of radius
-     *
-     * @return the value of radius
-     */
-    public long getRadius() {
-        return radius;
+    public int getWidth() {
+        return width;
     }
 
-    /**
-     * Set the value of radius
-     *
-     * @param radius new value of radius
-     */
-    public void setRadius(long radius) {
-        long oldRadius = this.radius;
-        this.radius = radius;
-        this.firePropertyChange(PROP_RADIUS, oldRadius, radius);
+    public void setWidth(int width) {
+        long oldWidth = this.width;
+        this.width = width;
+        this.firePropertyChange(PROP_WIDTH, oldWidth, width);
     }
     
     public Circle clone() {
