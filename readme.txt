@@ -124,6 +124,10 @@ Alle folgenden Befehle sind im gewünschten Verzeichnis (allenfalls mit cd wechse
 	Proxy konfigurieren:
 	git config http.proxy proxy.zuehlke.com:8080
 
+	Proxy Konfiguration wieder entfernen (für von Zuhause):
+	git config --unset http.proxy
+
+
 Siehe auch weitere GIT cheat sheets unter http://help.github.com/git-cheat-sheets/
 
 
