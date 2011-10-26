@@ -49,4 +49,12 @@ public class Circle extends GraphElementImpl {
         this.radius = radius;
         this.firePropertyChange(PROP_RADIUS, oldRadius, radius);
     }
+    
+    public Circle clone() {
+        Circle clone = (Circle)super.clone();
+        
+        clone.radius = radius;
+        
+        return clone;
+    }
 }

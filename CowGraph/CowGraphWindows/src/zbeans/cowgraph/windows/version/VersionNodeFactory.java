@@ -22,6 +22,8 @@
 package zbeans.cowgraph.windows.version;
 
 import java.beans.IntrospectionException;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
 import org.openide.nodes.ChildFactory;
 import org.openide.nodes.Node;
@@ -34,12 +36,14 @@ import zbeans.cowgraph.model.CowGraphVersion;
  * 
  * @author Michael Muehlebach <michael@anduin.ch>
  */
-public class VersionNodeFactory extends ChildFactory<CowGraphVersion> {
+public class VersionNodeFactory extends ChildFactory<CowGraphVersion> implements PropertyChangeListener {
 
     private final CowGraphDocument document;
 
     public VersionNodeFactory(CowGraphDocument document) {
         this.document = document;
+        
+        this.document.addPropertyChangeListener(this);
     }
 
     @Override
@@ -57,5 +61,10 @@ public class VersionNodeFactory extends ChildFactory<CowGraphVersion> {
             Exceptions.printStackTrace(ex);
         }
         return node;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        this.refresh(true);
     }
 }

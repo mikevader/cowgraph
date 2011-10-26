@@ -16,16 +16,11 @@
  */
 package zbeans.cowgraph.datasource;
 
-import java.util.List;
-import zbeans.cowgraph.model.CowGraphDocument;
-
 /**
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public interface DocumentDataSource {
-    public void addDataSourceListener(DataSourceListener listener);
-    public List<CowGraphDocument> getDocuments();
-    public CowGraphDocument getDocument(String documentName);
-    public CowGraphDocument createNewDocument();
+public interface DataSourceListener {
+    public void dataSourceChanged();
+    
 }

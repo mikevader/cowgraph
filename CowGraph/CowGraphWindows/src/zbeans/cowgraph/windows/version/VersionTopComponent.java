@@ -58,6 +58,7 @@ public final class VersionTopComponent extends TopComponent implements ExplorerM
 
         view = new OutlineView();
         view.addPropertyColumn(CowGraphVersion.PROP_DATE, "Date Modified");
+        view.getOutline().setRootVisible(false);
         add(view, BorderLayout.CENTER);
 
         DocumentDataSource dataSource = Lookup.getDefault().lookup(DocumentDataSource.class);

@@ -24,7 +24,7 @@ import zbeans.simple.beans.PropertyChangeObservable;
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public interface GraphElement extends PropertyChangeObservable {
+public interface GraphElement extends PropertyChangeObservable, Cloneable {
 
     public static final String PROP_X = "x";
     public static final String PROP_Y = "y";
@@ -53,4 +53,6 @@ public interface GraphElement extends PropertyChangeObservable {
     public void setX(double x);
 
     public void setY(double y);
+    
+    public GraphElement clone();
 }
