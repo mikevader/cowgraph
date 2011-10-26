@@ -45,7 +45,7 @@ Die Entwicklungs-Umgebung ist wie folgt zu installieren und einzurichten:
 3. Git installieren und konfigurieren:
 	Gemäss Anleitung: http://help.github.com/win-set-up-git/
 	ACHTUNG: 
-	Git-Bash speichert alle Einstellungen im Working Directory wo es sich sktuell befindet (Command: pwd), 
+	Git-Bash speichert alle Einstellungen im Working Directory wo es sich aktuell befindet (Command: pwd), 
 	Auch wird dort hin ausgecheckt wo die Konsole sich aktuell befindet: mit cd in entsprechendes Verzeichnis wechseln!
 	Deshalb wird empfohlen, bevor Git gemäss Anleitung konfiguriert wird, 
 	die Git-Bash-Konsole auf das gewünschte Working-Directory für ZBeans-Projekte zu konfigurieren 
@@ -54,6 +54,7 @@ Die Entwicklungs-Umgebung ist wie folgt zu installieren und einzurichten:
 4. Dann auf github.com nach unserem Projekt "zbeans/cowgraph" suchen und dieses "forken" und auschecken:
 	- Gemäss Anleitung unter http://help.github.com/fork-a-repo/
 	- $ git clone git@github.com:<youusername>/cowgraph.git
+	- Respektive für Zugriff über Zühlke-Firewall besser https für zugriff verwenden, siehe Zugriff über HTTPS konfigurieren im GIT HOWTO weiter unten.
 
 5. (Optional) Git Plugin für Netbeans installieren
 	[Optional, weil es nicht wahnsinnig hilfreich zu sein scheint.]
@@ -109,6 +110,19 @@ Alle folgenden Befehle sind im gewünschten Verzeichnis (allenfalls mit cd wechse
 	git push
 
 	Schliesslich gemäss Punkt 3 in gemeinsames Repository pullen.
+
+5. zugriff über HTTPS konfigurieren:
+
+	Anzeigen aller konfigurierten URLs:
+	git remote -v
+
+	Auf github.com, auf das gewünschte Repository klicken (auf Deiner Übersichts-Seite)
+	und die entsprechenden HTTPs URLs kopieren:
+	git remote set-url origin https://<uswername>@github.com/<username>/cowgraph.git		
+	git remote set-url upstream https://<username>@github.com/zbeans/cowgraph.git
+
+	Proxy konfigurieren:
+	git config http.proxy proxy.zuehlke.com:8080
 
 Siehe auch weitere GIT cheat sheets unter http://help.github.com/git-cheat-sheets/
 
