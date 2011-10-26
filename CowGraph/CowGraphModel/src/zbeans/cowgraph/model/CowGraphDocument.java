@@ -16,8 +16,6 @@
  */
 package zbeans.cowgraph.model;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;

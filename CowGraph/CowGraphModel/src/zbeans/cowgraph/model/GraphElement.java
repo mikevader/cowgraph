@@ -44,13 +44,13 @@ public interface GraphElement extends PropertyChangeObservable {
 
     public GraphElementType getType();
 
-    public double getX();
+    public int getX();
 
-    public double getY();
+    public int getY();
 
     public Color getColor();
 
-    public void setX(double x);
+    public void setX(int x);
 
-    public void setY(double y);
+    public void setY(int y);
 }

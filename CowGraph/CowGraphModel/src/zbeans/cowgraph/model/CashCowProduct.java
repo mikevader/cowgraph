@@ -40,4 +40,5 @@ public class CashCowProduct extends GraphElementImpl implements CompositeGraphEl
     public List<GraphElement> getElements() {
         return Collections.unmodifiableList(elements);
     }
+    
 }
