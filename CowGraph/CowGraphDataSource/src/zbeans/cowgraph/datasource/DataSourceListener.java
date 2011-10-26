@@ -14,37 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package zbeans.cowgraph.model;
+package zbeans.cowgraph.datasource;
 
 /**
- * A circle.
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class Circle extends GraphElementImpl {
-
-    public static final String PROP_WIDTH = "width";
-    private int width = 40;
-
-    public Circle() {
-        super(GraphElementType.CIRCLE);
-    }
+public interface DataSourceListener {
+    public void dataSourceChanged();
     
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        long oldWidth = this.width;
-        this.width = width;
-        this.firePropertyChange(PROP_WIDTH, oldWidth, width);
-    }
-    
-    public Circle clone() {
-        Circle clone = (Circle)super.clone();
-        
-        clone.width = width;
-        
-        return clone;
-    }
 }

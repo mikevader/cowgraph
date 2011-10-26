@@ -17,6 +17,8 @@
 package zbeans.cowgraph.model;
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import zbeans.simple.beans.ObservableBean;
 
 /**
@@ -25,9 +27,10 @@ import zbeans.simple.beans.ObservableBean;
  */
 public class GraphElementImpl extends ObservableBean implements GraphElement {
 
-    private final GraphElementType type;
+    private GraphElementType type;
     private int x;
     private int y;
+
     private Color color;
 
     public GraphElementImpl(final GraphElementType type) {
@@ -102,5 +105,21 @@ public class GraphElementImpl extends ObservableBean implements GraphElement {
     @Override
     public GraphElementType getType() {
         return type;
+    }
+
+    @Override
+    public GraphElementImpl clone() {
+        GraphElementImpl clone = null;
+        try {
+            clone = (GraphElementImpl) super.clone();
+            clone.type = type;
+            clone.x = x;
+            clone.y = y;
+            clone.color = color;
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GraphElementImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return clone;
     }
 }

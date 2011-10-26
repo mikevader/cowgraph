@@ -68,6 +68,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
             @Override
             public void accept(Widget widget, Point point, Transferable transferable) {
                 addGraphElementsFromTransferable(transferable, widget.convertLocalToScene(point));
+                getView().requestFocusInWindow();
             }
         }));
 
@@ -79,11 +80,15 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         return version;
     }
 
-    public void setVersion(CowGraphVersion version) {
-        //TODO: Scene should initialize itself according to the given version. Now it starts with an empty scene and reacts to add/remove event since its creation which omits all object create before.
+    /**
+     * Has to be called before scene gets visible!!!
+     */
+    public void setVersion(CowGraphVersion version) {        
         unsubscribeFromVersionChanges();
         this.version = version;
-        subscribeToVersionChanges();
+        if (isVisible()) {
+            subscribeToVersionChanges();
+        }
     }
 
     private void subscribeToVersionChanges() {
@@ -101,7 +106,8 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
     @Override
     protected void notifyAdded() {
         super.notifyAdded();
-        subscribeToVersionChanges();
+        // TODO: ensure to create all widgets first, according to current set version.
+        subscribeToVersionChanges();        
     }
 
     @Override

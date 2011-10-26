@@ -22,16 +22,20 @@
 package zbeans.cowgraph.windows.version;
 
 import java.beans.IntrospectionException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.Action;
 import org.openide.actions.OpenAction;
 import org.openide.cookies.OpenCookie;
 import org.openide.nodes.BeanNode;
 import org.openide.nodes.Children;
+import org.openide.util.Utilities;
 import org.openide.util.actions.SystemAction;
 import org.openide.util.lookup.Lookups;
 import org.openide.util.lookup.ProxyLookup;
 import zbeans.cowgraph.model.CowGraphVersion;
-import zbeans.cowgraph.visual.editor.CowGraphVisualEditorTopComponent;
+import zbeans.cowgraph.visual.editor.actions.EditAction;
 
 /**
  *
@@ -68,8 +72,12 @@ public class VersionNode extends BeanNode {
 
     /** Providing the Open action on a feed entry */
     @Override
-    public Action[] getActions(boolean popup) {
-        return new Action[]{SystemAction.get(OpenAction.class)};
+    public Action[] getActions(boolean context) {
+        List<Action> actions = new ArrayList<Action>(10);
+        actions.add(SystemAction.get(OpenAction.class));
+        actions.addAll(Utilities.actionsForPath("CowGraph/Nodes/Version/Actions"));
+        actions.addAll(Arrays.asList(super.getActions(context)));
+        return actions.toArray(new Action[actions.size()]);
     }
 
     @Override
@@ -88,7 +96,7 @@ public class VersionNode extends BeanNode {
 
         @Override
         public void open() {
-            CowGraphVisualEditorTopComponent.openOrActivateForSelectedVersion();
+            EditAction.openInVersionEditor(version);
         }
     }
 }

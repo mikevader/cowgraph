@@ -27,7 +27,7 @@ import zbeans.simple.beans.ObservableBean;
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class CowGraphVersion extends ObservableBean {
+public class CowGraphVersion extends ObservableBean implements Cloneable {
 
     public static final String PROP_NAME = "name";
     public static final String PROP_DATE = "date";
@@ -101,7 +101,7 @@ public class CowGraphVersion extends ObservableBean {
         }
         return added;
     }
-    
+
     public String getLongDisplayName() {
         return getDocument().getName() + " - " + getName();
     }
@@ -120,5 +120,24 @@ public class CowGraphVersion extends ObservableBean {
      */
     protected final void firePropertyElementRemoved(String propertyName, final Object elementRemoved) {
         firePropertyChange(propertyName, elementRemoved, null);
+    }
+
+    /**
+     * Creates a deep copy of a version object within the same document. This can be used for creating a continuation of a version.
+     * @param version1
+     * @return 
+     */
+    public static CowGraphVersion nextVersion(CowGraphVersion version1) {
+        CowGraphVersion version2 = new CowGraphVersion(version1.document);
+
+        version2.name = version1.name + ".1";
+        version2.date = new Date();
+        
+        for (GraphElement element1 : version1.elements) {
+            version2.add(element1.clone());
+        }
+        
+        
+        return version2;
     }
 }
