@@ -15,7 +15,7 @@ public class ObservableBean implements PropertyChangeObservable {
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
     @Override
-    public void addPropertyChangeListener(final PropertyChangeListener listener) {
+    public void addPropertyChangeListener(final PropertyChangeListener listener) {        
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
