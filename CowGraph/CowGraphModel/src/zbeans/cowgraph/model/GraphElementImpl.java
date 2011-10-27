@@ -28,10 +28,10 @@ import zbeans.simple.beans.ObservableBean;
 public class GraphElementImpl extends ObservableBean implements GraphElement {
 
     private GraphElementType type;
-    private int x;
-    private int y;
+    private int x = 0;
+    private int y = 0;
 
-    private Color color;
+    private Color color = Color.BLACK;
 
     public GraphElementImpl(final GraphElementType type) {
         this.type = type;
