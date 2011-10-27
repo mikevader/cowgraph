@@ -121,8 +121,8 @@ public class CircleWidget extends Widget {
     protected void paintWidget() {
         super.paintWidget();
         Graphics2D gr = getGraphics();
-        gr.setColor(Color.BLACK);
-        gr.drawOval(CircleWidget.BOUNDS_INSET, CircleWidget.BOUNDS_INSET, (int) element.getWidth(), (int) element.getWidth());
+        gr.setColor(element.getColor());
+        gr.drawOval(CircleWidget.BOUNDS_INSET, CircleWidget.BOUNDS_INSET, element.getWidth(), element.getWidth());
     }
 
     /**
