@@ -47,6 +47,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     private CowGraphVersion version;
     private LayerWidget mainLayer;
+    private boolean active = false;
 
     CowGraphVisualEditorScene() {
         mainLayer = new LayerWidget(this);
@@ -86,7 +87,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
     public void setVersion(CowGraphVersion version) {        
         unsubscribeFromVersionChanges();
         this.version = version;
-        if (isVisible()) {
+        if (active) {
             subscribeToVersionChanges();
         }
     }
@@ -105,6 +106,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected void notifyAdded() {
+        active = true;
         super.notifyAdded();
         // TODO: ensure to create all widgets first, according to current set version.
         subscribeToVersionChanges();        
@@ -112,6 +114,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected void notifyRemoved() {
+        active = false;
         super.notifyRemoved();
         unsubscribeFromVersionChanges();
     }
