@@ -31,18 +31,8 @@ public class CowGraphVersion extends ObservableBean implements Cloneable {
 
     public static final String PROP_NAME = "name";
     public static final String PROP_DATE = "date";
-
-    public static enum Property {
-
-        /**
-         * We send a property change event to this property when an element is added, passing the added element as new value.
-         */
-        ELEMENTS_ADDED,
-        /**
-         * We send a property change event to this property when an element is removed, passing the removed element as old value.
-         */
-        ELEMENTS_REMOVED;
-    }
+    public static final String PROP_ELEMENTS = "elements";
+    
     private CowGraphDocument document;
     private String name;
     private Date date;
@@ -90,36 +80,20 @@ public class CowGraphVersion extends ObservableBean implements Cloneable {
 
     public GraphElement remove(int index) {
         GraphElement elem = elements.remove(index);
-        firePropertyElementRemoved(Property.ELEMENTS_REMOVED.name(), elem);
+        firePropertyElementRemoved(PROP_ELEMENTS, elem);
         return elem;
     }
 
     public boolean add(GraphElement elem) {
         boolean added = elements.add(elem);
         if (added) {
-            firePropertyElementAdded(Property.ELEMENTS_ADDED.name(), elem);
+            firePropertyElementAdded(PROP_ELEMENTS, elem);
         }
         return added;
     }
 
     public String getLongDisplayName() {
         return getDocument().getName() + " - " + getName();
-    }
-
-    /**
-     * FIXME: move to ObservableBean
-     * Fire change event for element added.
-     */
-    protected final void firePropertyElementAdded(String propertyName, final Object elementAdded) {
-        firePropertyChange(propertyName, null, elementAdded);
-    }
-
-    /**
-     * FIXME: move to ObservableBean
-     * Fire change event for element removed.
-     */
-    protected final void firePropertyElementRemoved(String propertyName, final Object elementRemoved) {
-        firePropertyChange(propertyName, elementRemoved, null);
     }
 
     /**
