@@ -21,6 +21,7 @@ import java.util.Map;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
 import zbeans.cowgraph.model.Circle;
+import zbeans.cowgraph.model.CowGraphProduct;
 import zbeans.cowgraph.model.GraphElement;
 
 public class WidgetFactory {
@@ -32,6 +33,7 @@ public class WidgetFactory {
      */
     static {
         registerGraphElementWidget(Circle.class, CircleWidget.class);
+        registerGraphElementWidget(CowGraphProduct.class, CowGraphProductWidget.class);
     }
 
     public static void registerGraphElementWidget(Class<? extends GraphElement> graphElementClass, Class<? extends Widget> widgetClass) {

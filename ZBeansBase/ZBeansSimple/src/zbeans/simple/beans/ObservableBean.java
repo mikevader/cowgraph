@@ -139,6 +139,34 @@ public class ObservableBean implements PropertyChangeObservable {
         propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
     }
     
+    /**
+     * Fire change event for an element added to a collection
+     */
+    protected final void firePropertyElementAdded(final String collectionPropertyName, final Object elementAdded) {
+        firePropertyChange(getCollectionElementAddedPropertyName(collectionPropertyName), null, elementAdded);
+    }
+
+    /**
+     * Fire change event for an element removed to a collection
+     */
+    protected final void firePropertyElementRemoved(final String collectionPropertyName, final Object elementRemoved) {
+        firePropertyChange(getCollectionElementRemovedPropertyName(collectionPropertyName), elementRemoved, null);
+    }
+    
+    /**
+     * Name of the property for which a change event is fired, when an element is added to the collection property of the given name.
+     */
+    public static String getCollectionElementAddedPropertyName(String collectionPropertyName) {
+        return collectionPropertyName + "_ADDED";
+    }
+    
+    /**
+     * Name of the property for which a change event is fired, when an element is removed from the collection property of the given name.
+     */
+    public static String getCollectionElementRemovedPropertyName(String collectionPropertyName) {
+        return collectionPropertyName + "_REMOVED";
+    }
+
 
 
 }
