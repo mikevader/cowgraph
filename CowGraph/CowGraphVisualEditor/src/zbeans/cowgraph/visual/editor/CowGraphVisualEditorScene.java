@@ -38,6 +38,7 @@ import zbeans.cowgraph.model.GraphElement;
 import zbeans.cowgraph.model.GraphElementFactory;
 import zbeans.cowgraph.model.GraphElementType;
 import zbeans.cowgraph.visual.editor.widget.WidgetFactory;
+import zbeans.simple.beans.ObservableBean;
 
 /**
  *
@@ -47,6 +48,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     private CowGraphVersion version;
     private LayerWidget mainLayer;
+    private boolean active = false;
 
     CowGraphVisualEditorScene() {
         mainLayer = new LayerWidget(this);
@@ -86,7 +88,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
     public void setVersion(CowGraphVersion version) {        
         unsubscribeFromVersionChanges();
         this.version = version;
-        if (isVisible()) {
+        if (active) {
             subscribeToVersionChanges();
         }
     }
@@ -105,6 +107,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected void notifyAdded() {
+        active = true;
         super.notifyAdded();
         // TODO: ensure to create all widgets first, according to current set version.
         subscribeToVersionChanges();        
@@ -112,6 +115,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     protected void notifyRemoved() {
+        active = false;
         super.notifyRemoved();
         unsubscribeFromVersionChanges();
     }
@@ -152,7 +156,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_ADDED.name())) {
+        if (evt.getPropertyName().equals(ObservableBean.getCollectionElementAddedPropertyName(CowGraphVersion.PROP_ELEMENTS))) {
             this.addNode((GraphElement) evt.getNewValue());
 
             if (SwingUtilities.isEventDispatchThread()) {
@@ -169,7 +173,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
                 });
             }
 
-        } else if (evt.getPropertyName().equals(CowGraphVersion.Property.ELEMENTS_REMOVED.name())) {
+        } else if (evt.getPropertyName().equals(ObservableBean.getCollectionElementRemovedPropertyName(CowGraphVersion.PROP_ELEMENTS))) {
             GraphElement element = (GraphElement) evt.getOldValue();
             //TODO: Search in the graph for the node (aka GraphElement) and remove it. Maybe it would be an good idea to keep pointers to the nodes in a hashtable for better performance.
         }

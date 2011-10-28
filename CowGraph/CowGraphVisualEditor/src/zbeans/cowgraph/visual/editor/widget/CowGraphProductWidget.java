@@ -30,31 +30,26 @@ import org.netbeans.api.visual.border.BorderFactory;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
 import zbeans.cowgraph.model.Circle;
+import zbeans.cowgraph.model.CowGraphProduct;
+import zbeans.cowgraph.model.GraphElement;
 
 /**
- * Example widget to visualize a Circle, that can move and resize the circle and updates to changes in the Circle model element.
- * 
- * See following tutorials for information about resizing functionality:
- * http://netbeans.org/community/magazine/html/04/visuallibrary.html
- * http://java.dzone.com/news/how-add-resize-functionality-v
- * http://blogs.oracle.com/geertjan/entry/small_netbeans_visual_library_resize
+ * Widget to render and edit a cow graph product in the visual editor
  */
-public class CircleWidget extends Widget {
+public class CowGraphProductWidget extends Widget {
     
     public static final int BOUNDS_INSET = 10;
 
-    private Circle element;
-    private CircleDependency dependency;
+    private CowGraphProduct element;
+    private GraphElementDependency dependency;
 
-    public CircleWidget(Scene scene, Circle element) {
+    public CowGraphProductWidget(Scene scene, CowGraphProduct element) {
         super(scene);
         this.element = element;
 
 
         setBorder(BorderFactory.createEmptyBorder());
 
-        // order of actions added is important: resize action won't get any events, when after move action
-        getActions().addAction(ActionFactory.createResizeAction(new CircleResizeStrategy(), null));
         getActions().addAction(ActionFactory.createMoveAction());
 
         getActions().addAction(ActionFactory.createSelectAction(new SelectProvider() {
@@ -95,9 +90,11 @@ public class CircleWidget extends Widget {
         getActions().addAction(hoverAction);
         getScene().getActions().addAction(hoverAction);
 
-        dependency = new CircleDependency(this, element);
+        dependency = new GraphElementDependency(this, element);
         dependency.updateWidget();
         addDependency(dependency);
+        
+        createCompositeChildWidgets();
     }
 
     @Override
@@ -110,47 +107,11 @@ public class CircleWidget extends Widget {
         element.removePropertyChangeListener(dependency);
     }
 
-    @Override
-    protected Rectangle calculateClientArea() {
-        int width = (int) element.getWidth() + 2 * CircleWidget.BOUNDS_INSET;
-        Rectangle rect = new Rectangle(0, 0, width, width);
-        return rect;
-    }
-
-    @Override
-    protected void paintWidget() {
-        super.paintWidget();
-        Graphics2D gr = getGraphics();
-        gr.setColor(element.getColor());
-        gr.drawOval(CircleWidget.BOUNDS_INSET, CircleWidget.BOUNDS_INSET, element.getWidth(), element.getWidth());
-    }
-
-    /**
-     * A simple strategy that puts the bounds according to current choosen width (height same as width).
-     */
-    private static class CircleResizeStrategy implements ResizeStrategy {
-
-        @Override
-        public Rectangle boundsSuggested(final Widget widget,
-                final Rectangle originalBounds,
-                final Rectangle suggestedBounds,
-                final ResizeProvider.ControlPoint controlPoint) {
-            final Rectangle result = new Rectangle(suggestedBounds);
-
-            final double deltaW = Math.abs(suggestedBounds.getWidth() - originalBounds.getWidth());
-            final double deltaH = Math.abs(suggestedBounds.getHeight() - originalBounds.getHeight());
-
-            if (deltaW >= deltaH) { // moving mostly horizontally
-                result.height = result.width;
-            } else { // moving mostly vertically
-                result.width = result.height;
-            }
-            
-            // keep position
-            result.x = 0;
-            result.y = 0;
-            return result;
+    private void createCompositeChildWidgets() {
+        for (GraphElement graphElem : element.getElements()) {
+            addChild(WidgetFactory.createWidget(getScene(), graphElem));            
         }
     }
+
     
 }

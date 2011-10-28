@@ -16,9 +16,7 @@
  */
 package zbeans.cowgraph.model;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.awt.Color;
 
 /**
  * Cash cow buble: a circle with a specified color, size, position, text and
@@ -26,19 +24,19 @@ import java.util.List;
  *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public class CashCowProduct extends GraphElementImpl implements CompositeGraphElement {
-    private List<GraphElement> elements;
-
-    public CashCowProduct() {
-        super(GraphElementType.CIRCLE);
-        elements = new LinkedList<GraphElement>();
-
-        // TODO: Create here a complete CashCow buble with circles arrows and text graph elements.
-    }
-
-    @Override
-    public List<GraphElement> getElements() {
-        return Collections.unmodifiableList(elements);
+public class CowGraphProduct extends CompositeGraphElementImpl {
+    
+    private Circle circle1 = new Circle();
+    private Circle circle2 = new Circle();
+    
+    public CowGraphProduct() {
+        super(GraphElementType.PRODUCT);
+        circle1.setColor(Color.RED);
+        circle2.setColor(Color.BLUE);
+        circle2.setX(20);
+        circle2.setY(20);
+        addGraphElement(circle1);
+        addGraphElement(circle2);        
     }
     
 }

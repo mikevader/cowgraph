@@ -17,6 +17,7 @@
 package zbeans.cowgraph.visual.editor.widget;
 
 import java.awt.Rectangle;
+import java.beans.PropertyChangeEvent;
 import org.netbeans.api.visual.widget.Widget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,11 @@ public class CircleDependency extends GraphElementDependency<Circle, CircleWidge
     }
 
     @Override
+    public boolean isWidgetUpdateNeeded(PropertyChangeEvent event) {
+        return super.isWidgetUpdateNeeded(event) || Circle.PROP_WIDTH.equals(event.getPropertyName());
+    }
+       
+    @Override
     public void updateWidget() {
         super.updateWidget();
         Circle circle = getGraphElement();
@@ -50,6 +56,6 @@ public class CircleDependency extends GraphElementDependency<Circle, CircleWidge
         int width = (int) circle.getWidth() + 2 * CircleWidget.BOUNDS_INSET;
         widget.setPreferredBounds(new Rectangle(0, 0, width, width));
         LOGGER.info("Circle Widget width updated: " + widget.getPreferredBounds().width);
-    }   
+    }
     
 }

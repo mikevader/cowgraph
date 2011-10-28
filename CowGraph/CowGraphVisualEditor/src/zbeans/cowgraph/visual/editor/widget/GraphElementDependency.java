@@ -56,7 +56,7 @@ public class GraphElementDependency<G extends GraphElement, W extends Widget> im
         }
         propagatingChangesToWidget = true;
 
-        if (isUpdateNeeded(evt)) {
+        if (isWidgetUpdateNeeded(evt)) {
             updateWidget();
 
             SwingUtilities.invokeLater(new Runnable() {
@@ -82,17 +82,16 @@ public class GraphElementDependency<G extends GraphElement, W extends Widget> im
         this.propagatingChangesToNode = false;
     }
 
-    public boolean isUpdateNeeded(PropertyChangeEvent event) {
-        return GraphElement.PROP_X.equals(event.getPropertyName()) || GraphElement.PROP_Y.equals(event.getPropertyName());
-    }
-
     public void updateGraphElement() {
         this.graphElement.setX(widget.getPreferredLocation().x);
         this.graphElement.setY(widget.getPreferredLocation().y);
-
     }
 
+    public boolean isWidgetUpdateNeeded(PropertyChangeEvent event) {
+        return GraphElement.PROP_X.equals(event.getPropertyName()) || GraphElement.PROP_Y.equals(event.getPropertyName()) || GraphElement.PROP_COLOR.equals(event.getPropertyName());
+    }
+    
     public void updateWidget() {
-        widget.setPreferredLocation(new Point((int) graphElement.getX(), (int) graphElement.getY()));
+        widget.setPreferredLocation(new Point(graphElement.getX(), graphElement.getY()));
     }
 }
