@@ -68,7 +68,7 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
             @Override
             public void accept(Widget widget, Point point, Transferable transferable) {
                 addGraphElementsFromTransferable(transferable, widget.convertLocalToScene(point));
-                getView().requestFocusInWindow();
+                //getView().requestFocusInWindow();
             }
         }));
 

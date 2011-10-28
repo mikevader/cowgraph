@@ -17,10 +17,10 @@
 package zbeans.cowgraph.visual.editor.actions;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JMenuItem;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -30,21 +30,18 @@ import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import org.openide.util.NbBundle.Messages;
-import org.openide.util.actions.Presenter;
-import zbeans.cowgraph.datasource.DocumentDataSource;
 import zbeans.cowgraph.model.CowGraphDocument;
 import zbeans.cowgraph.model.CowGraphVersion;
 
-@ActionID(category = "File",
+@ActionID(category = "CowGraph",
 id = "zbeans.cowgraph.visual.editor.actions.AddVersionAction")
-@ActionRegistration(iconBase = "zbeans/cowgraph/visual/editor/actions/addVersion.png",
+@ActionRegistration(iconBase = "zbeans/cowgraph/visual/editor/actions/addversion.png",
 displayName = "#CTL_AddVersionAction")
 @ActionReferences({
-    @ActionReference(path = "Toolbars/File", position = 0),
-    @ActionReference(path = "CowGraph/Nodes/Version/Actions")
+    @ActionReference(path = "CowGraph/Nodes/Version/Actions", position=0)
 })
 @Messages("CTL_AddVersionAction=Create New Version...")
-public final class AddVersionAction extends AbstractAction implements ContextAwareAction, LookupListener, Presenter.Popup {
+public final class AddVersionAction extends AbstractAction implements ActionListener, ContextAwareAction, LookupListener {
 
     private Lookup.Result<CowGraphDocument> documentResult;
     private Lookup.Result<CowGraphVersion> versionResult;
@@ -66,13 +63,11 @@ public final class AddVersionAction extends AbstractAction implements ContextAwa
     }
 
     private AddVersionAction(String label) {
-        super(label, new ImageIcon("zbeans/cowgraph/visual/editor/actions/addVersion.png"));
+        super(label);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        DocumentDataSource dataSource = Lookup.getDefault().lookup(DocumentDataSource.class);
-
         CowGraphVersion version = null;
 
         if (this.documentResult != null && !this.documentResult.allInstances().isEmpty()) {
@@ -103,10 +98,5 @@ public final class AddVersionAction extends AbstractAction implements ContextAwa
         } else {
             this.setEnabled(false);
         }
-    }
-
-    @Override
-    public JMenuItem getPopupPresenter() {
-        return new JMenuItem(this);
     }
 }

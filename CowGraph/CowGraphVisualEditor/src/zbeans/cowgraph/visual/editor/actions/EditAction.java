@@ -16,13 +16,11 @@
  */
 package zbeans.cowgraph.visual.editor.actions;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JMenuItem;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -33,7 +31,6 @@ import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.Utilities;
-import org.openide.util.actions.Presenter;
 import zbeans.cowgraph.model.CowGraphVersion;
 import zbeans.cowgraph.visual.editor.CowGraphVisualEditorTopComponent;
 
@@ -43,13 +40,13 @@ import zbeans.cowgraph.visual.editor.CowGraphVisualEditorTopComponent;
  */
 @ActionID(category = "CowGraph",
 id = "zbeans.cowgraph.visual.editor.actions.EditAction")
-@ActionRegistration(iconBase = "zbeans/cowgraph/visual/editor/actions/add.png",
+@ActionRegistration(iconBase = "zbeans/cowgraph/visual/editor/new_icon.png",
 displayName = "#CTL_EditAction")
 @ActionReferences({
     @ActionReference(path = "Toolbars/File", position = 0)
 })
 @Messages("CTL_EditAction=Edit Version...")
-public class EditAction extends AbstractAction implements LookupListener, ContextAwareAction, Presenter.Toolbar, Presenter.Popup {
+public class EditAction extends AbstractAction implements LookupListener, ContextAwareAction {
 
     private Lookup.Result<CowGraphVersion> result;
     private JButton toolbarBtn;
@@ -59,7 +56,7 @@ public class EditAction extends AbstractAction implements LookupListener, Contex
     }
 
     public EditAction(Lookup lookup) {
-        super(Bundle.CTL_EditAction(), new ImageIcon("com/netbeansrcp/taskactions/Universal.png"));
+        super(Bundle.CTL_EditAction(), new ImageIcon("zbeans/cowgraph/visual/editor/new_icon.png"));
 
         this.result = lookup.lookupResult(CowGraphVersion.class);
         this.result.addLookupListener(this);
@@ -95,19 +92,5 @@ public class EditAction extends AbstractAction implements LookupListener, Contex
     @Override
     public Action createContextAwareInstance(Lookup actionContext) {
         return new EditAction(actionContext);
-    }
-
-    @Override
-    public Component getToolbarPresenter() {
-        if (this.toolbarBtn == null) {
-            this.toolbarBtn = new JButton(this);
-        }
-        
-        return this.toolbarBtn;
-    }
-
-    @Override
-    public JMenuItem getPopupPresenter() {
-        return new JMenuItem(this);
     }
 }
