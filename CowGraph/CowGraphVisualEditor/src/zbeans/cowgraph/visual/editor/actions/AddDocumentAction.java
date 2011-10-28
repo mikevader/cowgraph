@@ -19,6 +19,8 @@ package zbeans.cowgraph.visual.editor.actions;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
@@ -43,14 +45,22 @@ public final class AddDocumentAction extends AbstractAction implements ActionLis
     @Override
     public void actionPerformed(ActionEvent e) {
         DocumentDataSource dataSource = Lookup.getDefault().lookup(DocumentDataSource.class);
-
         CowGraphVersion version = null;
 
-        // No document is selected and a new doc and version is created
-        CowGraphDocument doc = dataSource.createNewDocument();
-        version = new CowGraphVersion(doc);
-        doc.add(version);
+        NotifyDescriptor.InputLine nd = new NotifyDescriptor.InputLine("Name:", "Document", NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.QUESTION_MESSAGE);
+        Object res = DialogDisplayer.getDefault().notify(nd);
 
-        EditAction.openInVersionEditor(version);
+        if (NotifyDescriptor.OK_OPTION == res) {
+            String documentname = nd.getInputText();
+
+            // No document is selected and a new doc and version is created
+            CowGraphDocument doc = dataSource.createNewDocument();
+            doc.setName(documentname);
+            version = new CowGraphVersion(doc);
+            version.setName("v1");
+            doc.add(version);
+
+            EditAction.openInVersionEditor(version);
+        }
     }
 }

@@ -18,7 +18,6 @@ package zbeans.cowgraph.visual.editor.actions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import org.openide.awt.ActionRegistration;
