@@ -110,6 +110,15 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
         active = true;
         super.notifyAdded();
         // TODO: ensure to create all widgets first, according to current set version.
+        
+        if (this.version != null) {
+            
+            for (GraphElement graphElement : this.version.getElements()) {
+                Widget widget = WidgetFactory.createWidget(this, graphElement);
+                mainLayer.addChild(widget);
+            }
+        }
+        
         subscribeToVersionChanges();        
     }
 
@@ -135,8 +144,8 @@ public class CowGraphVisualEditorScene extends GraphScene<GraphElement, String> 
     }
 
     @Override
-    protected Widget attachNodeWidget(GraphElement node) {
-        Widget widget = WidgetFactory.createWidget(this, node);
+    protected Widget attachNodeWidget(GraphElement element) {
+        Widget widget = WidgetFactory.createWidget(this, element);
         mainLayer.addChild(widget);
         return widget;
     }

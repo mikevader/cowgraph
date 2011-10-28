@@ -91,7 +91,7 @@ public class CircleWidget extends Widget {
                 setBorder(BorderFactory.createResizeBorder(BOUNDS_INSET-1, Color.BLACK, false));
             }
         });
-
+        
         getActions().addAction(hoverAction);
         getScene().getActions().addAction(hoverAction);
 
