@@ -47,7 +47,7 @@ public final class AddDocumentAction extends AbstractAction implements ActionLis
         DocumentDataSource dataSource = Lookup.getDefault().lookup(DocumentDataSource.class);
         CowGraphVersion version = null;
 
-        NotifyDescriptor.InputLine nd = new NotifyDescriptor.InputLine("Name:", "Document", NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.QUESTION_MESSAGE);
+        NotifyDescriptor.InputLine nd = new NotifyDescriptor.InputLine("Name:", "Document", NotifyDescriptor.OK_CANCEL_OPTION, NotifyDescriptor.PLAIN_MESSAGE);
         Object res = DialogDisplayer.getDefault().notify(nd);
 
         if (NotifyDescriptor.OK_OPTION == res) {
