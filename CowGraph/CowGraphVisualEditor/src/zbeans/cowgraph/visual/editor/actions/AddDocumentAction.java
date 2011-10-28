@@ -16,36 +16,29 @@
  */
 package zbeans.cowgraph.visual.editor.actions;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import org.openide.awt.ActionRegistration;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionReferences;
 import org.openide.awt.ActionID;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
-import org.openide.util.actions.Presenter;
 import zbeans.cowgraph.datasource.DocumentDataSource;
 import zbeans.cowgraph.model.CowGraphDocument;
 import zbeans.cowgraph.model.CowGraphVersion;
 
-@ActionID(category = "File",
+@ActionID(category = "CowGraph",
 id = "zbeans.cowgraph.visual.editor.actions.AddDocumentAction")
-@ActionRegistration(iconBase = "zbeans/cowgraph/visual/editor/actions/newDocument.png",
+@ActionRegistration(iconBase = "zbeans/cowgraph/visual/editor/actions/newdocument.png",
 displayName = "#CTL_AddDocumentAction")
 @ActionReferences({
-    @ActionReference(path = "Toolbars/File", position = 0),
-    @ActionReference(path = "CowGraph/Nodes/Document/Actions")
+    @ActionReference(path = "Menu/File", position = 0),
+    @ActionReference(path = "Toolbars/File", position = 3333)
 })
 @Messages("CTL_AddDocumentAction=Create New Document...")
-public final class AddDocumentAction extends AbstractAction implements Presenter.Toolbar {
-
-    public AddDocumentAction() {
-        super(Bundle.CTL_AddDocumentAction(), new ImageIcon("zbeans/cowgraph/visual/editor/actions/newDocument.png"));
-    }
+public final class AddDocumentAction extends AbstractAction implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -59,10 +52,5 @@ public final class AddDocumentAction extends AbstractAction implements Presenter
         doc.add(version);
 
         EditAction.openInVersionEditor(version);
-    }
-
-    @Override
-    public Component getToolbarPresenter() {
-        return new JButton(this);
     }
 }

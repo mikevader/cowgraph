@@ -26,11 +26,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.Action;
-import org.openide.actions.DeleteAction;
 import org.openide.nodes.BeanNode;
 import org.openide.nodes.Children;
 import org.openide.util.Utilities;
-import org.openide.util.actions.SystemAction;
 import org.openide.util.lookup.Lookups;
 import zbeans.cowgraph.model.CowGraphDocument;
 
