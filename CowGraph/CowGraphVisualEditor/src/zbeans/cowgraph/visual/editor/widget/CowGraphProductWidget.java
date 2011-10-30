@@ -37,6 +37,10 @@ public class CowGraphProductWidget extends Widget {
 
     private CowGraphProduct element;
     private GraphElementDependency dependency;
+    
+    private CircleWidget circleWidget;
+    private ArrowWidget arrowWidget;
+    private LabelTextWidget textWidget;
 
     public CowGraphProductWidget(Scene scene, CowGraphProduct element) {
         super(scene);
@@ -103,10 +107,23 @@ public class CowGraphProductWidget extends Widget {
     }
 
     private void createCompositeChildWidgets() {
-        for (GraphElement graphElem : element.getElements()) {
-            addChild(WidgetFactory.createWidget(getScene(), graphElem));            
-        }
+        circleWidget = new CircleWidget(getScene(), element.getCircle());
+        arrowWidget = new ArrowWidget(getScene(), element.getArrow());
+        textWidget = new LabelTextWidget(getScene(), element.getLabelText()); 
+            
+        circleWidget.addDependency(new Dependency() {
+            @Override
+            public void revalidateDependency() {
+                element.getArrow().setToX(element.getCircle().getWidth() * 2);
+                element.getArrow().setToY(-element.getCircle().getWidth() * 2);
+                element.getLabelText().setX(-element.getCircle().getWidth() / 2);
+                element.getLabelText().setY(element.getCircle().getWidth() / 2 + 20);
+            }           
+        });
+        
+        addChild(circleWidget);
+        addChild(textWidget);
+        // addChild(arrowWidget);
     }
-
     
 }

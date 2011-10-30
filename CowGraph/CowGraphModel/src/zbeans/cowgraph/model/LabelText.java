@@ -17,16 +17,33 @@
 package zbeans.cowgraph.model;
 
 /**
+ * A circle.
+ *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
-public enum GraphElementGroup {
+public class LabelText extends GraphElementImpl {
 
-    BASIC("basic"),
-    COW("cow");
+    public static final String PROP_TEXT = "text";   
     
-    public final String title;
+    private String text = "Text";    
 
-    private GraphElementGroup(String title) {
-        this.title = title;
+    public LabelText() {
+        super(GraphElementType.LABEL);
+    }
+
+    public String getText() {
+        return text;
+    }
+       
+    public void setText(String text) {
+        String oldText = this.text;
+        this.text = text;
+        this.firePropertyChange(PROP_TEXT, oldText, text);
+    }
+    
+    public LabelText clone() {
+        LabelText clone = (LabelText)super.clone();        
+        clone.text = text;        
+        return clone;
     }
 }

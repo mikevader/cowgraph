@@ -23,7 +23,9 @@ package zbeans.cowgraph.model;
 public enum GraphElementType {
 
     CIRCLE("Circle", Circle.class, GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/palette_circle.png"),
-    PRODUCT("Product", CowGraphProduct.class, GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/palette_product.png");
+    ARROW("Arrow", Arrow.class, GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/palette_arrow.png"),
+    LABEL("Label", LabelText.class, GraphElementGroup.BASIC, "zbeans/cowgraph/visual/editor/palette/palette_text.png"),    
+    PRODUCT("Product", CowGraphProduct.class, GraphElementGroup.COW, "zbeans/cowgraph/visual/editor/palette/palette_product.png");
     
     private final String name;
     private final GraphElementGroup group;

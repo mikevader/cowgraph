@@ -18,19 +18,21 @@ package zbeans.cowgraph.visual.editor.widget;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Paint;
 import java.awt.Point;
 import java.awt.Rectangle;
 import org.netbeans.api.visual.action.ActionFactory;
 import org.netbeans.api.visual.action.ResizeProvider;
 import org.netbeans.api.visual.action.ResizeStrategy;
 import org.netbeans.api.visual.action.SelectProvider;
+import org.netbeans.api.visual.action.TextFieldInplaceEditor;
 import org.netbeans.api.visual.action.TwoStateHoverProvider;
 import org.netbeans.api.visual.action.WidgetAction;
 import org.netbeans.api.visual.border.BorderFactory;
+import org.netbeans.api.visual.widget.LabelWidget;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
 import zbeans.cowgraph.model.Circle;
+import zbeans.cowgraph.model.LabelText;
 
 /**
  * Example widget to visualize a Circle, that can move and resize the circle and updates to changes in the Circle model element.
@@ -40,23 +42,25 @@ import zbeans.cowgraph.model.Circle;
  * http://java.dzone.com/news/how-add-resize-functionality-v
  * http://blogs.oracle.com/geertjan/entry/small_netbeans_visual_library_resize
  */
-public class CircleWidget extends Widget {
-    
+public class LabelTextWidget extends Widget {
+
     public static final int BOUNDS_INSET = 10;
+    private LabelText element;
+    private GraphElementDependency<LabelText, LabelTextWidget> dependency;
+    private LabelWidget labelWidget;
 
-    private Circle element;
-    private CircleDependency dependency;
-
-    public CircleWidget(Scene scene, Circle element) {
+    public LabelTextWidget(Scene scene, LabelText element) {
         super(scene);
         this.element = element;
 
-
         setBorder(BorderFactory.createEmptyBorder());
 
-        // order of actions added is important: resize action won't get any events, when after move action
-        getActions().addAction(ActionFactory.createResizeAction(new CircleResizeStrategy(), null));
-        getActions().addAction(ActionFactory.createMoveAction());
+        labelWidget = new LabelWidget(scene, element.getText());
+        WidgetAction editorAction = ActionFactory.createInplaceEditorAction(new LabelTextFieldEditor());
+        labelWidget.getActions().addAction(editorAction);
+        addChild(labelWidget);
+        
+                getActions().addAction(ActionFactory.createMoveAction());
 
         getActions().addAction(ActionFactory.createSelectAction(new SelectProvider() {
 
@@ -92,11 +96,12 @@ public class CircleWidget extends Widget {
                 setBorder(BorderFactory.createResizeBorder(BOUNDS_INSET-1, Color.BLACK, false));
             }
         });
-        
+
         getActions().addAction(hoverAction);
         getScene().getActions().addAction(hoverAction);
 
-        dependency = new CircleDependency(this, element);
+
+        dependency = new GraphElementDependency<LabelText, LabelTextWidget>(this, element);
         dependency.updateWidget();
         addDependency(dependency);
     }
@@ -111,51 +116,18 @@ public class CircleWidget extends Widget {
         element.removePropertyChangeListener(dependency);
     }
 
-    @Override
-    protected Rectangle calculateClientArea() {
-        int width = (int) element.getWidth() + 2 * CircleWidget.BOUNDS_INSET;
-        int x = - width / 2;
-        int y = - width / 2;
-        Rectangle rect = new Rectangle(x, y, width, width);
-        return rect;
-    }
+    private class LabelTextFieldEditor implements TextFieldInplaceEditor {
 
-    @Override
-    protected void paintWidget() {
-        super.paintWidget();
-        Graphics2D gr = getGraphics();
-        gr.setColor(element.getColor());
-        int x = - element.getWidth() / 2;
-        int y = - element.getWidth() / 2;
-        gr.drawOval(x, y, element.getWidth(), element.getWidth());
-    }
+        public boolean isEnabled(Widget widget) {
+            return true;
+        }
 
-    /**
-     * A simple strategy that puts the bounds according to current choosen width (height same as width).
-     */
-    private static class CircleResizeStrategy implements ResizeStrategy {
+        public String getText(Widget widget) {
+            return ((LabelWidget) widget).getLabel();
+        }
 
-        @Override
-        public Rectangle boundsSuggested(final Widget widget,
-                final Rectangle originalBounds,
-                final Rectangle suggestedBounds,
-                final ResizeProvider.ControlPoint controlPoint) {
-            final Rectangle result = new Rectangle(suggestedBounds);
-
-            final double deltaW = Math.abs(suggestedBounds.getWidth() - originalBounds.getWidth());
-            final double deltaH = Math.abs(suggestedBounds.getHeight() - originalBounds.getHeight());
-            
-            if (deltaW >= deltaH) { // moving mostly horizontally
-                result.height = result.width;
-            } else { // moving mostly vertically
-                result.width = result.height;
-            }
-            
-            // keep position
-            result.x = - result.width / 2;
-            result.y = - result.width / 2;
-            return result;
+        public void setText(Widget widget, String text) {
+            ((LabelWidget) widget).setLabel(text);
         }
     }
-    
 }

@@ -54,7 +54,7 @@ public class CircleDependency extends GraphElementDependency<Circle, CircleWidge
         Circle circle = getGraphElement();
         Widget widget = getWidget();
         int width = (int) circle.getWidth() + 2 * CircleWidget.BOUNDS_INSET;
-        widget.setPreferredBounds(new Rectangle(0, 0, width, width));
+        widget.setPreferredBounds(new Rectangle(-width/2, -width/2, width, width));
         LOGGER.info("Circle Widget width updated: " + widget.getPreferredBounds().width);
     }
     

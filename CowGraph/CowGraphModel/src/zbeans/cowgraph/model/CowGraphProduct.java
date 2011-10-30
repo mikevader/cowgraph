@@ -26,17 +26,36 @@ import java.awt.Color;
  */
 public class CowGraphProduct extends CompositeGraphElementImpl {
     
-    private Circle circle1 = new Circle();
-    private Circle circle2 = new Circle();
+    private Circle circle = new Circle();
+    private Arrow arrow = new Arrow();
+    private LabelText labelText = new LabelText();
+    
+    private static int count = 1;
     
     public CowGraphProduct() {
         super(GraphElementType.PRODUCT);
-        circle1.setColor(Color.RED);
-        circle2.setColor(Color.BLUE);
-        circle2.setX(20);
-        circle2.setY(20);
-        addGraphElement(circle1);
-        addGraphElement(circle2);        
+        circle.setColor(Color.BLUE);        
+        arrow.setColor(Color.BLUE);
+        labelText.setText("Product " + count++);
+        labelText.setX(0);
+        labelText.setY(45);        
+        addGraphElement(arrow);
+        addGraphElement(circle);
+        addGraphElement(labelText);
     }
+
+    public Circle getCircle() {
+        return circle;
+    }
+
+    public Arrow getArrow() {
+        return arrow;
+    }
+
+    public LabelText getLabelText() {
+        return labelText;
+    }
+    
+    
     
 }
