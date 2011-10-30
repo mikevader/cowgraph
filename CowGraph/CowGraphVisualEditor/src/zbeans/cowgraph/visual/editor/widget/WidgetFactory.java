@@ -20,9 +20,11 @@ import java.util.HashMap;
 import java.util.Map;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
+import zbeans.cowgraph.model.Arrow;
 import zbeans.cowgraph.model.Circle;
 import zbeans.cowgraph.model.CowGraphProduct;
 import zbeans.cowgraph.model.GraphElement;
+import zbeans.cowgraph.model.LabelText;
 
 public class WidgetFactory {
 
@@ -33,6 +35,8 @@ public class WidgetFactory {
      */
     static {
         registerGraphElementWidget(Circle.class, CircleWidget.class);
+        registerGraphElementWidget(Arrow.class, ArrowWidget.class);
+        registerGraphElementWidget(LabelText.class, LabelTextWidget.class);
         registerGraphElementWidget(CowGraphProduct.class, CowGraphProductWidget.class);
     }
 

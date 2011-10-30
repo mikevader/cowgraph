@@ -18,6 +18,7 @@ package zbeans.cowgraph.visual.editor.widget;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.Point;
 import java.awt.Rectangle;
 import org.netbeans.api.visual.action.ActionFactory;
@@ -113,7 +114,9 @@ public class CircleWidget extends Widget {
     @Override
     protected Rectangle calculateClientArea() {
         int width = (int) element.getWidth() + 2 * CircleWidget.BOUNDS_INSET;
-        Rectangle rect = new Rectangle(0, 0, width, width);
+        int x = - width / 2;
+        int y = - width / 2;
+        Rectangle rect = new Rectangle(x, y, width, width);
         return rect;
     }
 
@@ -122,7 +125,9 @@ public class CircleWidget extends Widget {
         super.paintWidget();
         Graphics2D gr = getGraphics();
         gr.setColor(element.getColor());
-        gr.drawOval(CircleWidget.BOUNDS_INSET, CircleWidget.BOUNDS_INSET, element.getWidth(), element.getWidth());
+        int x = - element.getWidth() / 2;
+        int y = - element.getWidth() / 2;
+        gr.drawOval(x, y, element.getWidth(), element.getWidth());
     }
 
     /**
@@ -139,7 +144,7 @@ public class CircleWidget extends Widget {
 
             final double deltaW = Math.abs(suggestedBounds.getWidth() - originalBounds.getWidth());
             final double deltaH = Math.abs(suggestedBounds.getHeight() - originalBounds.getHeight());
-
+            
             if (deltaW >= deltaH) { // moving mostly horizontally
                 result.height = result.width;
             } else { // moving mostly vertically
@@ -147,8 +152,8 @@ public class CircleWidget extends Widget {
             }
             
             // keep position
-            result.x = 0;
-            result.y = 0;
+            result.x = - result.width / 2;
+            result.y = - result.width / 2;
             return result;
         }
     }

@@ -17,11 +17,12 @@
 package zbeans.cowgraph.model;
 
 /**
- *
  * @author Michael M&uuml;hlebach <michael at anduin.ch>
  */
 public enum GraphElementGroup {
-    BASIC("basic");
+
+    BASIC("basic"),
+    COW("cow");
     
     public final String title;
 

@@ -17,19 +17,14 @@
 package zbeans.cowgraph.visual.editor.widget;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import org.netbeans.api.visual.action.ActionFactory;
-import org.netbeans.api.visual.action.ResizeProvider;
-import org.netbeans.api.visual.action.ResizeStrategy;
 import org.netbeans.api.visual.action.SelectProvider;
 import org.netbeans.api.visual.action.TwoStateHoverProvider;
 import org.netbeans.api.visual.action.WidgetAction;
 import org.netbeans.api.visual.border.BorderFactory;
 import org.netbeans.api.visual.widget.Scene;
 import org.netbeans.api.visual.widget.Widget;
-import zbeans.cowgraph.model.Circle;
 import zbeans.cowgraph.model.CowGraphProduct;
 import zbeans.cowgraph.model.GraphElement;
 
@@ -42,6 +37,10 @@ public class CowGraphProductWidget extends Widget {
 
     private CowGraphProduct element;
     private GraphElementDependency dependency;
+    
+    private CircleWidget circleWidget;
+    private ArrowWidget arrowWidget;
+    private LabelTextWidget textWidget;
 
     public CowGraphProductWidget(Scene scene, CowGraphProduct element) {
         super(scene);
@@ -108,10 +107,23 @@ public class CowGraphProductWidget extends Widget {
     }
 
     private void createCompositeChildWidgets() {
-        for (GraphElement graphElem : element.getElements()) {
-            addChild(WidgetFactory.createWidget(getScene(), graphElem));            
-        }
+        circleWidget = new CircleWidget(getScene(), element.getCircle());
+        arrowWidget = new ArrowWidget(getScene(), element.getArrow());
+        textWidget = new LabelTextWidget(getScene(), element.getLabelText()); 
+            
+        circleWidget.addDependency(new Dependency() {
+            @Override
+            public void revalidateDependency() {
+                element.getArrow().setToX(element.getCircle().getWidth() * 2);
+                element.getArrow().setToY(-element.getCircle().getWidth() * 2);
+                element.getLabelText().setX(-element.getCircle().getWidth() / 2);
+                element.getLabelText().setY(element.getCircle().getWidth() / 2 + 20);
+            }           
+        });
+        
+        addChild(circleWidget);
+        addChild(textWidget);
+        // addChild(arrowWidget);
     }
-
     
 }
