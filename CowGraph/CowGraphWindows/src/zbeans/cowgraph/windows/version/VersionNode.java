@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.Action;
-import org.netbeans.api.actions.Editable;
 import org.openide.actions.OpenAction;
 import org.openide.cookies.OpenCookie;
 import org.openide.nodes.BeanNode;
@@ -42,7 +41,7 @@ import zbeans.cowgraph.visual.editor.actions.EditAction;
  *
  * @author Michael Muehlebach <michael@anduin.ch>
 /** Wrapping the children in a FilterNode */
-public class VersionNode extends BeanNode implements Editable {
+public class VersionNode extends BeanNode {
 
     public VersionNode(CowGraphVersion version) throws IntrospectionException {
         super(version, Children.LEAF, new ProxyLookup(Lookups.singleton(version), Lookups.fixed(new EntryOpenCookie(version))));
@@ -84,11 +83,6 @@ public class VersionNode extends BeanNode implements Editable {
     @Override
     public Action getPreferredAction() {
         return getActions(false)[0];
-    }
-
-    @Override
-    public void edit() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     /** Specifying what should happen when the user invokes the Open action */

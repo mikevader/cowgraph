@@ -17,6 +17,7 @@
 package zbeans.cowgraph.model;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -48,4 +49,15 @@ public class CompositeGraphElementImpl extends GraphElementImpl implements Compo
         firePropertyChange(PROP_ELEMENTS, element, null);
     }
     
+    public CompositeGraphElementImpl clone() {
+       CompositeGraphElementImpl clone = (CompositeGraphElementImpl)super.clone();
+
+       clone.elements = new LinkedList<GraphElement>();
+
+       for (GraphElement element1 : this.elements) {
+            clone.elements.add(element1.clone());
+        }
+        
+        return clone;
+    }
 }
